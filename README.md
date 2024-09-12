@@ -1,8 +1,8 @@
-QuizifyAI
+##CardMates
 
 Overview
 
-QuizifyAI is an AI-powered flashcard and quizzing web app designed to optimize the learning process. Users can create, organize, and manage flashcards by subjects or groups. AI automates keyword extraction, enhances flashcard wording, and generates multiple question types (multiple-choice, true/false, matching, short response). Users can customize quizzes by setting the number of questions and difficulty levels, and the app is fully responsive for use on all devices (desktops, tablets, phones).
+CardMates is an AI-powered flashcard and quizzing web app designed to optimize the learning process. Users can create, organize, and manage flashcards by subjects or groups. AI automates keyword extraction, enhances flashcard wording, and generates multiple question types (multiple-choice, true/false, matching, short response). Users can customize quizzes by setting the number of questions and difficulty levels, and the app is fully responsive for use on all devices (desktops, tablets, phones).
 
 Key Features
 
