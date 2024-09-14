@@ -1,4 +1,4 @@
-CardMates testing testing
+CardMates
 
 Overview
 
