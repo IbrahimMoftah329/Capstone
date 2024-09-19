@@ -38,3 +38,20 @@ Backend: Team member B - Java backend, database, user authentication.
 AI Integration: Team member C - OpenAI API for AI-powered features.
 Mobile Optimization: Team member D - Ensures functionality on mobile devices.
 Testing & Deployment: Team member E - QA, deployment on AWS/Heroku.
+
+
+
+### How to run/setup project
+
+- git clone the repo using either the HTML or SSH link
+- check if you have **nodemon** installed 
+    - open terminal and run the command **"npm list -g nodemon"**
+      If nodemon is installed globally, you’ll see its version listed. If not, it will show an empty result or an error.
+- **Install Nodemon** if it is not already installed
+    - To install globally, open terminal to any directory and run the code:
+        **"npm install -g nodemon"**
+- Once nodemon is installed, cd into the repo, then cd into the Backend directory
+- to start the server, run the code **"npm run dev"**
+- open safari or chrome and type in the url: **"http://localhost:4000/"**
+- cd into the Backend directory
+
