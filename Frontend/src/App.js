@@ -1,6 +1,9 @@
 import logo from './logo.svg';
+import { useState } from "react";
 import './App.css';
-import Homepage from "./Components/Homepage"
+import Homepage from "./Components/Homepage";
+import NavBar from "./Components/NavBar";
+
 
 function App() {
   return (
