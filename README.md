@@ -1,57 +1,70 @@
-CardMates
-
-Overview
-
+# CardMates
+## Overview  
 CardMates is an AI-powered flashcard and quizzing web app designed to optimize the learning process. Users can create, organize, and manage flashcards by subjects or groups. AI automates keyword extraction, enhances flashcard wording, and generates multiple question types (multiple-choice, true/false, matching, short response). Users can customize quizzes by setting the number of questions and difficulty levels, and the app is fully responsive for use on all devices (desktops, tablets, phones).
 
-Key Features
+## Key Features
+Flashcard Management: Create, edit, and delete flashcards organized into decks.  
+AI-Enhanced Flashcards: AI searches for relevant study materials.  
+Quiz Generation: Generate quizzes (multiple-choice, true/false, matching, short-response) based on flashcard decks.  
+Difficulty Settings: Customize quizzes by specifying difficulty (easy, medium, hard) with predefined question distribution.  
 
-Flashcard Management: Create, edit, delete flashcards organized into groups (e.g., subject, class) with customizable subgroups.
-AI-Enhanced Flashcards: AI suggests improved word choices and searches for relevant study materials.
-Quiz Generation: Generate quizzes (multiple-choice, true/false, matching, short-response) based on flashcards.
-Difficulty Settings: Customize quizzes by specifying difficulty (easy, medium, hard) with predefined question distribution.
-Responsive Design: Fully functional across desktops, laptops, tablets, and mobile devices.
-Tech Stack
+## Tech Stack  
+Frontend: React.js  
+Backend: Node.js (with Express.js)  
+AI Integration: OpenAI API (for keyword extraction, quiz generation, and resource lookup)  
+Database: MongoDB  
+Hosting: AWS or Heroku  
+Version Control: GitHub  
 
-Frontend: React.js
-Backend: Java (Spring Boot)
-AI Integration: OpenAI API (for keyword extraction, quiz generation, and resource lookup)
-Database: MySQL/PostgreSQL
-Hosting: AWS or Heroku
-Version Control: GitHub
-Planned MVP Features
-
-Flashcard Creation & Management: Group and organize flashcards, add hints.
+## Planned MVP Features  
+Flashcard Creation & Management: Group and organize flashcards.
 AI Assistance: Keyword extraction and flashcard enhancement.
-Quiz Creation: Dynamic quiz generation based on flashcard content.
 Customizable Difficulty: Create quizzes with varied difficulty settings.
-Reach Goals
 
-Spaced Repetition: AI-based learning schedules for better retention.
-Progress Tracking: Analytics and performance insights.
-Collaborative Study: Share flashcards and quizzes with others.
-Advanced AI: Improved language processing for more accurate question generation.
-Team
+## Reach Goals  
+Spaced Repetition: AI-based learning schedules for better retention.  
+Progress Tracking: Analytics and performance insights.  
+Collaborative Study: Share flashcards and quizzes with others.  
+Advanced AI: Improved language processing for more accurate question generation.  
 
-Frontend: Team member A - React UI and responsiveness.
-Backend: Team member B - Java backend, database, user authentication.
-AI Integration: Team member C - OpenAI API for AI-powered features.
-Mobile Optimization: Team member D - Ensures functionality on mobile devices.
-Testing & Deployment: Team member E - QA, deployment on AWS/Heroku.
+## Team  
+Frontend: Nina and Ella - React UI and responsiveness.  
+Backend: Luis and Calvin - Java backend and database.  
+API Integration: Ibrahim - OpenAI API for AI-powered features and user authentication.  
+Testing & Deployment: All team members - QA, deployment on AWS/Heroku.  
+
+## How to run/setup the project  
+
+Follow these steps to set up and run the project: 
+### 1. Clone the Repository Clone the repo using either the HTML or SSH link: 
+```bash git clone <repository-url> ``` 
+
+### 2. Check for Nodemon Installation Verify if **Nodemon** is installed globally: 
+```bash npm list -g nodemon ``` 
+- If Nodemon is installed, you'll see its version. If not, you'll see an empty result or an error.
+
+### 3. Install Nodemon If Nodemon is not installed, you can install it globally by running: 
+```bash npm install -g nodemon ``` 
+
+### 4. Navigate to the Backend Directory Change into the cloned repository's Backend directory: 
+```bash cd Backend ``` 
+
+### 5. Start the Server To start the server, run: 
+```bash npm run dev ``` 
+
+### 6. Access the Application Open your web browser (Safari or Chrome) and navigate to: 
+``` http://localhost:4000/ ```
 
 
+### Updating your main branch without overwriting your local
 
-### How to run/setup project
-
-- git clone the repo using either the HTML or SSH link
-- check if you have **nodemon** installed 
-    - open terminal and run the command **"npm list -g nodemon"**
-      If nodemon is installed globally, you’ll see its version listed. If not, it will show an empty result or an error.
-- **Install Nodemon** if it is not already installed
-    - To install globally, open terminal to any directory and run the code:
-        **"npm install -g nodemon"**
-- Once nodemon is installed, cd into the repo, then cd into the Backend directory
-- to start the server, run the code **"npm run dev"**
-- open safari or chrome and type in the url: **"http://localhost:4000/"**
-- cd into the Backend directory
-
+git fetch origin (fetching the latest updates from the remote repository)
+git status (make sure it says: On branch main)
+git switch main (switches to the main branch, which you should already be on)
+git pull origin main (Update the local main branch with the latest changes from the remote main branch)
+git switch your-branch (assumes that you were working your branch when making changes)
+If you merge, you should switch back to your working branch (if you're not on it already) and merge the main branch into your branch.
+Git merge main (merges the fetched changes onto your local main branch)
+------------------------------
+At this point, your main branch that was previously behind the remote changes (on GitHub) is now updated
+git push (push your changes to GitHub as normal)
