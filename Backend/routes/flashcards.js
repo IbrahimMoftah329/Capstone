@@ -1,5 +1,5 @@
 const express  = require('express')
-const Flashcard = require('../models/flashcardModel')
+const Flashcard = require('../models/flashcard')
 
 const router = express.Router()
 
@@ -15,16 +15,16 @@ router.get('/:id', (req, res) => {
 
 // POST a new flashcard
 router.post('/', async (req, res) => {
-    const {prompt, answer, difficulty, sets, questionBank} = req.body
+    const {prompt, answer} = req.body
 
     try{
-        const flashcard = await Flashcard.create({prompt, answer, difficulty, sets, questionBank})
+        const flashcard = await Flashcard.create({prompt, answer})
+
         res.status(200).json(flashcard)
 
     } catch(error) {
         res.status(400).json({error: error.message})
     }
-    res.json({mssg: 'POST a new flashcard'})
 })
 
 // DELETE a Flashcard
