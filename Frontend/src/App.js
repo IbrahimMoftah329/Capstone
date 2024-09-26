@@ -1,8 +1,8 @@
 import React from 'react';
-import Analytics from './components/Analytics';
-import Cards from './components/Cards';
-import Footer from './components/Footer';
-import Navbar from './components/Navbar';
+import Analytics from './Components/Analytics';
+import Cards from './Components/Cards';
+import Footer from './Components/Footer';
+import Navbar from './Components/Navbar';
 
 function App() {
   return (
