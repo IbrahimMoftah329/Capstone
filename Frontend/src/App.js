@@ -11,6 +11,11 @@ function App() {
       <Analytics />
       <Cards />
       <Footer />
+    <div>
+      <Navbar />
+      <Analytics />
+      <Cards />
+      <Footer />
     </div>
   );
 }
