@@ -66,7 +66,7 @@ Your local main branch is behind the remote main branch, what do you do?
  - ```git pull origin main``` (Update the local main branch with the latest changes from the remote main branch)
 
 At this point, your local main branch is equal to the remote main branch. 
-===================================================================================================================
+
 If you would also like your local test branch to be equal/updated with the remote main branch (could involve changes from other people), do these steps: 
 
  - ```git switch your-test-branch``` (assumes that you were working your own local test branch when making changes)
