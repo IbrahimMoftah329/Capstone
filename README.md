@@ -88,7 +88,7 @@ not exist on your local machine yet, what do you do?
     From github.com:IbrahimMoftah329/Capstone
     42a3e3f..2ca3db6  main           -> origin/main\
     \* [new branch]      Backend-models -> origin/Backend-models\
-    \* [new branch]      Ella-Front     -> origin/Ella-Front\
-    \* [new branch]      example-branch -> origin/example-branch
+    \* [new branch]      example-branch -> origin/example-branch\
+    \* [new branch]      example-branch-2 -> origin/example-branch-2
  - ```git switch example-branch``` (Simultaneously switches to and sets the branch origin to the remote branch)
  - ```git branch``` (Check that you are now on the new branch)
