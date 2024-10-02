@@ -56,15 +56,39 @@ Follow these steps to set up and run the project:
 ``` http://localhost:4000/ ```
 
 
-### Updating your main branch without overwriting your local
+### 7. Updating your main branch without overwriting your local
 
-git fetch origin (fetching the latest updates from the remote repository)
-git status (make sure it says: On branch main)
-git switch main (switches to the main branch, which you should already be on)
-git pull origin main (Update the local main branch with the latest changes from the remote main branch)
-git switch your-branch (assumes that you were working your branch when making changes)
-If you merge, you should switch back to your working branch (if you're not on it already) and merge the main branch into your branch.
-Git merge main (merges the fetched changes onto your local main branch)
-------------------------------
-At this point, your main branch that was previously behind the remote changes (on GitHub) is now updated
-git push (push your changes to GitHub as normal)
+Your local main branch is behind the remote main branch, what do you do?
+
+ - ```git fetch origin``` (can be done on any branch, fetches the latest updates from the remote repository)
+ - ```git branch``` (used to see all local branches, your current branch will be highlighted in green and have an asterisk at the beginning)
+ - ```git switch main``` (switches to main branch)
+ - ```git pull origin main``` (Update the local main branch with the latest changes from the remote main branch)
+
+At this point, your local main branch is equal to the remote main branch. 
+
+If you would also like your local test branch to be equal/updated with the remote main branch (could involve changes from other people), do these steps: 
+
+ - ```git switch your-test-branch``` (assumes that you were working your own local test branch when making changes)
+ - ```git merge main``` (merges the local main branch onto your local testing branch)
+
+At this point, your main branch that was previously behind the remote changes (on github) is now updated
+you should continue to work on the testing branch and push any changes when done
+git push (push your changes to github as normal, pushes commited changes onto the remote version of whichever branch you are on)
+
+### 8. Pulling a remote branch that doesn't exist on your local machine yet.
+
+There is a new branch created on Github that you would like to access locally and be able to change the code to, but it does
+not exist on your local machine yet, what do you do?
+
+ - ```git branch``` (Check which branch you are on)
+ - ```git switch main``` (Switch to the main branch if you were not on it before)
+ - ```git pull``` (pulls all the new changes from the remote main branch)
+ - You should see some lines that say something similar to:
+    From github.com:IbrahimMoftah329/Capstone
+    42a3e3f..2ca3db6  main           -> origin/main\
+    \* [new branch]      Backend-models -> origin/Backend-models\
+    \* [new branch]      example-branch -> origin/example-branch\
+    \* [new branch]      example-branch-2 -> origin/example-branch-2
+ - ```git switch example-branch``` (Simultaneously switches to and sets the branch origin to the remote branch)
+ - ```git branch``` (Check that you are now on the new branch)
