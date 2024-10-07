@@ -46,6 +46,10 @@ Follow these steps to set up and run the project:
 ### 3. Install Nodemon If Nodemon is not installed, you can install it globally by running: 
 ```npm install -g nodemon ``` 
 
+```npm install --save-dev @clerk/clerk-react ```
+
+```npm install react-router-dom ```
+
 ### 4. Navigate to the Backend Directory Change into the cloned repository's Backend directory: 
 ```cd Backend ``` 
 
