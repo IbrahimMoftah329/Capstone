@@ -1,6 +1,6 @@
 nav {
     width: 100%;
-    height:10%;
+    height:7%;
     /*background: #ffffff;*/
     color: #ffffff;
     padding: 4x 0;
@@ -11,6 +11,19 @@ nav {
     align-items: center;
     justify-content: space-between;
     z-index: 10;
+    
+}
+/* Style the logo image */
+.nav-logo {
+    height: 80px; /* Set the height (adjust as necessary) */
+    width: auto; /* Maintain aspect ratio */
+    padding: 5px; /* Space around the logo */
+}
+/* Ensure the logo is responsive */
+@media (max-width: 768px) {
+    .navbar-logo {
+      height: 30px; /* Adjust logo size for smaller screens */
+    }
 }
 img{
     width: 5%
@@ -23,7 +36,7 @@ a{
 }
 nav ul li{
     display:inline-block;
-    padding: 30px;
+    padding: 10px;
     list-style:none;
     margin:5px 20px;
     font-size: 16px;
@@ -31,4 +44,32 @@ nav ul li{
 .dark-nav{
     background: #124883;
     transition: .5s;
+}
+
+/* Add styles for the search bar */
+.search-bar {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    margin-right: 20px; /* Adjust based on your layout */
+}
+
+.search-input {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-right: none; /* Remove the right border to avoid overlap */
+    border-radius: 30px 0 0 30px; /* Rounded on the left side */
+    font-size: 16px;
+}
+
+.search-button {
+    padding: 8px 16px;
+    border: 1px solid #ccc;
+    border-left: none; /* Remove the left border to avoid overlap */
+    background-color: #D9D9D9;
+    color: #000000;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 0 30px 30px 0; /* Rounded on the right side */
 }
