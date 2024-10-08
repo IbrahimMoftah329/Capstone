@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './Navbar.css';
 import logo from '../../assets/logo2.png';
-import { Link } from 'react-scroll';
-// import Home from '../../pages/HomePage/Home'
-// import About from '../../pages/AboutPage/About'
-// import Profile from '../../pages/ProfilePage/Profile'
+import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/clerk-react';
 
 const Navbar = () => {
@@ -36,7 +33,7 @@ const Navbar = () => {
   return (
     <nav className={`container ${bar ? 'dark-nav' : ''}`}>
       {/* <img src={logo} className='nav-logo'/> */}
-      <Link to="/home">
+      <Link to="/">
         <h1 className="cm">Cardmates</h1>
       </Link>
 

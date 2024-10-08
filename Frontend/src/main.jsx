@@ -1,7 +1,7 @@
 import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client'; // Correct import
-import App from './pages/HomePage/Home.jsx';
-import './pages/HomePage/Home.css';
+import { createRoot } from 'react-dom/client';
+import App from './App.jsx'
+import './index.css'
 import { ClerkProvider } from '@clerk/clerk-react';
 
 // Import your publishable key

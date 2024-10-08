@@ -1,7 +1,7 @@
 nav {
     width: 100%;
-    height:7%;
-    /*background: #ffffff;*/
+    height: 80px;
+    background-color: #124883;
     color: #ffffff;
     padding: 4x 0;
     position:fixed;
