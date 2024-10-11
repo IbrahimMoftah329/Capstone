@@ -19,11 +19,11 @@ const SignUpComponent = () => {
         <p> Have a question? Contact us here.</p>
         <br></br>
         <ul>
-          <li><img src={spade} alt="spade" />cardmates@gmail.com</li>
+          <li><img src={spade} alt="spade" className="small-image" />cardmates@gmail.com</li>
           <br></br>
-          <li><img src={heart} alt="heart" /> +1 123-456-7890</li>
+          <li><img src={heart} alt="heart" className="small-image" /> +1 123-456-7890</li>
           <br></br>
-          <li><img src={club} alt="club" /> 1234 Hunter Ave, Brooklyn, NY 10485, United States</li>
+          <li><img src={club} alt="club" className="small-image" /> 1234 Hunter Ave, Brooklyn, NY 10485, United States</li>
         </ul>
       </div>
       <div>

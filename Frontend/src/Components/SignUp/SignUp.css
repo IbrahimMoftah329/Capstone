@@ -8,6 +8,11 @@
    justify-content: space-between; 
 }
 
+.small-image {
+    width: 5%; /* or any percentage or value */
+    height: auto; /* keeps the aspect ratio */
+}
+
 .col{
     flex-basis: 48%;
     color: #000000;
