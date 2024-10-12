@@ -1,9 +1,16 @@
+/* SignUp.css */
+
 .signUp{
    margin: 80px auto;
    max-width: 90%;
    display: flex;
    align-center: center;
    justify-content: space-between; 
+}
+
+.small-image {
+    width: 5%; /* or any percentage or value */
+    height: auto; /* keeps the aspect ratio */
 }
 
 .col{

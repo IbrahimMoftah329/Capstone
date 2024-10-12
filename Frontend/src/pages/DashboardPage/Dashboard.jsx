@@ -1,14 +1,22 @@
-import React from 'react';
-import Navbar from '../../Components/Navbar/Navbar'; // Reuse the Navbar component
+import React, { useState } from 'react';
 import './Dashboard.css';
+import DashSidebar from '../../Components/DashSidebar/DashSidebar';
+import DashContent from '../../Components/DashContent/DashContent';
 
 const Dashboard = () => {
-    return (
-      <div>
-        <Navbar /> {/* Navbar from your homepage */}
+  const [selectedItem, setSelectedItem] = useState('Home');
 
-      </div>
-    );
+  // Function to update the content based on sidebar selection
+  const handleItemSelect = (item) => {
+    setSelectedItem(item);
   };
+
+  return (
+    <div style={{ display: 'flex' }}>
+      <DashSidebar onSelectItem={handleItemSelect} />
+      <DashContent selectedItem={selectedItem} />
+    </div>
+  );
+};
   
   export default Dashboard;
