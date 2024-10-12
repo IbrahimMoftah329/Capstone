@@ -46,7 +46,7 @@ const Navbar = () => {
       {/* Navigation Links */}
       <ul>
         <li>
-          <Link to="/about">About Us</Link> {/* Link to About Page */}
+          <Link to="/about" className='About'>About Us</Link> {/* Link to About Page */}
         </li>
 
         {/* Clerk Authentication */}
