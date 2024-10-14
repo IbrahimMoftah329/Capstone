@@ -109,9 +109,6 @@ const Navbar = () => {
             <Link to="/dashboard">Dashboard</Link>
           </li>
           <li>
-            <Link to="/profile">Profile</Link>
-          </li>
-          <li>
             <UserButton />
           </li>
         </SignedIn>

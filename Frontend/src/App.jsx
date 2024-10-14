@@ -10,7 +10,6 @@ import AboutTitle from './Components/AboutTitle/AboutTitle'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/clerk-react';
 import About from './pages/AboutPage/About';
-import Profile from './pages/ProfilePage/Profile';
 import Dashboard from './pages/DashboardPage/Dashboard';
 
 const App = () => {
@@ -35,10 +34,8 @@ const App = () => {
           } />
           {/* About Page */}
           <Route path="/about" element={<About />} />
-          {/* Profile Page */}
-          <Route path="/profile" element={<Profile />} />
           {/* Dashboard Page */}
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/dashboard/*" element={<Dashboard />} />
         </Routes>
         {/* Footer */}
         <Footer />

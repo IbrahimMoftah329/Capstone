@@ -25,18 +25,17 @@
 }
 
 .sidebar-item {
-    display: flex;
-    align-items: center;
-    background-color: transparent;
+    list-style: none;
+    margin: 10px 0;
+}
+
+.sidebar-item a {
+    text-decoration: none; /* Remove the default link styling */
+    display: flex; /* Align icon and text */
+    align-items: center; /* Vertically center the content */
+    justify-content: flex-start; /* Align content to the left */
     font-size: 16px;
-    color: #000;
-    border: none;
-    padding: 10px;
-    text-align: left;
-    cursor: pointer;
-    outline: none;
-    margin: 5px 0;
-    width: 100%; /* Make the button stretch the full width of the sidebar */
+    transition: background-color 0.3s ease; /* Smooth hover transition */
 }
 
 .sidebar-item:hover {
