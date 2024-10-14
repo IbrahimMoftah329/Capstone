@@ -1,6 +1,5 @@
 const express  = require('express')
 const Flashcard = require('../models/flashcard')
-
 const router = express.Router()
 
 // GET all flashcards
