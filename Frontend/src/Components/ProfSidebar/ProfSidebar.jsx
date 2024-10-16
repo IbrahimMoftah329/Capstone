@@ -1,5 +1,6 @@
 import React from 'react';
 import './ProfSidebar.css';
+import { ImSpades } from "react-icons/im";
 import logo from '../../assets/logo2.png';
 import spade from '../../assets/spade.jpg';
 import heart from '../../assets/heart.jpg';
@@ -9,7 +10,7 @@ import diamond from '../../assets/diamond.jpg';
 
 const ProfSidebar = ({ onSelectItem }) => {
     const items = [
-        { label: 'Home', icon: spade },
+        { label: 'Home', icon: <ImSpades /> },
         { label: 'Profile', icon: heart },
         { label: 'Settings', icon: club },
         { label: 'Logout', icon: diamond },
