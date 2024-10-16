@@ -48,10 +48,10 @@ const DashSidebar = () => {
           <a href='/dashboard/home'> <ImSpades />  Home </a>
         </li>
         <li>
-          <a href='/dashboard/settings'> <BsSuitDiamondFill /> Settings  </a>
+          <a href='/dashboard/settings'> <BsSuitDiamondFill /> Profile  </a>
         </li>
         <li>
-          <a href='/dashboard/profile'> <GiClubs /> Profile</a>
+          <a href='/dashboard/profile'> <GiClubs /> Settings</a>
         </li>
         <li>
           <a href='/' onClick= {handleLogout} > <IoIosHeart /> Logout</a>
