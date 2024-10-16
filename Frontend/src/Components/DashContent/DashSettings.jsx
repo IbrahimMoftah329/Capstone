@@ -5,7 +5,7 @@ import './DashContent.css'; // Make sure the CSS file path is correct
 const DashSettings = () => {
     return (
         <div className="content">
-            <h1 className="content-title">Settings<GiClubs /> </h1>
+            <h1 className="content-title">Profile<GiClubs /> </h1>
             <h2>Personal Info</h2>
             <br></br>
             <h3>Full Name</h3>

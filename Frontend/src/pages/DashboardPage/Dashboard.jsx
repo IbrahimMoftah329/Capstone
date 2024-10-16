@@ -5,7 +5,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import Home from '../../Components/DashContent/DashHome';
 import Profile from '../../Components/DashContent/DashProfile';
 import Settings from '../../Components/DashContent/DashSettings';
-import Contact from '../../Components/DashContent/DashContact';
+import Logout from '../../Components/DashContent/DashLogout';
 
 const Dashboard = () => {
   return (
@@ -13,9 +13,11 @@ const Dashboard = () => {
       <DashSidebar /> {/* Sidebar is always visible */}
       <Routes>
         <Route path="home" element={<Home />} />
-        <Route path="profile" element={<Profile />} />
         <Route path="settings" element={<Settings />} />
-        <Route path="contact" element={<Contact />} />
+        <Route path="profile" element={<Profile />} />
+        <Route path="logout" element={<Logout />} />
+        {/* Redirect /dashboard to /dashboard/home */}
+        <Route path="/" element={<Navigate to="home" />} />
       </Routes>
     </div>
   );
