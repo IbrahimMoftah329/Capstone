@@ -127,6 +127,9 @@ nav ul li{
 }
 
 {/*button animations*/}
+.button:hover{
+    transform: translateY(-5px);
+}
 
 .button{
     transition-property: transform;
@@ -135,6 +138,3 @@ nav ul li{
     transition-delay: 0s;
 }
 
-.button:hover{
-    transform: translateY(-5px);
-}
