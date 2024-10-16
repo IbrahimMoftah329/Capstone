@@ -125,3 +125,16 @@ nav ul li{
     border-left: 1px solid #ccc; /* Border to separate button from input */
     border-radius: 0 30px 30px 0; /* Rounded on the right side */
 }
+
+{/*button animations*/}
+
+.button{
+    transition-property: transform;
+    transition-duration: 0.3s;
+    transition-timing-function: ease;
+    transition-delay: 0s;
+}
+
+.button:hover{
+    transform: translateY(-5px);
+}
