@@ -12,69 +12,62 @@ const getUsers = async(req, res) => {
 
 // get a single user
 const getUser = async(req, res) => {
-    const {id} = req.params
+    const { userId } = req.params;
 
-    if(!mongoose.Types.ObjectId.isValid(id)){
-        return res.status(404).json({error: "invalid object ID"})
+    try {
+      const user = await User.findById(userId);
+      if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+      res.status(200).json(user);
+    } catch (err) {
+      res.status(500).send(err.message);
     }
-
-    const userByID = await User.findById(id)
-
-    if(!userByID){
-        res.status(404).json({error: "no such user exists"})
-    }
-
-    res.status(200).json(userByID)
 }
 
 // create a new user
 const createUser = async (req, res) => {
-    const {username,university, decks, topicName} = req.body
 
-    try{
-        const user = await User.create({username, university, decks, topicName})
-
-        res.status(200).json(user)
-
-    } catch(error) {
-        res.status(400).json({error: error.message})
-    }
+    try {
+        const newUser = new User(req.body);
+        const savedUser = await newUser.save();
+        res.status(201).json(savedUser);
+      } catch (err) {
+        res.status(500).send(err.message);
+      }
 }
 
 // delete a user
 const deleteUser = async(req, res) => {
-    const{id} = req.params
 
-    if(!mongoose.Types.ObjectId.isValid(id)){
-        return res.status(404).json({error: "invalid object ID"})
-    }
+    const { userId } = req.params;
 
-    const user = await User.findOneAndDelete({_id: id})
+    try {
+        const deletedUser = await User.findByIdAndDelete(userId);
 
-    if(!user){
-        res.status(404).json({error: "no such user exists"})
-    }
+        if (!deletedUser) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+        res.status(200).json({ message: 'User deleted successfully', user: deletedUser });
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
 
-    res.status(200).json(user)
 }
 
 // update a user
 const updateUser = async(req, res) => {
-    const{id} = req.params
+    const { userId } = req.params;
 
-    if(!mongoose.Types.ObjectId.isValid(id)){
-        return res.status(404).json({error: "invalid object ID"})
+  try {
+    const updatedUser = await User.findByIdAndUpdate(userId, req.body, { new: true });
+    if (!updatedUser) {
+      return res.status(404).json({ error: 'User not found' });
     }
-
-    const user = await User.findOneAndUpdate({_id: id}, {
-        ...req.body
-    })
-
-    if(!user){
-        res.status(404).json({error: "no such user exists"})
-    }
-
-    res.status(200).json(user)
+    res.status(200).json(updatedUser);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
 }
 
 

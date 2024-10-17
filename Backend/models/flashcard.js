@@ -3,16 +3,21 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const flashcardSchema = new Schema ({
-    prompt: {
+    question: {
         type: String,
-        required: true,
+        required: true
     },
     answer: {
         type: String,
-        required: true,
+        required: true
     },
-});
+    deckId: { 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'Deck', 
+        required: true
+    }
+}, { timestamps: true });
 
-const Flashcard = mongoose.model('flashcard', flashcardSchema);
+const Flashcard = mongoose.model('Flashcard', flashcardSchema);
 
 module.exports = Flashcard

@@ -2,7 +2,6 @@ const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema
 
-const Deck = require('./deck').schema
 
 
 const userSchema = new Schema({
@@ -19,7 +18,10 @@ const userSchema = new Schema({
     type: String, 
     required: false 
   },
-  decks: [Deck],
+  decks:[{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Deck'
+  }],
 
 }, {timestamps: true});
 

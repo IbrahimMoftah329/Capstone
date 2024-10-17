@@ -1,6 +1,6 @@
 const express  = require('express')
-//const User = require('../models/user')
-//const Deck = require('../models/deck')
+const router = express.Router()
+
 
 const {
     createUser,
@@ -10,22 +10,23 @@ const {
     updateUser
 } = require('../Controllers/userControllers')
 
-const router = express.Router()
 
-// GET all users
+
+
+// Route to GET all users
 router.get('/', getUsers)
 
-// GET a single user 
-router.get('/:id', getUser)
+// Route to GET a single user 
+router.get('/:userId', getUser)
 
-// POST a new user
+// Route to POST/ ADD a new user
 router.post('/', createUser)
 
-// DELETE a user
-router.delete('/:id', deleteUser)
+// Route to DELETE a user
+router.delete('/:userId', deleteUser)
 
-// UPDATE a user
-router.patch('/:id', updateUser)
+// Route to UPDATE a user
+router.patch('/:userId', updateUser)
 
 module.exports = router
 

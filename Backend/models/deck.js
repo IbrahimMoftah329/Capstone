@@ -2,14 +2,16 @@ const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema
 
-const flashcardSchema = require('./flashcard').schema; // Import the flashcard schema
-const User = require('./user').schema
-//import User from './user.js';
 
 const deckSchema = new Schema({
-  topicName: { 
+  Title: { 
     type: String, 
     required: true 
+},
+  userId: {
+  type: mongoose.Schema.Types.ObjectId,
+  ref: 'User',
+  required: true
 },
   semester: { 
     type: String, 
@@ -23,12 +25,14 @@ const deckSchema = new Schema({
     type: String, 
     required: false 
 },
-  author: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
+  description: {
+  type: String,
+  required: false
 },
-  flashcards: [flashcardSchema] // Reference to the flashcard schema
-});
+  flashcards: [{ 
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'Flashcard' }] // Reference to the flashcard schema
+}, { timestamps: true });
 
-const Deck = mongoose.model('deck', deckSchema);
+const Deck = mongoose.model('Deck', deckSchema);
 module.exports = Deck;
