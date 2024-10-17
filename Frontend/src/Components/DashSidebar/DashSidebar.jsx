@@ -51,7 +51,7 @@ const DashSidebar = () => {
           <a href='/dashboard/settings'> <BsSuitDiamondFill /> Profile  </a>
         </li>
         <li>
-          <a href='/dashboard/profile'> <GiClubs /> Settings</a>
+          <a href='/dashboard/profile'> <GiClubs /> Contact </a>
         </li>
         <li>
           <a href='/' onClick= {handleLogout} > <IoIosHeart /> Logout</a>
