@@ -36,6 +36,7 @@
     justify-content: flex-start; /* Align content to the left */
     font-size: 16px;
     transition: background-color 0.3s ease; /* Smooth hover transition */
+    border-radius: 30px;
 }
 
 .sidebar-item:hover {

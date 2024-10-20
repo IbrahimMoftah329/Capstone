@@ -2,22 +2,24 @@ import React, { useState } from 'react';
 import './Dashboard.css';
 import DashSidebar from '../../Components/DashSidebar/DashSidebar';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import Home from '../../Components/DashContent/DashHome';
+import Library from '../../Components/DashContent/DashLibrary';
 import Profile from '../../Components/DashContent/DashProfile';
-import Settings from '../../Components/DashContent/DashSettings';
-import Logout from '../../Components/DashContent/DashLogout';
+import Contact from '../../Components/DashContent/DashContact';
+import Shuffle from '../../Components/DashContent/DashShuffle';
+import DashCard from '../../Components/DashContent/DashCard';
 
 const Dashboard = () => {
   return (
     <div style={{ display: 'flex' }}>
       <DashSidebar /> {/* Sidebar is always visible */}
       <Routes>
-        <Route path="home" element={<Home />} />
+        <Route path="library" element={<Library />} />
+        <Route path="library/:deckId" element={<DashCard />} />
         <Route path="profile" element={<Profile />} />
-        <Route path="settings" element={<Settings />} />
-        <Route path="logout" element={<Logout />} />
+        <Route path="contact" element={<Contact />} />
+        <Route path="shuffle" element={<Shuffle />} />
         {/* Redirect /dashboard to /dashboard/home */}
-        <Route path="/" element={<Navigate to="home" />} />
+        <Route path="/" element={<Navigate to="library" />} />
       </Routes>
     </div>
   );

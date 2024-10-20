@@ -9,10 +9,10 @@ import { Link } from 'react-router-dom';
 
 const DashSidebar = () => {
   const items = [
-    { label: 'Home', icon: spade, link: '/dashboard/home' },
+    { label: 'Library', icon: spade, link: '/dashboard/library' },
     { label: 'Profile', icon: heart, link: '/dashboard/profile' },
-    { label: 'Settings', icon: club, link: '/dashboard/settings' },
-    { label: 'Logout', icon: diamond, link: '/dashboard/logout' },
+    { label: 'Contact Us', icon: club, link: '/dashboard/contact' },
+    { label: 'Shuffle', icon: diamond, link: '/dashboard/shuffle' },
   ];
 
   return (

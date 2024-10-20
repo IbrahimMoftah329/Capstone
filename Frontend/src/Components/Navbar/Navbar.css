@@ -95,7 +95,7 @@ nav ul li{
     color: #000000;
     background-color: #D9D9D9; /* Background color for the dropdown */
     border: 1px solid #ccc; /* Optional border */
-    border-radius: 10px 10px 10px 10px; /* Rounded corners for aesthetics */
+    border-radius: 10px;
     z-index: 10;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
