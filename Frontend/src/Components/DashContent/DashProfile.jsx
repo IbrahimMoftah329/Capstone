@@ -9,10 +9,7 @@ const DashSettings = () => {
             <h2>Personal Info</h2>
             <br></br>
             <h3>Full Name</h3>
-            <input type='text' className='input' value="Isaac Newton"/>
-            <br></br>
-            <h3>Birthday</h3>
-            <input type='text' className='input' value="January 4, 2001"/>
+            <input type='text' className='input' value="Steve Jobs"/>
             <br></br>
             <h3>Gender</h3>
             <input type='text' className='input' value="Male"/>
@@ -23,7 +20,7 @@ const DashSettings = () => {
             <h3>Major</h3>
             <input type='text' className='input' value="Computer Science"/>
             <h3>Email</h3>
-            <input type='text' className='input' value="isaacnewt@gmail.com"/>
+            <input type='text' className='input' value="stevejobs@gmail.com"/>
             <br></br>
             <h3>Password</h3>
             <input type='password' className='input' value="password123"/>
