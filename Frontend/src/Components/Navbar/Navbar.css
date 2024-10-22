@@ -5,7 +5,7 @@ nav {
     height: 80px;
     background-color: #124883;
     color: #ffffff;
-    padding: 4x 0;
+    /* padding: 4x 0; */
     position:fixed;
     top: 0;
     left: 0;
@@ -41,11 +41,12 @@ a{
 }
 
 nav ul li{
-    display:inline-block;
+    display: inline-flex;
+    justify-content: flex-end;
     padding: 5px;
     list-style:none;
-    margin:5px 20px;
-    font-size: 16px;
+    margin:10px;
+    font-size: 16x;
 }
 
 .dark-nav{
