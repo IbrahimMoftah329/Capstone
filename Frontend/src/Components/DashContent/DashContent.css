@@ -57,14 +57,14 @@ h3 {
 
 .popup {
     position: fixed;
-    top: 40%;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: #b0b0b0; /* Light grey color */
     color: #000000;
     padding: 10px 20px;
     border-radius: 30px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
     z-index: 1000;
     text-align: center;
     font-size: 16px;
@@ -74,4 +74,11 @@ h3 {
     padding: 20px;          /* Add some padding inside the box */
     border-radius: 30px;     /* Optional: rounded corners */
     background-color: #ffffff; /* Optional: light background */
+    box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.5);
+
+}
+
+.content-title svg {
+    width : 3%;
+    padding-top: 6px;
 }

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './DashContent.css'; // Make sure the CSS file path is correct
+import { BsSuitDiamondFill } from "react-icons/bs";
 
 const DashProfile = () => {
     const [showPopup, setShowPopup] = useState(false);
@@ -19,10 +20,10 @@ const DashProfile = () => {
 
     return (
         <div className="content">
-            <h1 className="content-title">Profile</h1>
+            <h1 className="content-title">Profile < BsSuitDiamondFill /> </h1>
             <form className="profile-box" onSubmit={handleUpdateClick}>
                 <h3>UserName</h3>
-                <input type='text' className='input' required placeholder='Enter UserName'  />
+                <input type='text' className='input' required placeholder='Enter Username'  />
                 <br />
                 <h3>Campus</h3>
                 <input type='text' className='input' required placeholder='Enter Campus'  />

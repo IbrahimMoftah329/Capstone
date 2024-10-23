@@ -26,7 +26,9 @@
     background-color: #ffffff;
     border-radius: 30px;
     position: relative;
-    
+    min-height: 350px;
+    box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.3);
+
 }
 
 /* Bottom part for Quizzes */
@@ -42,6 +44,8 @@
     border-radius: 30px;
     margin-top: 10px;
     position: relative;
+    box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.3);
+
 }
 
 .library-content-title {
@@ -296,3 +300,9 @@
 .popup-button.cancel:hover {
     background-color: darkgrey;
 }
+
+.library-content svg {
+    width : 3%;
+    padding-top: 6px;
+}
+

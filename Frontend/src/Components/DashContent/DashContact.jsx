@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { GiClubs } from "react-icons/gi";
 import './DashContent.css'; // Make sure the CSS file path is correct
 
 const DashContact = () => {
@@ -19,8 +20,10 @@ const DashContact = () => {
 
     return (
         <div className="content">
-            <h1 className="content-title">Contact Us </h1>
-            <div className="profile-box">
+            <h1 className="content-title">Contact Us <GiClubs /></h1>
+            <p> Need help? Get in touch. </p>
+            <br></br>
+                <div className="profile-box">
                 <div className='form'>
                     <form onSubmit={handleUpdateClick}>
                         <h3>Full name</h3>
