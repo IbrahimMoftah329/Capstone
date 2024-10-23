@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './DashLibrary.css';
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // Importing carousel styles
+import { Carousel as ResponsiveCarousel } from 'react-responsive-carousel'; // Importing the carousel
 
 const DashLibrary = () => {
     const [isDeckModalOpen, setIsDeckModalOpen] = useState(false);
     const [isQuizModalOpen, setIsQuizModalOpen] = useState(false);
     const [deckName, setDeckName] = useState('');
     const [deckDescription, setDeckDescription] = useState('');
-    const [professor, setProfessor] = useState(''); // New state for Professor
-    const [semester, setSemester] = useState(''); // New state for Semester
+    const [professor, setProfessor] = useState('');
+    const [semester, setSemester] = useState('');
     const [quizName, setQuizName] = useState('');
     const [quizDescription, setQuizDescription] = useState('');
     const [decks, setDecks] = useState([]);
@@ -27,8 +29,8 @@ const DashLibrary = () => {
                 id: decks.length + 1,
                 name,
                 description,
-                professor, // Include professor
-                semester, // Include semester
+                professor,
+                semester,
                 numOfCards: 0,
                 createdAt: new Date().toLocaleDateString()
             };
@@ -84,8 +86,8 @@ const DashLibrary = () => {
             setEditDeckId(deck.id);
             setDeckName(deck.name);
             setDeckDescription(deck.description);
-            setProfessor(deck.professor); // Set professor
-            setSemester(deck.semester); // Set semester
+            setProfessor(deck.professor);
+            setSemester(deck.semester);
         }
         setIsDeckModalOpen(true);
     };
@@ -94,12 +96,11 @@ const DashLibrary = () => {
         setIsDeckModalOpen(false);
         setDeckName('');
         setDeckDescription('');
-        setProfessor(''); // Reset professor
-        setSemester(''); // Reset semester
+        setProfessor('');
+        setSemester('');
         setIsEditing(false);
         setEditDeckId(null);
     };
-
 
     const openQuizModal = () => {
         setIsQuizModalOpen(true);
@@ -174,6 +175,33 @@ const DashLibrary = () => {
                     ))}
                 </div>
             </div>
+            
+            {/* Flashcard Carousel Integration */}
+            <div className="carousel-section">
+                <h2>Flashcard Carousel</h2>
+                <ResponsiveCarousel
+                    showArrows={true}
+                    showStatus={false}
+                    showIndicators={true}
+                    centerMode={true}
+                    centerSlidePercentage={80}
+                    infiniteLoop={true}
+                >
+                    <div>
+                        <img src="assets/1.jpeg" alt="Flashcard 1" />
+                        <p className="legend">Flashcard 1 Description</p>
+                    </div>
+                    <div>
+                        <img src="assets/2.jpeg" alt="Flashcard 2" />
+                        <p className="legend">Flashcard 2 Description</p>
+                    </div>
+                    <div>
+                        <img src="assets/3.jpeg" alt="Flashcard 3" />
+                        <p className="legend">Flashcard 3 Description</p>
+                    </div>
+                </ResponsiveCarousel>
+            </div>
+
             <div className="library-content-bottom">
                 <h1 className="library-content-title">Quizzes</h1>
                 <p className="library-content-description">Manage your quizzes here.</p>
