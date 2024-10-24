@@ -142,19 +142,6 @@ const DashLibrary = () => {
         setDeckToDelete(null);
     };
 
-
-
-    // the first two andleQuizSubmit and navigateToDeckDetail functions below were originally added but had errors, the next two are working without errors.
-
-    // const handleQuizSubmit = () => {
-    //     console.log(Quiz Name: ${quizName}, Description: ${quizDescription});
-    //     closeQuizModal();
-    // };
-
-    // const navigateToDeckDetail = (deck) => {
-    //     navigate(/dashboard/library/${deck.id}, { state: { deck } });
-    // };
-
     const handleQuizSubmit = () => {
         console.log(`Quiz Name: ${quizName}, Description: ${quizDescription}`);
         closeQuizModal();
@@ -164,8 +151,6 @@ const DashLibrary = () => {
         navigate(`/dashboard/library/${deck.id}`, { state: { deck } });
     };
     
-
-
     return (
         <div className="library-content">
             <h1 className="library-content-title">Library</h1>
