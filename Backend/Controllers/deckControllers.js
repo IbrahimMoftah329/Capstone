@@ -13,7 +13,7 @@ const getDecks = async(req, res) => {
       } catch (err) {
         res.status(500).send(err.message);
       }
-};
+}
 
 // get a single Deck
 /**
@@ -47,7 +47,7 @@ const addDeckToUser = async (req, res) => {
     res.status(500).send(err.message);
   }
   
-};
+}
 
 // delete a user
 const deleteDeck = async(req, res) => {
@@ -64,7 +64,7 @@ const deleteDeck = async(req, res) => {
     } catch (err) {
       res.status(500).send(err.message);
     }
-};
+}
 
 // update a user
 const updateDeck = async(req, res) => {
@@ -79,7 +79,7 @@ const updateDeck = async(req, res) => {
     } catch (err) {
       res.status(500).send(err.message);
     }
-};
+}
 
 
 module.exports = {
@@ -88,4 +88,4 @@ module.exports = {
     //getDeck,
     deleteDeck,
     updateDeck
-};
+}

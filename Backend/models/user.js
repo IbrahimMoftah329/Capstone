@@ -2,29 +2,26 @@ const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema
 
+
+
 const userSchema = new Schema({
-    clerkId: { 
-        type: String, 
-        required: true, 
-        unique: true 
-    },
-    username: { 
-        type: String, 
-        required: true, 
-        unique: true 
-    },
-    university: { 
-        type: String, 
-        required: true 
-    },
-    major: { 
-        type: String, 
-        required: false 
-    },
-    decks:[{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Deck'
-    }],
+  username: { 
+    type: String, 
+    required: true, 
+    unique: true 
+  },
+  university: { 
+    type: String, 
+    required: true 
+  },
+  major: { 
+    type: String, 
+    required: false 
+  },
+  decks:[{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Deck'
+  }],
 
 }, {timestamps: true});
 

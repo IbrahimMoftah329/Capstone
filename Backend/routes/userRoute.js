@@ -7,8 +7,11 @@ const {
     getUsers,
     getUser,
     deleteUser,
-    modifyUser,  // Changed from updateUser
-} = require('../Controllers/userControllers');
+    updateUser
+} = require('../Controllers/userControllers')
+
+
+
 
 // Route to GET all users
 router.get('/', getUsers)
@@ -23,6 +26,6 @@ router.post('/', createUser)
 router.delete('/:userId', deleteUser)
 
 // Route to UPDATE a user
-router.patch('/:userId', modifyUser);
+router.patch('/:userId', updateUser)
 
 module.exports = router
