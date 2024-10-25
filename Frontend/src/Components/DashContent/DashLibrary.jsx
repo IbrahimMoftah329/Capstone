@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ImSpades } from "react-icons/im";
 import './DashLibrary.css';
 
 const DashLibrary = () => {
@@ -152,7 +153,7 @@ const DashLibrary = () => {
     
     return (
         <div className="library-content">
-            <h1 className="library-content-title">Library</h1>
+            <h1 className="library-content-title">Library <ImSpades/></h1>
             <div className="library-content-top">
                 <h1 className="library-content-title">Decks</h1>
                 <p className="library-content-description">Manage your decks here.</p>
