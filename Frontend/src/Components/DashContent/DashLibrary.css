@@ -28,7 +28,6 @@
     position: relative;
     min-height: 350px;
     box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.3);
-    overflow-x: hidden; /* Enable vertical scrolling if needed */
 
 }
 
@@ -306,3 +305,4 @@
     width : 3%;
     padding-top: 6px;
 }
+

@@ -215,7 +215,6 @@
     overflow-y: auto; /* Enable vertical scrolling */
 }
 
-
 /* Make the input fields wider */
 .flashcard-modal-content textarea {
     width: 100%; /* Take full width */

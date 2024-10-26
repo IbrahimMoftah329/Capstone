@@ -155,11 +155,11 @@ const DashLibrary = () => {
     return (
         <div className="library-content">
             <h1 className="library-content-title">Library <ImSpades/></h1>
-            <div className="library-content-top "  >
+            <div className="library-content-top">
                 <h1 className="library-content-title">Decks</h1>
                 <p className="library-content-description">Manage your decks here.</p>
                 <button className="add-button" onClick={() => openDeckModal()}>+</button>
-                <div className="deck-list ">
+                <div className="deck-list">
                     {decks.map((deck) => (
                         <div key={deck.id} className="deck-item">
                             <div onClick={() => navigateToDeckDetail(deck)}>
