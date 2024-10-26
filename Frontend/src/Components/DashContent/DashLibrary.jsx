@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './DashLibrary.css';
 import { ImSpades } from "react-icons/im";
+import './DashLibrary.css';
 
 const DashLibrary = () => {
     const [isDeckModalOpen, setIsDeckModalOpen] = useState(false);
@@ -101,7 +101,6 @@ const DashLibrary = () => {
         setEditDeckId(null);
     };
 
-
     const openQuizModal = () => {
         setIsQuizModalOpen(true);
     };
@@ -147,11 +146,11 @@ const DashLibrary = () => {
         console.log(`Quiz Name: ${quizName}, Description: ${quizDescription}`);
         closeQuizModal();
     };
-
+    
     const navigateToDeckDetail = (deck) => {
         navigate(`/dashboard/library/${deck.id}`, { state: { deck } });
     };
-
+    
     return (
         <div className="library-content">
             <h1 className="library-content-title">Library <ImSpades/></h1>

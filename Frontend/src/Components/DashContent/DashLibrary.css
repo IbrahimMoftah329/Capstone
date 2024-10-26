@@ -8,8 +8,7 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    align-items: left;
-    justify-content: left;
+    align-items: stretch; /* Change to stretch */
     text-align: left;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-bottom-left-radius: 30px;
@@ -17,7 +16,7 @@
 
 /* Top part for Decks */
 .library-content-top {
-    flex: 1; /* Allow it to grow based on content */
+    flex: 0; /* Change from flex: 1 to flex: 0 */
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -26,15 +25,14 @@
     background-color: #ffffff;
     border-radius: 30px;
     position: relative;
-    min-height: 350px;
-    box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.3);
-
+    min-height: 480px;
+    margin-bottom: 10px; /* Add margin to prevent overlap */
+    flex-basis: auto;
 }
 
 /* Bottom part for Quizzes */
 .library-content-bottom {
-    min-height: 360px;
-    flex: 1; /* Do not grow unless necessary */
+    flex: 0; /* Change from flex: 1 to flex: 0 */
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -42,10 +40,9 @@
     text-align: left;
     background-color: #e0e0e0;
     border-radius: 30px;
-    margin-top: 10px;
     position: relative;
-    box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.3);
-
+    min-height: 350px;
+    flex-basis: auto;
 }
 
 .library-content-title {
@@ -300,9 +297,3 @@
 .popup-button.cancel:hover {
     background-color: darkgrey;
 }
-
-.library-content svg {
-    width : 3%;
-    padding-top: 6px;
-}
-

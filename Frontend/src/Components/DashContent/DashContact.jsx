@@ -23,7 +23,7 @@ const DashContact = () => {
             <h1 className="content-title">Contact Us <GiClubs /></h1>
             <p> Need help? Get in touch. </p>
             <br></br>
-                <div className="profile-box">
+            <div className="profile-box">
                 <div className='form'>
                     <form onSubmit={handleUpdateClick}>
                         <h3>Full name</h3>
