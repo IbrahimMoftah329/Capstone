@@ -10,7 +10,7 @@ const Hero = () => {
         <h1>Learn faster with Cardmates</h1>
         <p>We cannot change the cards we are dealt, just how we play the hand.</p>
         <SignedOut>
-          <Link to="signUp" smooth={true} offset={0} duration={500} className="signupbutton" >Sign Up</Link>
+          <Link to="signUp" smooth={true} offset={-260} duration={500} className="signupbutton" >Sign Up</Link>
         </SignedOut>
       </div>
     </div>

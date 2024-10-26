@@ -46,13 +46,11 @@ const Navbar = () => {
   return (
     <nav className={`container ${bar ? 'dark-nav' : ''}`}>
 
-      {/* <div className="navbar-sidebar">
-        <img src={logo} alt="Logo" className="logo-image" />
-      </div> */}
-
+      <div className='cm'>
       <Link to="/">
-        <h1 className="cm">Cardmates</h1>
+      <h1 className="heading"><img src="./public/navlogo.svg" alt="Cardmates Logo" width="45" height="45" />Cardmates</h1>
       </Link>
+      </div>
 
       <form onSubmit={handleSearchSubmit} className="search-bar">
         <div className="dropdown">

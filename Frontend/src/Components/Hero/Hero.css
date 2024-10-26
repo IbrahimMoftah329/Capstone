@@ -28,3 +28,14 @@
     margin: 10px auto 20px;
     line-height:1.5;
 }
+
+.signupbutton:hover{
+    transform: translateY(-5px);
+}
+
+.signupbutton{
+    transition-property: transform;
+    transition-duration: 0.3s;
+    transition-timing-function: ease;
+    transition-delay: 0s;
+}
