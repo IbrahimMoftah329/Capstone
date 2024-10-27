@@ -1,0 +1,65 @@
+.carousel {
+    padding: 0 80px;
+    position: relative;  
+    width: 100%; /* Adjust the width as needed */
+    margin: 30 auto;
+    overflow: hidden;
+}
+
+.next-button, .back-button {
+    position:absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    padding: 20px;
+    width: 10%;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.back-button{
+    right: auto;
+    left: 0;
+}
+
+.slider{
+    overflow: hidden;
+    display: flex;
+    overflow-x: scroll;
+    scroll-behavior: smooth;
+    width: 100%;
+
+
+}
+
+.slider ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: calc(100% * 3); /* Set width to accommodate all slides */
+    transition: transform 0.5s ease-in-out;
+}
+
+.slider ul li {
+    list-style:none;
+    width: 500px;
+    padding: 20px;
+}
+
+.slide, .slide-back {
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2); /* Add box shadow here */
+    padding: 40px;
+    border-radius: 10px;
+    color: #000000;
+    line-height: 1.4;
+    background: #f9f9f9;
+    flex: 0 0 33.33%; /* Set individual slide width */
+    margin: 20px;
+    text-align: center; /* Center text within the slide */
+    
+}
+
+.info h3 {
+    color: #124883;
+}

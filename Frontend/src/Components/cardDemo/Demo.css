@@ -1,0 +1,13 @@
+.front {
+    width: 300px;
+    height: 400px;
+    border: 1px solid black;
+    border-radius: 20px;
+    margin: 50px auto;
+    background: #FFFFFF;L
+}
+
+
+.back {
+    background: #FFFFFF;
+}
