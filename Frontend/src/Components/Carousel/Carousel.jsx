@@ -62,8 +62,10 @@ const slideForwards = () => {
         </div>
         {/* Short description or summary */}
         <p>{slideDescriptions[index]}</p>  {/* Always show the description */}
+        <div className='more'>
         <br></br>
-        <br></br>
+        <p>Click for more!</p>
+        </div>
       </div>
       {/* Back side content */}
       <div className='slide-back' onClick={() => handleFlip(index)}>
