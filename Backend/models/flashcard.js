@@ -19,5 +19,4 @@ const flashcardSchema = new Schema ({
 }, { timestamps: true });
 
 const Flashcard = mongoose.model('Flashcard', flashcardSchema);
-
 module.exports = Flashcard

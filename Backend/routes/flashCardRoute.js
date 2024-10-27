@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+
 const { 
     addFlashcardToDeck, 
     getFlashcard, 
@@ -7,7 +8,6 @@ const {
     deleteFlashcard,
     getAllFlashcardsInDeck
 } = require('../Controllers/flashcardControllers');
-
 
 
 // Route to add a new flashcard to a deck
@@ -20,7 +20,7 @@ router.get('/:flashcardId', getFlashcard);
 router.get('/deck/:deckId/flashcards', getAllFlashcardsInDeck);
 
 // Route to update a flashcard by ID
-router.put('/:flashcardId', updateFlashcard);
+router.patch('/:flashcardId', updateFlashcard);
 
 // Route to delete a flashcard by ID
 router.delete('/:flashcardId', deleteFlashcard);

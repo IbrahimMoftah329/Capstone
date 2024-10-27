@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ImSpades } from "react-icons/im";
 import './DashLibrary.css';
+import { useUser } from '@clerk/clerk-react';
 
 const DashLibrary = () => {
     const [isDeckModalOpen, setIsDeckModalOpen] = useState(false);
@@ -20,111 +21,124 @@ const DashLibrary = () => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [selectedSemester, setSelectedSemester] = useState('Select Semester');
     const navigate = useNavigate();
+    const { isSignedIn, user } = useUser();
+    if (!isSignedIn) {
+        return;
+    }
 
     // Mock backend functionality within this component
     const addDeck = (name, description, professor, semester) => {
-        return new Promise((resolve) => {
-            const newDeck = {
-                id: decks.length + 1,
-                name,
-                description,
-                professor, // Include professor
-                semester, // Include semester
-                numOfCards: 0,
-                createdAt: new Date().toLocaleDateString()
-            };
-            setDecks(prevDecks => [...prevDecks, newDeck]);
-            setTimeout(() => {
-                resolve(newDeck);
-            }, 500);
-        });
+        const newDeck = {
+            name,
+            description,
+            professor,
+            semester,
+        };
+        fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/decks/user/${user.id}/deck`, {
+            headers: {
+                "Content-Type": "application/json",
+            },
+            method: "POST",
+            body: JSON.stringify(newDeck),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                setDecks(prevDecks => [...prevDecks, data]);
+            })
     };
 
     const editDeck = (id, name, description, professor, semester) => {
-        return new Promise((resolve) => {
-            setDecks(prevDecks => 
-                prevDecks.map(deck => 
-                    deck.id === id ? { ...deck, name, description, professor, semester } : deck
-                )
-            );
-            setTimeout(() => {
-                resolve({ id, name, description, professor, semester });
-            }, 500);
-        });
+        const updatedDeck = {
+            name,
+            description,
+            professor,
+            semester,
+        };
+        return fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/decks/${id}`, {
+            headers: {
+                "Content-Type": "application/json",
+            },
+            method: "PATCH",
+            body: JSON.stringify(updatedDeck),
+        })
+            .then(response => response.json())
+            .then(data => {
+                setDecks(prevDecks =>
+                    prevDecks.map(deck => (deck._id === id ? { ...deck, ...data } : deck))
+                );
+                return data;
+            });
     };
 
     const deleteDeck = (id) => {
-        return new Promise((resolve) => {
-            setDecks(prevDecks => prevDecks.filter(deck => deck.id !== id));
-            setTimeout(() => {
-                resolve();
-            }, 500);
-        });
+        return fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/decks/${id}`, {
+            method: "DELETE",
+        })
+            .then(() => {
+                setDecks(prevDecks => prevDecks.filter(deck => deck._id !== id));
+            });
     };
-
+      
     const getDecks = () => {
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                resolve(decks);
-            }, 500);
-        });
+        fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/decks/user/${user.id}/decks`)
+            .then((response) => response.json())
+            .then((data) => {
+                setDecks(data);
+            })
     };
 
     useEffect(() => {
-        loadDecks();
+        getDecks();
     }, []);
 
-    const loadDecks = async () => {
-        const loadedDecks = await getDecks();
-        setDecks(loadedDecks);
-    };
-
-    const openDeckModal = (deck = null) => {
+    const openDeckModal = (deck = null) => (e) => {
+        e.preventDefault();
+        e.stopPropagation();
         if (deck) {
             setIsEditing(true);
-            setEditDeckId(deck.id);
+            setEditDeckId(deck._id);
             setDeckName(deck.name);
             setDeckDescription(deck.description);
-            setProfessor(deck.professor); // Set professor
-            setSemester(deck.semester); // Set semester
+            setProfessor(deck.professor);
+            setSemester(deck.semester);
+        } else {
+            setIsEditing(false);
+            setEditDeckId(null); 
+            setDeckName('');
+            setDeckDescription('');
+            setProfessor('');
+            setSemester('');
         }
         setIsDeckModalOpen(true);
     };
 
+    // Close modal and reset fields
     const closeDeckModal = () => {
         setIsDeckModalOpen(false);
-        setDeckName('');
-        setDeckDescription('');
-        setProfessor(''); // Reset professor
-        setSemester(''); // Reset semester
         setIsEditing(false);
         setEditDeckId(null);
-    };
-
-    const openQuizModal = () => {
-        setIsQuizModalOpen(true);
-    };
-
-    const closeQuizModal = () => {
-        setIsQuizModalOpen(false);
-        setQuizName('');
-        setQuizDescription('');
+        setDeckName('');
+        setDeckDescription('');
+        setProfessor('');
+        setSemester('');
     };
 
     const handleDeckSubmit = async () => {
         if (deckName && deckDescription && professor && semester) {
-            if (isEditing) {
-                await editDeck(editDeckId, deckName, deckDescription, professor, semester);
-            } else {
-                await addDeck(deckName, deckDescription, professor, semester);
-            }
-            closeDeckModal();
+        if (isEditing && editDeckId) {
+            await editDeck(editDeckId, deckName, deckDescription, professor, semester);
         } else {
-            alert("Please fill in all the fields before submitting.");
+            await addDeck(deckName, deckDescription, professor, semester);
+        }
+        closeDeckModal();
+        } else {
+        alert("Please fill in all the fields before submitting.");
         }
     };
 
-    const handleDeleteClick = (id) => {
+    const handleDeleteClick = (id) => (e) => {
+        e.preventDefault();
+        e.stopPropagation();
         setDeckToDelete(id);
         setShowDeletePopup(true);
     };
@@ -142,33 +156,43 @@ const DashLibrary = () => {
         setDeckToDelete(null);
     };
 
+    const openQuizModal = () => {
+        setIsQuizModalOpen(true);
+    };
+
+    const closeQuizModal = () => {
+        setIsQuizModalOpen(false);
+        setQuizName('');
+        setQuizDescription('');
+    };
+
     const handleQuizSubmit = () => {
         console.log(`Quiz Name: ${quizName}, Description: ${quizDescription}`);
         closeQuizModal();
     };
-    
+
     const navigateToDeckDetail = (deck) => {
-        navigate(`/dashboard/library/${deck.id}`, { state: { deck } });
+        navigate(`/dashboard/library/${deck._id}`, { state: { deck } });
     };
-    
+
     return (
         <div className="library-content">
-            <h1 className="library-content-title">Library <ImSpades/></h1>
+            <h1 className="library-content-title">Library <ImSpades /></h1>
             <div className="library-content-top">
                 <h1 className="library-content-title">Decks</h1>
                 <p className="library-content-description">Manage your decks here.</p>
-                <button className="add-button" onClick={() => openDeckModal()}>+</button>
+                <button className="add-button" onClick={openDeckModal()}>+</button>
                 <div className="deck-list">
-                    {decks.map((deck) => (
-                        <div key={deck.id} className="deck-item">
-                            <div onClick={() => navigateToDeckDetail(deck)}>
+                    {decks && decks.map((deck) => (
+                        <div key={deck._id} className="deck-item" onClick={() => navigateToDeckDetail(deck)}>
+                            <div>
                                 <h3>{deck.name}</h3>
                                 <p>{deck.numOfCards} cards</p>
                                 <p>Created on: {deck.createdAt}</p>
                             </div>
                             <div className="button-group">
-                                <button className="Library-button delete" type="button" onClick={() => handleDeleteClick(deck.id)}>Delete</button>
-                                <button className="Library-button edit" type="button" onClick={() => openDeckModal(deck)}>Edit</button>
+                                <button className="Library-button delete" type="button" onClick={handleDeleteClick(deck._id)}>Delete</button>
+                                <button className="Library-button edit" type="button" onClick={openDeckModal(deck)}>Edit</button>
                             </div>
                         </div>
                     ))}
@@ -187,11 +211,11 @@ const DashLibrary = () => {
                         <h2>{isEditing ? "Edit Deck" : "Add New Deck"}</h2>
                         <form onSubmit={(e) => { e.preventDefault(); handleDeckSubmit(); }}>
                             <h3>Deck Name</h3>
-                            <textarea type="text" className='input' value={deckName} onChange={(e) => setDeckName(e.target.value)} required placeholder='Enter Deck Name'/>
+                            <textarea type="text" className='input' value={deckName} onChange={(e) => setDeckName(e.target.value)} required placeholder='Enter Deck Name' />
                             <h3>Description</h3>
-                            <textarea id="message" rows="4" className='input' value={deckDescription} onChange={(e) => setDeckDescription(e.target.value)} required placeholder="Enter Deck Description"/>
+                            <textarea id="message" rows="4" className='input' value={deckDescription} onChange={(e) => setDeckDescription(e.target.value)} required placeholder="Enter Deck Description" />
                             <h3>Professor</h3>
-                            <input type="text" className='input' value={professor} onChange={(e) => setProfessor(e.target.value)} required placeholder="Enter Professor Name"/>
+                            <input type="text" className='input' value={professor} onChange={(e) => setProfessor(e.target.value)} required placeholder="Enter Professor Name" />
                             <h3>Semester</h3>
                             <select className='input' value={semester} onChange={(e) => setSemester(e.target.value)} required>
                                 <option value="" disabled>Select Semester</option>
@@ -224,9 +248,9 @@ const DashLibrary = () => {
                         <h2>Add New Quiz</h2>
                         <form onSubmit={(e) => { e.preventDefault(); handleQuizSubmit(); }}>
                             <h3>Quiz Name</h3>
-                            <textarea type="text" className='input' value={quizName} onChange={(e) => setQuizName(e.target.value)} required placeholder='Enter Quiz Name'  />
+                            <textarea type="text" className='input' value={quizName} onChange={(e) => setQuizName(e.target.value)} required placeholder='Enter Quiz Name' />
                             <h3>Description</h3>
-                            <textarea id="message" rows="4" className='input' value={quizDescription} onChange={(e) => setQuizDescription(e.target.value)} required placeholder="Enter Quiz Description"/>
+                            <textarea id="message" rows="4" className='input' value={quizDescription} onChange={(e) => setQuizDescription(e.target.value)} required placeholder="Enter Quiz Description" />
 
                             <div className="modal-buttons">
                                 <button type="button" onClick={closeQuizModal}>Cancel</button>

@@ -10,8 +10,6 @@ const {
 } = require('../Controllers/deckControllers')
 
 
-
-
 // Route to GET all user decks
 router.get('/user/:userId/decks', getDecks);
 

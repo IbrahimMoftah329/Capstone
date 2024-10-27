@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
 import { IoIosHeart } from "react-icons/io";
 import './DashContent.css'; // Make sure the CSS file path is correct
+import { useUser } from '@clerk/clerk-react';
 
 const DashProfile = () => {
+    const { isSignedIn, user } = useUser();
+    if (!isSignedIn) {
+        return;
+    }
+    
     const [showPopup, setShowPopup] = useState(false);
 
     const handleUpdateClick = (event) => {

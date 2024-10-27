@@ -104,6 +104,7 @@
     justify-content: space-between; /* Space out content horizontally */
     gap: 10px;
     position: relative;
+    cursor: pointer;
 }
 
 .Library-button {

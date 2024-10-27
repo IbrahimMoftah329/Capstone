@@ -5,14 +5,20 @@ const Schema = mongoose.Schema
 
 
 const userSchema = new Schema({
+  clerkId: {
+    type: String,
+    required: true,
+    unique: true,
+    index: true,
+  },
   username: { 
     type: String, 
-    required: true, 
+    // required: true, 
     unique: true 
   },
   university: { 
     type: String, 
-    required: true 
+    // required: true 
   },
   major: { 
     type: String, 
@@ -24,6 +30,19 @@ const userSchema = new Schema({
   }],
 
 }, {timestamps: true});
+
+userSchema.statics.findOrCreateUserByClerkId = async function (clerkId) {
+  // Attempt to find the document
+  let user = await this.findOne({ clerkId });
+  
+  // If document is found, return it
+  if (user) return user;
+
+  // If document is not found, create it
+  user = new this({ clerkId });
+  await user.save();
+  return user;
+};
 
 const User = mongoose.model('User', userSchema);
 
