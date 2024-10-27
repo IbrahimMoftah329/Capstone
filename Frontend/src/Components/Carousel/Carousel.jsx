@@ -14,13 +14,15 @@ const Carousel = () => {
     "Cardmates offers personalized learning pathways to help students reach their full potential.",
     "Cardmates provides engaging and interactive learning experiences tailored to individual needs.", // Custom front description for slide 2
     "Cardmates offers a user-friendly platform for organizing and managing personalized learning experiences.", // Custom front description for slide 3
+    "Cardmates integrates AI to deliver personalized learning experiences, adapting to individual needs and optimizing learning outcomes. ", //Custom design for 4th card 
     "Cardmates leverages the power of AI to create highly personalized quizzes that challenge learners, ensuring they are neither bored nor overwhelmed. By tailoring quizzes to each individual's needs, Cardmates optimizes the learning experience and maximizes knowledge retention, ultimately empowering learners to achieve their full potential.", // Back description for slide 1
     "Cardmates empowers students to connect with like-minded peers by providing a platform to easily find and connect with students taking similar classes or studying under the same professors. Cardmates facilitates meaningful connections, fostering collaboration, study groups, and friendships among students who share common academic interests.", // Custom back description for slide 2
-    "Our platform makes it easy for learners to navigate and find specific topics. Cardmates offers a user-friendly interface that is easy to navigate, even for learners with limited technical skills. Our tools can streamline the process of creating, administering, and analyzing quizzes, saving users valuable time and effort." // Custom back description for slide 3
+    "Our platform makes it easy for learners to navigate and find specific topics. Cardmates offers a user-friendly interface that is easy to navigate, even for learners with limited technical skills. Our tools can streamline the process of creating, administering, and analyzing quizzes, saving users valuable time and effort.", // Custom back description for slide 3
+    "Cardmates leverages AI to automate quiz creation, generating relevant questions based on the learning material. This saves time for educators and ensures that quizzes are aligned with the curriculum."//Custom back description for slide 4
   ];
 
 const slideForwards = () => {
-    if (tx > -100) {
+    if (tx > -50) {
       tx -= 25; // Adjust the movement amount if needed
     }
     slider.current.style.transform = `translateX(${tx}%)`;
@@ -49,7 +51,7 @@ const slideForwards = () => {
       <div className='slider'>
         <ul ref={slider}>
           {/* Slide elements */}
-          {['Personalized Learning', 'Engaging Learning Experience', 'Organization and Ease of Use'].map((slideTitle, index) => (
+          {['Personalized Learning', 'Engaging Learning Experience', 'Organization and Ease of Use', 'AI Integrated Learning'].map((slideTitle, index) => (
   <li key={index}>
     <ReactCardFlip isFlipped={isFlipped[index]} flipDirection="horizontal">
       {/* Front side content */}
@@ -70,7 +72,7 @@ const slideForwards = () => {
       {/* Back side content */}
       <div className='slide-back' onClick={() => handleFlip(index)}>
         {/* Detailed information, images, or additional content */}
-        <p>{slideDescriptions[index + 3]}</p>
+        <p>{slideDescriptions[index + 4]}</p>
       </div>
     </ReactCardFlip>
   </li>

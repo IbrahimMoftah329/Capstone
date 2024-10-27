@@ -21,14 +21,15 @@
     right: auto;
     left: 0;
 }
-
+.next-button{
+    right: 9;;
+}
 .slider{
     overflow: hidden;
     display: flex;
     overflow-x: scroll;
     scroll-behavior: smooth;
     width: 100%;
-
 
 }
 
@@ -42,9 +43,12 @@
 }
 
 .slider ul li {
-    list-style:none;
-    width: 500px;
-    padding: 20px;
+    flex: 1;
+    min-width: 300px;
+    max-width: 400px;
+    margin: 658x; /* Reduce margin between slides */
+    border-radius: 10px;
+    text-align: center;
 }
 
 .slide, .slide-back {
@@ -57,7 +61,8 @@
     flex: 0 0 33.33%; /* Set individual slide width */
     margin: 20px;
     text-align: center; /* Center text within the slide */
-    
+    width: 300px;
+    height: 400px;
 }
 
 .info h3 {

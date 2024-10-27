@@ -10,7 +10,6 @@ import About from './pages/AboutPage/About';
 import Dashboard from './pages/DashboardPage/Dashboard';
 import Carousel from './Components/Carousel/Carousel'
 import TitleC from './Components/Title/TitleC'
-import Demo from './Components/cardDemo/Demo'
 
 const App = () => {
   return (
