@@ -27,7 +27,7 @@
 .slider{
     overflow: hidden;
     display: flex;
-    overflow-x: scroll;
+    overflow-x: hidden;
     scroll-behavior: smooth;
     width: 100%;
 
