@@ -35,10 +35,10 @@ userSchema.statics.findOrCreateUserByClerkId = async function (clerkId) {
   // Attempt to find the document
   let user = await this.findOne({ clerkId });
   
-  // If document is found, return it
+  // If user is found, return it
   if (user) return user;
 
-  // If document is not found, create it
+  // If user is not found, create it
   user = new this({ clerkId });
   await user.save();
   return user;
