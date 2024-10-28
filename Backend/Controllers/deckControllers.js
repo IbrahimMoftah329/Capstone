@@ -64,11 +64,9 @@ const deleteDeck = async (req, res) => {
 
     // Step 2: Delete all flashcards associated with this deck
     const flashcardDeletionResult = await Flashcard.deleteMany({ deckId });
-    console.log("Flashcards deleted:", flashcardDeletionResult.deletedCount);
 
     // Step 3: Delete the deck itself
     const deletedDeck = await Deck.findByIdAndDelete(deckId);
-    console.log("Deleted Deck:", deletedDeck);
 
     // Step 4: Remove the deck reference from the user's deck list
     await User.findOneAndUpdate(
