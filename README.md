@@ -52,11 +52,13 @@ Follow these steps to set up and run the project:
 ### 5. Start the Server To start the server, run: 
 ```bash npm run dev ``` 
 
-### 6. Access the Application Open your web browser (Safari or Chrome) and navigate to: 
-``` http://localhost:4000/ ```
+### 6. Navigate to the Frontend Directory Change into the cloned repository's Frontend directory: 
+```bash cd Frontend ``` 
 
+### 7. Start the Webpage To start the Webpage, run: 
+```bash npm run dev ``` 
 
-### 7. Updating your main branch without overwriting your local
+### Updating your main branch without overwriting your local
 
 Your local main branch is behind the remote main branch, what do you do?
 
@@ -76,7 +78,7 @@ At this point, your main branch that was previously behind the remote changes (o
 you should continue to work on the testing branch and push any changes when done
 git push (push your changes to github as normal, pushes commited changes onto the remote version of whichever branch you are on)
 
-### 8. Pulling a remote branch that doesn't exist on your local machine yet.
+### Pulling a remote branch that doesn't exist on your local machine yet.
 
 There is a new branch created on Github that you would like to access locally and be able to change the code to, but it does
 not exist on your local machine yet, what do you do?
