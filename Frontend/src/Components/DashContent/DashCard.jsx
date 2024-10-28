@@ -164,7 +164,7 @@ const DashCard = () => {
                                 <p>{card.answer}</p>
                             </div>
                             <div className="button-group">
-                                <button className="flashcard-button delete" type="button" onClick={() => handleDeleteClick(card._id)}>Delete</button>
+                                <button className="flashcard-button delete" type="button" onClick={handleDeleteClick(card._id)}>Delete</button>
                                 <button className="flashcard-button edit" type="button" onClick={openFlashcardModal(card)}>Edit</button>
                             </div>
                         </div>
