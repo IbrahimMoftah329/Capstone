@@ -56,20 +56,20 @@ const deleteUser = async(req, res) => {
 }
 
 // update a user
-const updateUser = async(req, res) => {
-    const { userId } = req.params;
+const updateUser = async (req, res) => {
+  const { userId } = req.params; // userId here is actually clerkId
 
   try {
-    const updatedUser = await User.findByIdAndUpdate(userId, req.body, { new: true });
-    if (!updatedUser) {
-      return res.status(404).json({ error: 'User not found' });
-    }
-    res.status(200).json(updatedUser);
+      // Find by clerkId (a string) instead of _id (ObjectId)
+      const updatedUser = await User.findOneAndUpdate({ clerkId: userId }, req.body, { new: true });
+      if (!updatedUser) {
+          return res.status(404).json({ error: 'User not found' });
+      }
+      res.status(200).json(updatedUser);
   } catch (err) {
-    res.status(500).send(err.message);
+      res.status(500).send(err.message);
   }
-}
-
+};
 
 module.exports = {
     createUser,

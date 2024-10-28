@@ -9,33 +9,55 @@ const DashProfile = () => {
         return;
     }
     
+    const [username, setUsername] = useState(user?.username || '');
+    const [university, setUniversity] = useState(user?.university || '');
+    const [major, setMajor] = useState(user?.major || '');
     const [showPopup, setShowPopup] = useState(false);
 
-    const handleUpdateClick = (event) => {
-        // Prevent the form from submitting if there's an actual submit behavior in the future
+    // Function to update user profile
+    const updateUserProfile = async (event) => {
         event.preventDefault();
 
-        // Show the popup when the button is clicked
-        setShowPopup(true);
+        const updatedData = {
+            username,
+            university,
+            major,
+        };
+        try {
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/users/${user.id}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(updatedData),
+            });
 
-        // Hide the popup after 3 seconds (optional)
-        setTimeout(() => {
-            setShowPopup(false);
-        }, 3000);
+            if (response.ok) {
+                // Show popup message on success
+                setShowPopup(true);
+                setTimeout(() => setShowPopup(false), 3000);
+            } else {
+                const errorText = await response.text();
+                console.error("Failed to update user profile:", errorText);
+            }
+        } catch (error) {
+            console.error("Error updating user profile:", error);
+        }
     };
+
 
     return (
         <div className="content">
             <h1 className="content-title">Profile < IoIosHeart /> </h1>
-            <form className="profile-box" onSubmit={handleUpdateClick}>
+            <form className="profile-box" onSubmit={updateUserProfile}>
                 <h3>UserName</h3>
-                <input type='text' className='input' required placeholder='Enter UserName'  />
+                <input type='text' className='input' value={username} onChange={(e) => setUsername(e.target.value)} required placeholder='Enter UserName'  />
                 <br />
-                <h3>Campus</h3>
-                <input type='text' className='input' required placeholder='Enter Campus'  />
+                <h3>university</h3>
+                <input type='text' className='input' value={university} onChange={(e) => setUniversity(e.target.value)} required placeholder='Enter university'  />
                 <br />
                 <h3>Major</h3>
-                <input type='text' className='input' required placeholder='Enter Major'  />
+                <input type='text' className='input' value={major} onChange={(e) => setMajor(e.target.value)} required placeholder='Enter Major'  />
                 <br />
                 <button type="submit" className="btn">Update</button>
             </form>

@@ -18,7 +18,7 @@ const userSchema = new Schema({
   },
   university: { 
     type: String, 
-    // required: true 
+    required: false
   },
   major: { 
     type: String, 
