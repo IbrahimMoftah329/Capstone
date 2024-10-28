@@ -43,8 +43,12 @@ Follow these steps to set up and run the project:
 ```bash npm list -g nodemon ``` 
 - If Nodemon is installed, you'll see its version. If not, you'll see an empty result or an error.
 
-### 3. Install Nodemon If Nodemon is not installed, you can install it globally by running: 
+### 3. Install dependencies If dependencies are not installed, you can install it globally by running: 
 ```bash npm install -g nodemon ``` 
+
+```bash npm install --save-dev @clerk/clerk-react ```
+
+```bash npm install react-router-dom ```
 
 ### 4. Navigate to the Backend Directory Change into the cloned repository's Backend directory: 
 ```bash cd Backend ``` 
