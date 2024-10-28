@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { IoIosHeart } from "react-icons/io";
 import './DashContent.css'; // Make sure the CSS file path is correct
 import { useUser } from '@clerk/clerk-react';
@@ -45,6 +45,21 @@ const DashProfile = () => {
         }
     };
 
+    const getUserInfo = () => {
+        fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/users/${user.id}`)
+            .then((response) => response.json())
+            .then((data) => {
+                setUsername(data.username || '');
+                setUniversity(data.university || '');
+                setMajor(data.major || '');
+            })
+            .catch(error => console.error("Error fetching user info:", error));
+    };
+
+
+    useEffect(() => {
+        getUserInfo();
+    }, [user]);
 
     return (
         <div className="content">

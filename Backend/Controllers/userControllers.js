@@ -12,10 +12,10 @@ const getUsers = async(req, res) => {
 
 // get a single user
 const getUser = async(req, res) => {
-    const { userId } = req.params;
+    const { userId: clerkId } = req.params;
 
     try {
-      const user = await User.findById(userId);
+      const user = await User.findOne({ clerkId });
       if (!user) {
         return res.status(404).json({ error: 'User not found' });
       }
@@ -57,19 +57,22 @@ const deleteUser = async(req, res) => {
 
 // update a user
 const updateUser = async (req, res) => {
-  const { userId } = req.params; // userId here is actually clerkId
+  const { userId: clerkId } = req.params;
 
   try {
-      // Find by clerkId (a string) instead of _id (ObjectId)
-      const updatedUser = await User.findOneAndUpdate({ clerkId: userId }, req.body, { new: true });
-      if (!updatedUser) {
-          return res.status(404).json({ error: 'User not found' });
-      }
-      res.status(200).json(updatedUser);
+      // Find or create the user by clerkId
+      let user = await User.findOrCreateUserByClerkId(clerkId, req.body);
+
+      // Update the user with new data
+      Object.assign(user, req.body);
+      await user.save();
+
+      res.status(200).json(user);
   } catch (err) {
       res.status(500).send(err.message);
   }
 };
+
 
 module.exports = {
     createUser,
