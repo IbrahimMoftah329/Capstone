@@ -143,6 +143,7 @@ const DashCard = () => {
                         </div>
                     ))}
                 </div>
+                
 
                 {/* Modal for Adding or Editing Flashcard */}
                 {isCardModalOpen && (
@@ -214,9 +215,6 @@ const DashCard = () => {
                             <div className="card-buttons">
                             <button className="prev-button" onClick={previousCard} disabled={currentCardIndex === 0}>
                                 Previous
-                            </button>
-                            <button className="flip-button" onClick={flipCard}>
-                                Flip
                             </button>
                             <button className="next-buttons" onClick={nextCard} disabled={currentCardIndex === flashcards.length - 1}>
                                 Next
