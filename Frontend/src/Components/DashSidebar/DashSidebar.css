@@ -1,0 +1,54 @@
+/* DashSidebar.css */
+
+.sidebar {
+    width: 200px;
+    height: 100vh;
+    background-color: #fff;
+    color: #000000;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.sidebar-logo-container {
+    display: flex; /* Add flexbox to the container */
+    justify-content: center; /* Center the logo horizontally */
+    align-items: center; /* Center the logo vertically */
+    margin-top: 10px;
+    margin-bottom: 10px; /* Space between the logo and the menu items */
+}
+
+.sidebar-logo {
+    width: 60%; /* Adjust the width of the logo */
+    height: auto;
+    margin: 10px 0; /* Add some spacing around the logo */
+}
+
+.sidebar-item {
+    list-style: none;
+    margin: 10px 0;
+}
+
+.sidebar-item a {
+    text-decoration: none; /* Remove the default link styling */
+    display: flex; /* Align icon and text */
+    align-items: center; /* Vertically center the content */
+    justify-content: flex-start; /* Align content to the left */
+    font-size: 20px; /* Keep the increased font size for text */
+    transition: background-color 0.3s ease; /* Smooth hover transition */
+    border-radius: 30px;
+    padding: 15px 20px; /* Increase padding for larger tabs */
+}
+
+.sidebar-item:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.sidebar-label {
+    font-size: 20px; /* Ensure the text size matches the increased font size */
+}
+
+.sidebar-icon {
+    font-size: 26px; /* Increase the size of the icons */
+    margin-right: 10px; /* Reduce the space between the icon and the text */
+}

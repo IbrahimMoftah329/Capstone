@@ -1,0 +1,253 @@
+/* DashCard.css */
+
+/* Main container */
+.flashcard-content {
+    flex: 1;
+    padding: 20px;
+    background-color: #f0f0f0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: left;
+    text-align: left;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-bottom-left-radius: 30px;
+}
+
+.flashcard-box {
+    padding: 20px;
+    border-radius: 30px;
+    background-color: #ffffff;
+    position: relative; /* Ensure the add-button positions correctly */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional: add a subtle shadow */
+}
+
+.flashcard-list {
+    display: flex;
+    flex-wrap: wrap; /* Allows deck items to wrap */
+    gap: 10px; /* Space between each deck item */
+    margin-top: 20px;
+}
+
+.deck-detail {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.flashcard-item {
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #f9f9f9;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    width: 100%; /* Ensure it takes full width of the container */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    transition: box-shadow 0.3s ease;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row; /* Align content horizontally */
+    flex-wrap: wrap; /* Allow the content to wrap to the next line */
+    justify-content: space-between; /* Space out content horizontally */
+    gap: 10px;
+    position: relative;
+}
+
+/* Title Styling */
+.flashcard-item h3 {
+    margin-top: 0;
+    font-size: 18px;
+    color: #333;
+    overflow: hidden; /* Hide overflow */
+    text-overflow: ellipsis; /* Show ellipsis if text is too long */
+    white-space: nowrap; /* Prevent line breaks */
+}
+
+/* Styling for the Prompt and Response areas */
+.flashcard-prompt, .flashcard-response {
+    flex: 1; /* Ensure these take up available space */
+    margin-right: 10px; /* Space between content and edit button */
+}
+
+/* Separate the sections clearly */
+.flashcard-prompt {
+    border-right: 2px solid #ddd; /* Separator between Prompt and Response */
+}
+
+/* Ensure headings inside flashcard items are styled */
+.flashcard-item strong {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #124883;
+}
+
+/* Ensure the flashcard item can adjust height based on content */
+.flashcard-item p {
+    margin: 0;
+    line-height: 1.5; /* Adjust line height for readability */
+}
+
+.deck-detail h2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+.deck-detail h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.flashcard-input {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.flashcard-input input {
+    flex: 1;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.flashcard-input button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.flashcard-input button:disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
+}
+
+.flashcard-input button:hover:not(:disabled) {
+    background-color: #0056b3;
+}
+
+/* Add button styling */
+.add-button {
+    position: absolute;
+    top: 20px; /* Adjust vertical positioning */
+    right: 20px; /* Align to the right side */
+    width: 30px;
+    height: 30px;
+    background-color: #124883;
+    color: white; /* White text */
+    border: none;
+    border-radius: 50%; /* Makes the button round */
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.add-button:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+.flashcard-button {
+    width: 60px;
+    height: 30px;
+    padding: 10px 20px;
+    background-color: #124883; /* Default blue background */
+    color: white; /* White text */
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+}
+
+/* Styling specific for the delete button */
+.flashcard-button.delete {
+    background-color: grey; /* Default grey background */
+    margin-bottom: 10px; /* Add space between buttons */
+}
+
+.flashcard-button.delete:hover {
+    background-color: red; /* Red background on hover */
+}
+
+.flashcard-button.edit {
+    background-color: #124883; /* Keep the edit button as blue */
+}
+
+.flashcard-button:hover {
+    background-color: #45a049; /* Darker green on hover for non-delete buttons */
+}
+
+/* Modal Styles */
+.flashcard-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Dark semi-transparent background */
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    z-index: 1000; /* Ensure it appears above other elements */
+}
+
+.flashcard-modal-content {
+    width: 85%; /* Increase the width slightly */
+    max-width: 1000px; /* Adjust maximum width */
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    max-height: 95%; /* Increase max-height to make it taller */
+    overflow-y: auto; /* Enable vertical scrolling */
+}
+
+/* Make the input fields wider */
+.flashcard-modal-content textarea {
+    width: 100%; /* Take full width */
+    padding: 10px; /* Add padding for a better user experience */
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px; /* Slightly larger font for better readability */
+    resize: vertical; /* Allow resizing only vertically */
+}
+
+.flashcard-modal-content button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.flashcard-modal-content button[type="button"] {
+    background-color: #ccc;
+    color: #333;
+}
+
+.flashcard-modal-content button[type="button"]:hover {
+    background-color: #bbb;
+}
+
+.flashcard-modal-content button[type="submit"] {
+    background-color: #124883;
+    color: #fff;
+}
+
+.flashcard-modal-content button[type="submit"]:hover {
+    background-color: #45a049;
+}

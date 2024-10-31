@@ -37,24 +37,24 @@ Testing & Deployment: All team members - QA, deployment on AWS/Heroku.
 
 Follow these steps to set up and run the project: 
 ### 1. Clone the Repository Clone the repo using either the HTML or SSH link: 
-```bash git clone <repository-url> ``` 
+```git clone <repository-url> ``` 
 
 ### 2. Check for Nodemon Installation Verify if **Nodemon** is installed globally: 
-```bash npm list -g nodemon ``` 
+```npm list -g nodemon ``` 
 - If Nodemon is installed, you'll see its version. If not, you'll see an empty result or an error.
 
 ### 3. Install dependencies If dependencies are not installed, you can install it globally by running: 
-```bash npm install -g nodemon ``` 
+```bash npm install -g nodemon ```
 
 ```bash npm install --save-dev @clerk/clerk-react ```
 
 ```bash npm install react-router-dom ```
 
 ### 4. Navigate to the Backend Directory Change into the cloned repository's Backend directory: 
-```bash cd Backend ``` 
+```cd Backend ``` 
 
 ### 5. Start the Server To start the server, run: 
-```bash npm run dev ``` 
+```npm run dev ``` 
 
 ### 6. Navigate to the Frontend Directory Change into the cloned repository's Frontend directory: 
 ```bash cd Frontend ``` 

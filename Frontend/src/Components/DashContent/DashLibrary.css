@@ -1,0 +1,300 @@
+/* DashLibrary.css */
+
+/* Main container */
+.library-content {
+    flex: 1;
+    padding: 20px;
+    background-color: #f0f0f0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch; /* Change to stretch */
+    text-align: left;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-bottom-left-radius: 30px;
+}
+
+/* Top part for Decks */
+.library-content-top {
+    flex: 0; /* Change from flex: 1 to flex: 0 */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    text-align: left;
+    background-color: #ffffff;
+    border-radius: 30px;
+    position: relative;
+    min-height: 480px;
+    margin-bottom: 10px; /* Add margin to prevent overlap */
+    flex-basis: auto;
+}
+
+/* Bottom part for Quizzes */
+.library-content-bottom {
+    flex: 0; /* Change from flex: 1 to flex: 0 */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    text-align: left;
+    background-color: #e0e0e0;
+    border-radius: 30px;
+    position: relative;
+    min-height: 350px;
+    flex-basis: auto;
+}
+
+.library-content-title {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.library-content-description {
+    font-size: 1.2rem;
+    color: #666;
+}
+
+/* Add button styling */
+.add-button {
+    position: absolute;
+    top: 20px; /* Adjust vertical positioning */
+    right: 20px; /* Align to the right side */
+    width: 30px;
+    height: 30px;
+    background-color: #124883;
+    color: white; /* White text */
+    border: none;
+    border-radius: 50%; /* Makes the button round */
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.add-button:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+/* Styling for the deck list */
+.deck-list {
+    display: flex;
+    flex-wrap: wrap; /* Allows deck items to wrap */
+    gap: 20px; /* Space between each deck item */
+    margin-top: 20px;
+}
+
+/* Styling each deck item as a box */
+.deck-item {
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #f9f9f9;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    width: 100%; /* Ensure it takes full width of the container */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    transition: box-shadow 0.3s ease;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row; /* Align content horizontally */
+    flex-wrap: wrap; /* Allow the content to wrap to the next line */
+    justify-content: space-between; /* Space out content horizontally */
+    gap: 10px;
+    position: relative;
+    cursor: pointer;
+}
+
+.Library-button {
+    width: 60px;
+    height: 30px;
+    padding: 10px 20px;
+    background-color: #124883; /* Default blue background */
+    color: white; /* White text */
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+}
+
+/* Styling specific for the delete button */
+.Library-button.delete {
+    background-color: grey; /* Default grey background */
+    margin-bottom: 10px; /* Add space between buttons */
+}
+
+.Library-button.delete:hover {
+    background-color: red; /* Red background on hover */
+}
+
+.Library-button.edit {
+    background-color: #124883; /* Keep the edit button as blue */
+}
+
+.Library-button:hover {
+    background-color: #45a049; /* Darker green on hover for non-delete buttons */
+}
+
+/* Title Styling */
+.deck-item h3 {
+    margin-top: 0;
+    font-size: 18px;
+    color: #333;
+    overflow: hidden; /* Hide overflow */
+    text-overflow: ellipsis; /* Show ellipsis if text is too long */
+    white-space: nowrap; /* Prevent line breaks */
+}
+
+/* Description Styling */
+.deck-item p {
+    font-size: 14px;
+    color: #666;
+    overflow: hidden; /* Hide overflow */
+    text-overflow: ellipsis; /* Show ellipsis if text is too long */
+    display: -webkit-box; /* Necessary for multiline truncation */
+    -webkit-line-clamp: 3; /* Limit to 3 lines */
+    -webkit-box-orient: vertical; /* Required for -webkit-line-clamp to work */
+    line-height: 1.5; /* Adjust to control spacing between lines */
+    max-height: 4.5em; /* Ensures it fits exactly 3 lines */
+    word-wrap: break-word; /* Ensure words do not overflow */
+}
+
+/* Add hover effect to deck items */
+.deck-item:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Modal Styles */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Dark semi-transparent background */
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    z-index: 1000; /* Ensure it appears above other elements */
+}
+
+.modal-content {
+    width: 85%; /* Increase the width slightly */
+    max-width: 1000px; /* Adjust maximum width */
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    max-height: 95%; /* Increase max-height to make it taller */
+    overflow-y: auto; /* Enable vertical scrolling */
+}
+
+/* Make the input fields wider */
+.modal-content textarea {
+    width: 100%; /* Take full width */
+    padding: 10px; /* Add padding for a better user experience */
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px; /* Slightly larger font for better readability */
+    resize: vertical; /* Allow resizing only vertically */
+}
+
+.modal-content h2 {
+    margin-top: 0;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.modal-content button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.modal-content button[type="button"] {
+    background-color: #ccc;
+    color: #333;
+}
+
+.modal-content button[type="button"]:hover {
+    background-color: #bbb;
+}
+
+.modal-content button[type="submit"] {
+    background-color: #124883;
+    color: #fff;
+}
+
+.modal-content button[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.popup-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+}
+
+.popup-buttons {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.popup-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.popup-button.confirm {
+    background-color: red;
+    color: white;
+}
+
+.popup-button.confirm:hover {
+    background-color: darkred;
+}
+
+.popup-button.cancel {
+    background-color: grey;
+    color: white;
+}
+
+.popup-button.cancel:hover {
+    background-color: darkgrey;
+}
