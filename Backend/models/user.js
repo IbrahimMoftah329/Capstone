@@ -2,8 +2,6 @@ const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema
 
-
-
 const userSchema = new Schema({
   clerkId: {
     type: String,
@@ -28,6 +26,10 @@ const userSchema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Deck'
   }],
+  quizzes:[{ 
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'Quiz' 
+  }],
 
 }, {timestamps: true});
 
@@ -45,5 +47,4 @@ userSchema.statics.findOrCreateUserByClerkId = async function (clerkId) {
 };
 
 const User = mongoose.model('User', userSchema);
-
 module.exports = User;

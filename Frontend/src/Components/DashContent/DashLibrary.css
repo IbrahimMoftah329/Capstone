@@ -141,7 +141,6 @@
     background-color: #45a049; /* Darker green on hover for non-delete buttons */
 }
 
-/* Title Styling */
 .deck-item h3 {
     margin-top: 0;
     font-size: 18px;
@@ -149,6 +148,7 @@
     overflow: hidden; /* Hide overflow */
     text-overflow: ellipsis; /* Show ellipsis if text is too long */
     white-space: nowrap; /* Prevent line breaks */
+    max-width: 70vw; /* Set maximum width relative to the viewport */
 }
 
 /* Description Styling */
@@ -297,4 +297,98 @@
 
 .popup-button.cancel:hover {
     background-color: darkgrey;
+}
+
+/* Styling for the deck list */
+.quiz-list {
+    display: grid;
+    gap: 20px; /* Space between each deck item */
+    margin-top: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Responsive columns */
+    align-items: stretch; /* Ensure items stretch to fill each row */
+}
+
+/* Styling each deck item as a box */
+.quiz-item {
+    padding: 15px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    transition: box-shadow 0.3s ease;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    min-height: 250px; /* Set a minimum height */
+    word-break: break-word;
+}
+
+/* Title Styling */
+.quiz-item h3 {
+    margin-top: 0;
+    font-size: 18px;
+    color: #333;
+    overflow: hidden; /* Hide overflow */
+    text-overflow: ellipsis; /* Show ellipsis if text is too long */
+    white-space: nowrap; /* Prevent line breaks */
+}
+
+/* Description Styling */
+.quiz-item p {
+    font-size: 14px;
+    color: #666;
+    overflow: hidden; /* Hide overflow */
+    text-overflow: ellipsis; /* Show ellipsis if text is too long */
+    display: -webkit-box; /* Necessary for multiline truncation */
+    -webkit-line-clamp: 5; /* Limit to 5 lines */
+    -webkit-box-orient: vertical; /* Required for -webkit-line-clamp to work */
+    line-height: 1.5; /* Adjusts spacing between lines */
+    max-height: 7.5em; /* Ensures it fits exactly 5 lines */
+    word-wrap: break-word; /* Ensures words do not overflow */
+    word-break: break-word; /* Breaks long words to wrap within container */
+}
+
+/* Add hover effect to deck items */
+.quiz-item:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Container for buttons */
+.quiz-item-buttons {
+    display: flex;
+    gap: 10px; /* Space between buttons */
+    justify-content: center; /* Center align buttons if desired */
+    margin-top: 10px; /* Add some space above the buttons */
+}
+
+/* Individual button styling */
+.quiz-button {
+    padding: 5px 15px; /* Adjust padding for better fit */
+    background-color: #124883; /* Default blue background */
+    color: white; /* White text */
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+    flex: 1; /* Ensures buttons are equal in width */
+    white-space: nowrap; /* Prevents text from wrapping */
+}
+
+/* Styling specific for the delete button */
+.quiz-button.delete {
+    background-color: grey; /* Default grey background */
+}
+
+.quiz-button.delete:hover {
+    background-color: red; /* Red background on hover */
+}
+
+.quiz-button:hover {
+    background-color: #45a049; /* Darker green on hover for non-delete buttons */
 }
