@@ -146,9 +146,9 @@ const DashCard = () => {
 
     return (
         <div className="flashcard-content">
-            <h1 className="content-title">{deck ? deck.name : "Deck Details"}</h1>
+            <h1 className="content-title">{deck.name}</h1>
             <div className="flashcard-box">
-                <p className="content-description">{deck?.description}</p> {/* Use deck description */}
+                <p className="content-description" style={{ paddingBottom: "10px", paddingRight: "35px" }}>{deck.description}</p> {/* Use deck description */}
                 <p>Created on: {
                     new Date(deck.createdAt).toLocaleDateString('en-US', {
                         month: 'numeric',
@@ -156,11 +156,12 @@ const DashCard = () => {
                         year: 'numeric'
                     })
                 }</p> {/* Show creation date */}
-                <p>Professor: {deck?.professor}</p> {/* Show creation date */}
-                <p>Semester: {deck?.semester}</p> {/* Show creation date */}
+                <p>Professor: {deck.professor}</p> {/* Show creation date */}
+                <p>Semester: {deck.semester}</p> {/* Show creation date */}
                 <p>Number of Flashcards: {deck.flashcards.length} cards</p>
                 <button className="add-button" onClick={openFlashcardModal()}>+</button>
-                <h2>Flashcards</h2>
+                
+                <h2 style={{ paddingTop: "10px" }}>Flashcards:</h2>
                 <div className="flashcard-list" style={{ width: '100%' }}>
                     {flashcards.map((card) => (
                         <div key={card._id} className="flashcard-item">

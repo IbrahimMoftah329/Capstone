@@ -178,10 +178,18 @@ const DashLibrary = () => {
 
     // quiz functions
     const addQuiz = (name, description, deckId) => {
+        const associatedDeckInfo = decks.find(deck => deck._id === deckId);
+        if (!associatedDeckInfo) {
+            console.error("Selected deck not found");
+            return;
+        }
+    
         const newQuiz = {
             name,
             description,
             deckId,
+            semester: associatedDeckInfo.semester,
+            professor: associatedDeckInfo.professor,
         };
     
         fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/quizzes/user/${user.id}/quiz`, {
@@ -196,7 +204,7 @@ const DashLibrary = () => {
                 if (!data.quiz || !data.quiz._id) {
                     console.error("Quiz data is missing _id:", data.quiz);
                 }
-        
+    
                 // Update both `decks` and `quizzes` state after adding the quiz
                 setDecks(prevDecks =>
                     prevDecks.map(deck =>
@@ -209,6 +217,7 @@ const DashLibrary = () => {
             })
             .catch(error => console.error("Error adding quiz:", error));
     };
+    
 
     const deleteQuiz = (id) => {
         return fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/quizzes/${id}`, {
@@ -331,7 +340,7 @@ const DashLibrary = () => {
                         <div>
                             <h3>{quiz.name}</h3>
                             <p>{quiz.description}</p>
-                            <p>Associated Deck: {associatedDeck?.name || "No deck"}</p>
+                            <p>Associated Deck:<br />{associatedDeck.name}</p>
                             <p>Number of Questions: {quiz.numQuestions}</p>
                             <p>Created on: {
                                 new Date(quiz.createdAt).toLocaleDateString('en-US', {

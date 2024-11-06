@@ -45,7 +45,7 @@ const getQuizzes = async (req, res) => {
 
 const addQuizToUser = async (req, res) => {
     const { userId } = req.params;
-    const { deckId, name, description } = req.body;
+    const { deckId, name, description, semester, professor } = req.body;
   
     console.log("Request body:", req.body);
   
@@ -68,6 +68,8 @@ const addQuizToUser = async (req, res) => {
             name,
             description,
             deckId,
+            semester,
+            professor,
             createdBy: user.clerkId,
             questions: [],
         });

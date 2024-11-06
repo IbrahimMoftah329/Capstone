@@ -3,6 +3,7 @@ const router = express.Router();
 
 const {
     getDecks,
+    getDeck,
     addDeckToUser,
     deleteDeck,
     updateDeck
@@ -12,6 +13,9 @@ const {
 
 // Route to GET all user decks
 router.get('/user/:userId/decks', getDecks);
+
+// Route to get a single deck by ID
+router.get('/:deckId', getDeck);
 
 // Route to POST a new deck to a user
 router.post('/user/:userId/deck', addDeckToUser);
