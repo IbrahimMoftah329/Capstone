@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import './DashCard.css';
+import nextArrow from '/Users/ninapham/Desktop/OCT /Capstone/Frontend/src/assets/arrow.jpg';
+import backArrow from '/Users/ninapham/Desktop/OCT /Capstone/Frontend/src/assets/arrow2.jpg';
 
 const DashCard = () => {
     const location = useLocation();
@@ -195,6 +197,8 @@ const DashCard = () => {
                     </div>
                 )}
 
+                {/* study mode container flashcard setup */}
+
                 <div className="study-mode-container">
                         {!isStudyMode ? (
                         <button className="study-button" onClick={startStudy}>
@@ -212,16 +216,17 @@ const DashCard = () => {
                             </div>
                             </div>
 
-                            <div className="card-buttons">
-                            <button className="prev-button" onClick={previousCard} disabled={currentCardIndex === 0}>
-                                Previous
+                            <div className="card-buttons-studymode">
+                            <button className="prev-button-studymode" onClick={previousCard} disabled={currentCardIndex === 0}>
+                                <img src={backArrow } alt='previous-arrow'/>
                             </button>
-                            <button className="next-buttons" onClick={nextCard} disabled={currentCardIndex === flashcards.length - 1}>
-                                Next
-                            </button>
-                            <button className="exit-button" onClick={() => setIsStudyMode(false)}>
+                            <button className="exit-button-studymode" onClick={() => setIsStudyMode(false)}>
                                 Exit
                             </button>
+                            <button className="next-buttons-studymode" onClick={nextCard} disabled={currentCardIndex === flashcards.length - 1}>
+                                <img src= {nextArrow } alt = 'next-arrow' />
+                            </button>
+
                             </div>
                         </div>
                         )}
