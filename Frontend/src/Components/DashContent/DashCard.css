@@ -376,21 +376,6 @@
     height: 4rem;
 }
 
-/* Exit button styles */
-.exit-button-studymode {
-    display: block;
-    margin: 0 auto;
-    padding: 0.75rem 1.5rem;
-    background-color: #124883;
-    color: white;
-    border: none;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    font-weight: 500;
-    transition: background-color 0.2s ease;
-}
-
-
 /* Focus styles for accessibility */
 .prev-button-studymode:focus,
 .next-buttons-studymode:focus,
@@ -451,4 +436,17 @@
     .next-buttons-studymode {
         right: -30px;
     }
+}
+
+.restart-button-studymode, .shuffle-button-studymode, .exit-button-studymode {
+    display: block;
+    margin: 0 auto;
+    padding: 0.75rem 1.5rem;
+    background-color: #124883;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
 }

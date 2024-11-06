@@ -117,6 +117,15 @@ const DashCard = () => {
         setIsFlipped(!isFlipped);
     };
 
+    const shuffleArray = (array) => {
+        return array.sort(() => Math.random() - 0.5);
+      };
+    
+      const shuffleCards = () => {
+        setFlashcards(shuffleArray([...flashcards]));
+      };
+    
+      
     return (
         <div className="flashcard-content">
             <h1 className="content-title">{deck ? deck.name : "Deck Details"}</h1>
@@ -145,7 +154,45 @@ const DashCard = () => {
                         </div>
                     ))}
                 </div>
-                
+                {/* study mode container flashcard setup */}
+
+                <div className="study-mode-container">
+                        {!isStudyMode ? (
+                        <button className="study-button" onClick={startStudy}>
+                        Study Flashcards
+                    </button>
+                        ) : (
+                        <div className="study-mode">
+                            <div className="card-info">
+                            Card {currentCardIndex + 1} of {flashcards.length}
+                            </div>
+
+                            <div className="flashcard">
+                            <div className="flashcard-contents" onClick={flipCard}>
+                                {isFlipped ? flashcards[currentCardIndex].response : flashcards[currentCardIndex].prompt}
+                            </div>
+                            </div>
+
+                            <div className="card-buttons-studymode">
+                            <button className="prev-button-studymode" onClick={previousCard} disabled={currentCardIndex === 0}>
+                                <img src={backArrow } alt='previous-arrow'/>
+                            </button>
+                            <button className="restart-button-studymode" onClick={() => setCurrentCardIndex(0)}>
+                                Restart
+                            </button>
+                            <button className="exit-button-studymode" onClick={() => setIsStudyMode(false)}>
+                                Exit
+                            </button>
+                            <button className="shuffle-button-studymode" onClick={shuffleCards}>
+                                Shuffle
+                            </button>
+                            <button className="next-buttons-studymode" onClick={nextCard} disabled={currentCardIndex === flashcards.length - 1}>
+                                <img src= {nextArrow } alt = 'next-arrow' />
+                            </button>
+                            </div>
+                        </div>
+                        )}
+                    </div>
 
                 {/* Modal for Adding or Editing Flashcard */}
                 {isCardModalOpen && (
@@ -197,41 +244,7 @@ const DashCard = () => {
                     </div>
                 )}
 
-                {/* study mode container flashcard setup */}
-
-                <div className="study-mode-container">
-                        {!isStudyMode ? (
-                        <button className="study-button" onClick={startStudy}>
-                        Study Flashcards
-                    </button>
-                        ) : (
-                        <div className="study-mode">
-                            <div className="card-info">
-                            Card {currentCardIndex + 1} of {flashcards.length}
-                            </div>
-
-                            <div className="flashcard">
-                            <div className="flashcard-contents" onClick={flipCard}>
-                                {isFlipped ? flashcards[currentCardIndex].response : flashcards[currentCardIndex].prompt}
-                            </div>
-                            </div>
-
-                            <div className="card-buttons-studymode">
-                            <button className="prev-button-studymode" onClick={previousCard} disabled={currentCardIndex === 0}>
-                                <img src={backArrow } alt='previous-arrow'/>
-                            </button>
-                            <button className="exit-button-studymode" onClick={() => setIsStudyMode(false)}>
-                                Exit
-                            </button>
-                            <button className="next-buttons-studymode" onClick={nextCard} disabled={currentCardIndex === flashcards.length - 1}>
-                                <img src= {nextArrow } alt = 'next-arrow' />
-                            </button>
-
-                            </div>
-                        </div>
-                        )}
-                    </div>
-
+    
                 {/* Styled Popup for Delete Confirmation */}
                 {showDeletePopup && (
                     <div className="popup-overlay">
