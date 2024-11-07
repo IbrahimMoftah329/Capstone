@@ -104,7 +104,7 @@ not exist on your local machine yet, what do you do?
 
 # Getting Started with Docker
 
-This document provides instructions for setting up and running the `getting-started` Docker image. 
+This document provides instructions for setting up and running the `cardmates` Docker image. 
 First make sure you have docker installed from their website https://docs.docker.com/engine/install/
 
 ## Docker Instructions
@@ -127,7 +127,7 @@ docker tag cardmates *new name*
 ### Build the container (Skip if docker image pulled succesfully)
 
 ```bash
-docker build -t frontend-cardmates .
+docker build -t frontend-cardmates ../frontend
 ```
 
 ### Run the Docker Container
