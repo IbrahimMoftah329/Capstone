@@ -46,6 +46,11 @@ const Navbar = () => {
   const handleSearchSubmit = async (e) => {
     e.preventDefault();
     console.log(`Search Query: ${searchQuery}, Selected Option: ${selectedOption}`);
+
+    if (!searchQuery.trim()) {
+      console.log("Search query is empty. Please enter a search term.");
+      return; // Exit the function if there is no input
+    }
   
     try {
       const response = await fetch(`http://localhost:4000/api/decks/alldecks`);
