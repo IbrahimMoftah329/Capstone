@@ -1,16 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import './Navbar.css';
 import logo from '../../assets/logo2.png';
-import { Link } from 'react-router-dom'; // Import Link from react-router-dom
+import { Link, useNavigate } from 'react-router-dom'; // Import Link from react-router-dom
 import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/clerk-react';
+
 
 const Navbar = () => {
   const [bar, setBar] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [selectedOption, setSelectedOption] = useState('Filter'); // Default value for dropdown
+  const [filteredResults, setFilteredResults] = useState([]);
 
-  const options = ['Campus', 'Professors', 'Topic', 'Major'];
+
+
+  const navigate = useNavigate();
+  const options = ['Topic', 'Professor', 'Semester'];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -37,11 +42,48 @@ const Navbar = () => {
     setSearchQuery(e.target.value);
   };
 
-  const handleSearchSubmit = (e) => {
+  
+  const handleSearchSubmit = async (e) => {
     e.preventDefault();
     console.log(`Search Query: ${searchQuery}, Selected Option: ${selectedOption}`);
-    // Handle the search action, such as filtering content or redirecting to a search page
+  
+    try {
+      const response = await fetch(`http://localhost:4000/api/decks/alldecks`);
+      const allDecks = await response.json();
+  
+      // Normalize the search query
+      const normalizedQuery = searchQuery
+        .trim()
+        .replace(/\s+/g, ' ')
+        .toLowerCase();
+  
+      let filteredDecks;
+  
+      if (selectedOption === 'Filter' || selectedOption === 'Topic') {
+        // Filter by name and description for "Topic"
+        filteredDecks = allDecks.filter(deck =>
+          deck.name.toLowerCase().includes(normalizedQuery) ||
+          deck.description.toLowerCase().includes(normalizedQuery)
+        );
+      } else if (selectedOption === 'Professor') {
+        // Filter by professor for "Professor"
+        filteredDecks = allDecks.filter(deck =>
+          deck.professor.toLowerCase().includes(normalizedQuery)
+        );
+      } else if (selectedOption === 'Semester') {
+        // Filter by semester for "Semester"
+        filteredDecks = allDecks.filter(deck =>
+          deck.semester.toLowerCase().includes(normalizedQuery)
+        );
+      }
+  
+      // Navigate to /searchresults and pass the filtered results
+      navigate('/searchresults', { state: { filteredResults: filteredDecks } });
+    } catch (error) {
+      console.error('Error fetching decks:', error);
+    }
   };
+  
 
   return (
     <nav className={`container ${bar ? 'dark-nav' : ''}`}>

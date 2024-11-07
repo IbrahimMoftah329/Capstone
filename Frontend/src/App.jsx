@@ -11,6 +11,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/clerk-react';
 import About from './pages/AboutPage/About';
 import Dashboard from './pages/DashboardPage/Dashboard';
+import SearchResults from './pages/SearchResultsPage/SearchResults';
 
 const App = () => {
   return (
@@ -36,7 +37,12 @@ const App = () => {
           <Route path="/about" element={<About />} />
           {/* Dashboard Page */}
           <Route path="/dashboard/*" element={<Dashboard />} />
-          
+
+
+          {/* Search Results Page */}
+          <Route path="/searchresults" element={<SearchResults />} />
+
+
         </Routes>
         {/* Footer */}
         <Footer />

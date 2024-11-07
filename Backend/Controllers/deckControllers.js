@@ -4,6 +4,21 @@ const User = require('../models/user')
 
 const mongoose = require('mongoose')
 
+// Get all decks from all users
+const getAllDecks = async (req, res) => {
+  try {
+    // Fetch all decks from the database
+    const decks = await Deck.find()   // This will display all decks, and the unique object id given to each flashcard within that deck
+    
+    // The line below can be used instead of the line above this one if you would like the populate flashcards,
+    // meaning "http://localhost:4000/api/decks/alldecks" will show the contents for each flashcard within each deck
+    // const decks = await Deck.find().populate('flashcards'); // Optionally populate flashcards if needed
+    
+    res.status(200).json(decks);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+}
 
 // Get all decks for a user
 const getDecks = async (req, res) => {
@@ -98,6 +113,7 @@ const updateDeck = async (req, res) => {
 
 
 module.exports = {
+  getAllDecks,
   addDeckToUser,
   getDecks,
   getDeck,
