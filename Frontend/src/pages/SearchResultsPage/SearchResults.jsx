@@ -1,5 +1,5 @@
 import React from 'react';
-import './SearchResults.css'; // Import your styles
+import './SearchResults.css';
 import { useLocation } from 'react-router-dom';
 
 const SearchResults = () => {
@@ -7,7 +7,7 @@ const SearchResults = () => {
   const { filteredResults } = location.state || { filteredResults: [] };
 
   return (
-    <div className='container'>
+    <div className='results-box'>
       <h1 className='results-title'>Search Results</h1>
       {filteredResults.length > 0 ? (
         <div className='results-grid'>

@@ -1,10 +1,15 @@
-.container {
-    padding: 20px;
-  }
-  
+ 
+.results-box {
+    display: block;
+    height: 100vh;
+    padding-left: 100px;
+
+}
+
   .results-title {
     text-align: center;
-    margin-bottom: 20px;
+    padding-top: 40px;
+    padding-bottom: 30px;
   }
   
   .results-grid {
@@ -41,7 +46,7 @@
   }
   
   .view-button {
-    background-color: #007bff;
+    background-color: #134883;
     color: white;
     border: none;
     padding: 10px;
@@ -50,7 +55,7 @@
   }
   
   .view-button:hover {
-    background-color: #0056b3;
+    background-color: #45a049;
   }
   
   .no-results {

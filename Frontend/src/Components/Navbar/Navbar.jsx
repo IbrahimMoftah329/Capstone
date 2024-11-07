@@ -53,14 +53,14 @@ const Navbar = () => {
   
       // Normalize the search query
       const normalizedQuery = searchQuery
-        .trim()
-        .replace(/\s+/g, ' ')
-        .toLowerCase();
+        .trim()   // this will remove beginning and trailing spaces
+        .replace(/\s+/g, ' ')     // this will convert any multiple spaces to a single space 
+        .toLowerCase();           // this will make the query all lowercase for case insensitivity
   
       let filteredDecks;
   
       if (selectedOption === 'Filter' || selectedOption === 'Topic') {
-        // Filter by name and description for "Topic"
+        // Filter by name and description for "Topic" or "Filter"
         filteredDecks = allDecks.filter(deck =>
           deck.name.toLowerCase().includes(normalizedQuery) ||
           deck.description.toLowerCase().includes(normalizedQuery)
@@ -87,10 +87,6 @@ const Navbar = () => {
 
   return (
     <nav className={`container ${bar ? 'dark-nav' : ''}`}>
-
-      {/* <div className="navbar-sidebar">
-        <img src={logo} alt="Logo" className="logo-image" />
-      </div> */}
 
       <Link to="/">
         <h1 className="cm">Cardmates</h1>
@@ -150,7 +146,7 @@ const Navbar = () => {
           <li>
             <Link to="/dashboard">Dashboard</Link>
           </li>
-          <li>
+          <li classname = "user-button">
             <UserButton />
           </li>
         </SignedIn>
