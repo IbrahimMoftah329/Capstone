@@ -127,7 +127,7 @@ docker tag cardmates *new name*
 ### Build the container (Skip if docker image pulled succesfully)
 
 ```bash
-docker build -t getting-started .
+docker build -t frontend-cardmates .
 ```
 
 ### Run the Docker Container
@@ -137,11 +137,11 @@ Run the Docker container in detached mode:
 If your application requires specific ports to be exposed, you can map the container's port to your host's port. For example, to map port 5173:
 
 ```bash
-docker run --name getting-started-container -p 5173:5173 -d getting-started
+docker run -p 5173:5173 cardmates
 ```
 
 ## Notes
-- Ensure you have Docker installed and running on your machine before executing these commands.
+- Ensure you have Docker installed and running on your machine before executing these commands. It is recommended you make a user on DockerHub to view the contianer and image
 
 
 
