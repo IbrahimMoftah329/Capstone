@@ -98,3 +98,50 @@ not exist on your local machine yet, what do you do?
     \* [new branch]      example-branch-2 -> origin/example-branch-2
  - ```git switch example-branch``` (Simultaneously switches to and sets the branch origin to the remote branch)
  - ```git branch``` (Check that you are now on the new branch)
+ - 
+
+
+
+# Getting Started with Docker
+
+This document provides instructions for setting up and running the `getting-started` Docker image. 
+First make sure you have docker installed from their website https://docs.docker.com/engine/install/
+
+## Docker Instructions
+
+### Pull the Docker Image
+
+First, pull the Docker image from Docker Hub:
+
+```bash
+docker pull cardmates
+```
+
+### (Optional) Tag the Image
+
+You can tag the image with a simpler name for local use:
+
+```bash
+docker tag cardmates *new name*
+```
+### Build the container (Skip if docker image pulled succesfully)
+
+```bash
+docker build -t getting-started .
+```
+
+### Run the Docker Container
+
+Run the Docker container in detached mode:
+
+If your application requires specific ports to be exposed, you can map the container's port to your host's port. For example, to map port 5173:
+
+```bash
+docker run --name getting-started-container -p 5173:5173 -d getting-started
+```
+
+## Notes
+- Ensure you have Docker installed and running on your machine before executing these commands.
+
+
+
