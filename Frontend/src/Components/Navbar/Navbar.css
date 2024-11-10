@@ -125,3 +125,12 @@ nav ul li{
     border-left: 1px solid #ccc; /* Border to separate button from input */
     border-radius: 0 30px 30px 0; /* Rounded on the right side */
 }
+
+.heading {
+    display: flex;
+    align-items: center;
+  }
+
+  .heading img {
+    margin-right: 10px; /* Adjust the margin as needed */
+  }

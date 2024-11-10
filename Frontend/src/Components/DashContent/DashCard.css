@@ -251,3 +251,202 @@
 .flashcard-modal-content button[type="submit"]:hover {
     background-color: #45a049;
 }
+/* Study mode container */
+.study-mode-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+/* Study button (initial state) */
+.study-button {
+    display: block;
+    margin: 0 auto;
+    padding: 0.75rem 1.5rem;
+    background-color: #124883;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+}
+
+/* Study mode layout */
+.study-mode {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    min-height: 70vh;
+}
+
+/* Card counter */
+.card-info {
+    text-align: center;
+    font-size: 1rem;
+    color: #4b5563;
+    margin-top: 2rem;
+}
+
+/* Flashcard container - Added relative positioning for arrow placement */
+.flashcard {
+    width: 100%;
+    max-width: 400px;
+    aspect-ratio: 3/4;
+    position: relative;
+    perspective: 1000px;
+    margin: 2rem 0;
+}
+
+/* Flashcard content */
+.flashcard-contents {
+    width: 100%;
+    height: 100%;
+    padding: 2rem;
+    background-color: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 1rem;
+    box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+    font-size: 1.125rem;
+}
+
+/* Button container - Modified for new arrow positioning */
+.card-buttons-studymode {
+    width: 100%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+
+/* Navigation buttons - Updated positioning */
+.prev-button-studymode,
+.next-buttons-studymode {
+    position: absolute;
+    top: -400px; /* Adjust this value based on your card height */
+    transform: translateY(50%);
+    padding: 0.75rem;
+    border: none;
+    border-radius: 50%;
+    background: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    z-index: 10;
+    box-shadow: none;
+    
+}
+
+.prev-button-studymode {
+    left: -5px; /* Adjust this value to position the button */
+}
+
+.next-buttons-studymode {
+    right: -5px; /* Adjust this value to position the button */
+}
+
+/* Hover state for navigation buttons */
+.prev-button-studymode:hover:not(:disabled),
+.next-buttons-studymode:hover:not(:disabled) {
+    transform: translateY(50%) scale(1.1);
+}
+
+/* Disabled state for navigation buttons */
+.prev-button-studymode:disabled,
+.next-buttons-studymode:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Style for the arrow images */
+.prev-button-studymode img,
+.next-buttons-studymode img {
+    width: 4rem;
+    height: 4rem;
+}
+
+/* Focus styles for accessibility */
+.prev-button-studymode:focus,
+.next-buttons-studymode:focus,
+.exit-button-studymode:focus {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+}
+
+/* Active states */
+.prev-button-studymode:active:not(:disabled),
+.next-buttons-studymode:active:not(:disabled) {
+    transform: translateY(50%) scale(0.95);
+}
+
+.exit-button-studymode:active {
+    background-color: #b91c1c;
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 640px) {
+    .flashcard {
+        max-width: 320px;
+        aspect-ratio: 2/3;
+    }
+
+    .prev-button-studymode,
+    .next-buttons-studymode {
+        padding: 0.5rem;
+    }
+    
+    /* Adjust arrow positions for mobile */
+    .prev-button-studymode {
+        left: -40px;
+    }
+
+    .next-buttons-studymode {
+        right: -40px;
+    }
+    
+    .prev-button-studymode img,
+    .next-buttons-studymode img {
+        width: 1.25rem;
+        height: 1.25rem;
+    }
+
+    .flashcard-contents {
+        padding: 1.5rem;
+        font-size: 1rem;
+    }
+}
+
+/* Additional media query for very small screens */
+@media (max-width: 480px) {
+    .prev-button-studymode {
+        left: -30px;
+    }
+
+    .next-buttons-studymode {
+        right: -30px;
+    }
+}
+
+.restart-button-studymode, .shuffle-button-studymode, .exit-button-studymode {
+    display: block;
+    margin: 0 auto;
+    padding: 0.75rem 1.5rem;
+    background-color: #124883;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+}

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import nextArrow from '/Users/ninapham/Desktop/OCT /Capstone/Frontend/src/assets/arrow.jpg';
+import backArrow from '/Users/ninapham/Desktop/OCT /Capstone/Frontend/src/assets/arrow2.jpg';
 import './DashCard.css'; // Optional CSS file for styling
 import { useUser } from '@clerk/clerk-react';
 
@@ -15,6 +17,11 @@ const DashCard = () => {
     const [showDeletePopup, setShowDeletePopup] = useState(false); // State for delete popup visibility
     const [cardToDelete, setCardToDelete] = useState(null); // State for the card to be deleted
     const { isSignedIn, user } = useUser();
+    const [editingIndex, setEditingIndex] = useState(null);
+    const [isStudyMode, setIsStudyMode] = useState(false);
+    const [currentCardIndex, setCurrentCardIndex] = useState(0);
+    const [isFlipped, setIsFlipped] = useState(false);
+
     if (!isSignedIn) {
         return;
     }
@@ -144,6 +151,45 @@ const DashCard = () => {
         setCardToDelete(null);
     };
 
+    {/*study mode functions*/}
+
+    const startStudy = () => {
+        if (flashcards.length === 0) {
+            alert('Please add some flashcards first!');
+            return;
+        }
+        setIsStudyMode(true);
+        setCurrentCardIndex(0);
+        setIsFlipped(false);
+    };
+
+    const nextCard = () => {
+        if (currentCardIndex < flashcards.length - 1) {
+            setCurrentCardIndex(prev => prev + 1);
+            setIsFlipped(false);
+        }
+    };
+
+    const previousCard = () => {
+        if (currentCardIndex > 0) {
+            setCurrentCardIndex(prev => prev - 1);
+            setIsFlipped(false);
+        }
+    };
+
+    const flipCard = () => {
+        setIsFlipped(!isFlipped);
+    };
+
+    const shuffleArray = (array) => {
+        return array.sort(() => Math.random() - 0.5);
+      };
+    
+      const shuffleCards = () => {
+        setFlashcards(shuffleArray([...flashcards]));
+      };
+    
+
     return (
         <div className="flashcard-content">
             <h1 className="content-title">{deck ? deck.name : "Deck Details"}</h1>
@@ -189,6 +235,46 @@ const DashCard = () => {
                         </div>
                     </div>
                 )}
+
+                  {/* study mode container flashcard setup */}
+
+                  <div className="study-mode-container">
+                        {!isStudyMode ? (
+                        <button className="study-button" onClick={startStudy}>
+                        Study Flashcards
+                    </button>
+                        ) : (
+                        <div className="study-mode">
+                            <div className="card-info">
+                            Card {currentCardIndex + 1} of {flashcards.length}
+                            </div>
+
+                            <div className="flashcard">
+                            <div className="flashcard-contents" onClick={flipCard}>
+                                {isFlipped ? flashcards[currentCardIndex].response : flashcards[currentCardIndex].prompt}
+                            </div>
+                            </div>
+
+                            <div className="card-buttons-studymode">
+                            <button className="prev-button-studymode" onClick={previousCard} disabled={currentCardIndex === 0}>
+                                <img src={backArrow } alt='previous-arrow'/>
+                            </button>
+                            <button className="restart-button-studymode" onClick={() => setCurrentCardIndex(0)}>
+                                Restart
+                            </button>
+                            <button className="exit-button-studymode" onClick={() => setIsStudyMode(false)}>
+                                Exit
+                            </button>
+                            <button className="shuffle-button-studymode" onClick={shuffleCards}>
+                                Shuffle
+                            </button>
+                            <button className="next-buttons-studymode" onClick={nextCard} disabled={currentCardIndex === flashcards.length - 1}>
+                                <img src= {nextArrow } alt = 'next-arrow' />
+                            </button>
+                            </div>
+                        </div>
+                        )}
+                    </div>
 
                 {/* Styled Popup for Delete Confirmation */}
                 {showDeletePopup && (

@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import './Navbar.css';
-import logo from '../../assets/logo2.png';
 import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/clerk-react';
 
@@ -45,47 +44,37 @@ const Navbar = () => {
 
   return (
     <nav className={`container ${bar ? 'dark-nav' : ''}`}>
-
-      {/* <div className="navbar-sidebar">
-        <img src={logo} alt="Logo" className="logo-image" />
-      </div> */}
-
+      <div className='cm'>
       <Link to="/">
-        <h1 className="cm">Cardmates</h1>
+      <h1 className="heading"><img src="./public/navlogo.svg" onError={(e) => 
+      {
+        e.target.src = '/navlogo.svg'; // Replace with your fallback image path
+      }} alt="Cardmates Logo" width="45" height="45" />Cardmates</h1>
       </Link>
+      </div>
 
       <form onSubmit={handleSearchSubmit} className="search-bar">
         <div className="dropdown">
-          <div
-            className="dropdown-button" // Updated class name
-            onClick={handleDropdownToggle}
-          >
+          <div className="dropdown-button" onClick={handleDropdownToggle}>
             <span>{selectedOption}</span>
           </div>
-          {dropdownVisible && (
+          {dropdownVisible && 
+          (
             <div className="dropdown-menu">
               {options.map((option) => (
-                <div
-                  key={option}
-                  className="dropdown-item"
-                  onClick={() => handleOptionSelect(option)}
-                >
-                  {option}
+                <div key={option} className="dropdown-item" onClick={() => handleOptionSelect(option)}>
+                {option}
                 </div>
-              ))}
+              )
+              )
+              }
             </div>
-          )}
+          )
+          }
         </div>
-        <input
-          type="text"
-          value={searchQuery}
-          onChange={handleSearchChange}
-          placeholder="Search..."
-          className="search-input"
-        />
-        <button type="submit" className="search-button">
-          Search
-        </button>
+        <input type="text" value={searchQuery} onChange={handleSearchChange} placeholder="Search..." className="search-input"/>
+        <button type="submit" className="search-button"> Search </button>
+
       </form>
 
       {/* Navigation Links */}
