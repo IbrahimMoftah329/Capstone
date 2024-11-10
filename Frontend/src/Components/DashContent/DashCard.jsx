@@ -235,9 +235,7 @@ const DashCard = () => {
                         </div>
                     </div>
                 )}
-
                   {/* study mode container flashcard setup */}
-
                   <div className="study-mode-container">
                         {!isStudyMode ? (
                         <button className="study-button" onClick={startStudy}>
@@ -251,7 +249,7 @@ const DashCard = () => {
 
                             <div className="flashcard">
                             <div className="flashcard-contents" onClick={flipCard}>
-                                {isFlipped ? flashcards[currentCardIndex].response : flashcards[currentCardIndex].prompt}
+                                {isFlipped ? flashcards[currentCardIndex].answer : flashcards[currentCardIndex].question}
                             </div>
                             </div>
 
