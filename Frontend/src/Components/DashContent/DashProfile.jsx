@@ -4,10 +4,7 @@ import './DashContent.css'; // Make sure the CSS file path is correct
 import { useUser } from '@clerk/clerk-react';
 
 const DashProfile = () => {
-    const { isSignedIn, user } = useUser();
-    if (!isSignedIn) {
-        return;
-    }
+    const { user } = useUser();
     
     const [username, setUsername] = useState(user?.username || '');
     const [university, setUniversity] = useState(user?.university || '');
