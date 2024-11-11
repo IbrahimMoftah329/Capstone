@@ -63,6 +63,9 @@ const Results = () => {
                         <p>Your Answer: {result.userAnswer}</p>
                         <p>Correct Answer: {correctAnswer}</p>
                         {result.isCorrect ? <p>✅ Correct!</p> : <p>❌ Incorrect</p>}
+                        {question?.explanation && (
+                            <p className="explanation"><strong>Explanation:</strong> {question.explanation}</p>
+                        )}
                     </div>
                 );
             })}

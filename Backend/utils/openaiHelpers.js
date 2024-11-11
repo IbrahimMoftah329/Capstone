@@ -45,7 +45,7 @@ Explanation: <Explanation for correct answer>`;
         const options = parseOptions(fullResponse);
 
         // Extract Explanation
-        const explanationMatch = questionText.match(/Explanation:\s(.+)/);
+        const explanationMatch = fullResponse.match(/Explanation:\s(.+)/);
         const explanation = explanationMatch ? explanationMatch[1] : "No explanation provided";
 
         // Create and save the Question document
