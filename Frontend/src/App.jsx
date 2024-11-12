@@ -23,6 +23,9 @@ const App = () => {
               <div className='container'>
                 <TitleC />
                 <Carousel />
+                <br></br>
+                <br></br>
+                <br></br>
               <SignedOut>
                 <Title subtitle="Sign Up" title="Become a Mate" />
                 <SignUp />

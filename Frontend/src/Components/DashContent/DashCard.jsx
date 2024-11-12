@@ -245,10 +245,8 @@ const DashCard = () => {
                              <div className="study-mode-container">
                                 <div className="study-mode">
                                     <h2>Study Flashcards</h2>
-                
                                     {/* Suits Component */}
                                     <Suits deck={deck} flashcards={flashcards} currentCardIndex={currentCardIndex} isFlipped={isFlipped} onFlip={flipCard}/>
-
                                     {/* Carousel Navigation */}
                                     <div className="carousel-indicators">
                                     {flashcards.map((_, index) => (
