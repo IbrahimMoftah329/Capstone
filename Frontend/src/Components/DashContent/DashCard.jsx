@@ -237,35 +237,73 @@ const DashCard = () => {
                     </div>
                 )}
 
-                 {/* study mode container flashcard setup */}
-                <div className="study-mode-container">
-                {!isStudyMode ? (
-                <button className="study-button" onClick={startStudy}>Study Flashcards</button>
-                 ) : (
-                <>
-                <Suits deck={deck} flashcards={flashcards} currentCardIndex={currentCardIndex} isFlipped={isFlipped} onFlip={flipCard}/>
 
-                <div className="card-buttons-studymode">
-                <button className="prev-button-studymode" onClick={previousCard} disabled={currentCardIndex === 0}>
-                <img src={backArrow} alt='previous-arrow'/>
-                </button>
-                <button className="restart-button-studymode" onClick={() => setCurrentCardIndex(0)}>
-                Restart
-                </button>
-                <button className="exit-button-studymode" onClick={() => setIsStudyMode(false)}>
-                Exit
-                </button>
-                <button className="shuffle-button-studymode" onClick={shuffleCards}>
-                Shuffle
-                </button>
-                <button className="next-buttons-studymode" onClick={nextCard} disabled={currentCardIndex === flashcards.length - 1}>
-                <img src={nextArrow} alt='next-arrow' />
-                </button>
-            </div>
-            </>
-        )}
-        </div>
+                 {/* Study Mode Flashcard Modal */}
+                {isStudyMode && (
+                    <div className="study-mode-modal">
+                        <div className="study-mode-modal-content">
+                             <div className="study-mode-container">
+                                <div className="study-mode">
+                                    <h2>Study Flashcards</h2>
+                
+                                    {/* Suits Component */}
+                                    <Suits deck={deck} flashcards={flashcards} currentCardIndex={currentCardIndex} isFlipped={isFlipped} onFlip={flipCard}/>
 
+                                    {/* Carousel Navigation */}
+                                    <div className="carousel-indicators">
+                                    {flashcards.map((_, index) => (
+                                    <button key={index} className={`carousel-dot ${index === currentCardIndex ? 'active' : ''}`} onClick={() => { 
+                                        setCurrentCardIndex(index);
+                                        setIsFlipped(false);
+                                        }}/>
+                                        ))}
+                                    </div>
+
+                                    {/* Control Buttons */}
+                                    <div className="card-buttons-studymode">
+                                        <button className="prev-button-studymode" onClick={previousCard} disabled={currentCardIndex === 0}>
+                                        <img src={backArrow} alt="previous" />
+                                        </button>
+                                        <button className="restart-button-studymode" onClick={() => { 
+                                            setCurrentCardIndex(0); 
+                                            setIsFlipped(false); 
+                                        }}
+                                        >
+                                            Restart
+                                        </button>
+                                        <button 
+                                            className="exit-button-studymode" 
+                                            onClick={() => setIsStudyMode(false)}
+                                        >
+                                            Exit
+                                        </button>
+                                        <button 
+                                            className="shuffle-button-studymode" 
+                                            onClick={shuffleCards}
+                                        >
+                                            Shuffle
+                                        </button>
+                                        <button 
+                                            className="next-buttons-studymode" 
+                                            onClick={nextCard} 
+                                            disabled={currentCardIndex === flashcards.length - 1}
+                                        >
+                                            <img src={nextArrow} alt="next" />
+                                        </button>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                                </div>
+                            )}
+
+      {/* Regular Study Button (when modal is closed) */}
+      {!isStudyMode && (
+        <button className="study-button" onClick={startStudy}>
+          Study Flashcards
+        </button>
+      )}
+    
                 {/* Styled Popup for Delete Confirmation */}
                 {showDeletePopup && (
                     <div className="popup-overlay">
