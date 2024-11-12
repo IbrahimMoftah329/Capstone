@@ -4,6 +4,7 @@ import nextArrow from '/Users/ninapham/Desktop/OCT /Capstone/Frontend/src/assets
 import backArrow from '/Users/ninapham/Desktop/OCT /Capstone/Frontend/src/assets/arrow2.jpg';
 import './DashCard.css'; // Optional CSS file for styling
 import { useUser } from '@clerk/clerk-react';
+import Suits from '../Suits/Suits';
 
 const DashCard = () => {
     const location = useLocation();
@@ -236,54 +237,34 @@ const DashCard = () => {
                     </div>
                 )}
 
+                 {/* study mode container flashcard setup */}
+                <div className="study-mode-container">
+                {!isStudyMode ? (
+                <button className="study-button" onClick={startStudy}>Study Flashcards</button>
+                 ) : (
+                <>
+                <Suits deck={deck} flashcards={flashcards} currentCardIndex={currentCardIndex} isFlipped={isFlipped} onFlip={flipCard}/>
 
-                  {/* study mode container flashcard setup */}
-                  <div className="study-mode-container">
-    {!isStudyMode ? (
-        <button className="study-button" onClick={startStudy}>
-            Study Flashcards
-        </button>
-    ) : (
-        <div className="study-mode">
-            <div className="card-info">
-                Card {currentCardIndex + 1} of {flashcards.length}
-            </div>
-
-            <div className="flashcard-scene">
-                <div className={`flashcard-study ${isFlipped ? 'is-flipped' : ''}`} onClick={flipCard}>
-                    <div className="flashcard-face flashcard-face-front">
-                        <div className="flashcard-contents">
-                            {flashcards[currentCardIndex].question}
-                        </div>
-                    </div>
-                    <div className="flashcard-face flashcard-face-back">
-                        <div className="flashcard-contents">
-                            {flashcards[currentCardIndex].answer}
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div className="card-buttons-studymode">
+                <div className="card-buttons-studymode">
                 <button className="prev-button-studymode" onClick={previousCard} disabled={currentCardIndex === 0}>
-                    <img src={backArrow} alt='previous-arrow'/>
+                <img src={backArrow} alt='previous-arrow'/>
                 </button>
                 <button className="restart-button-studymode" onClick={() => setCurrentCardIndex(0)}>
-                    Restart
+                Restart
                 </button>
                 <button className="exit-button-studymode" onClick={() => setIsStudyMode(false)}>
-                    Exit
+                Exit
                 </button>
                 <button className="shuffle-button-studymode" onClick={shuffleCards}>
-                    Shuffle
+                Shuffle
                 </button>
                 <button className="next-buttons-studymode" onClick={nextCard} disabled={currentCardIndex === flashcards.length - 1}>
-                    <img src={nextArrow} alt='next-arrow' />
+                <img src={nextArrow} alt='next-arrow' />
                 </button>
             </div>
+            </>
+        )}
         </div>
-    )}
-</div>
 
                 {/* Styled Popup for Delete Confirmation */}
                 {showDeletePopup && (
