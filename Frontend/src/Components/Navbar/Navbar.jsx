@@ -49,7 +49,7 @@ const Navbar = () => {
 
     if (!searchQuery.trim()) {
       console.log("Search query is empty. Please enter a search term.");
-      return; // Exit the function if there is no input
+      return;
     }
   
     try {
@@ -65,19 +65,19 @@ const Navbar = () => {
       let filteredDecks;
   
       if (selectedOption === 'Filter' || selectedOption === 'Topic') {
-        // Filter by name and description for "Topic" or "Filter"
-        filteredDecks = allDecks.filter(deck =>
+          // Filter by name and description for "Topic" or "Filter"
+          filteredDecks = allDecks.filter(deck =>
           deck.name.toLowerCase().includes(normalizedQuery) ||
           deck.description.toLowerCase().includes(normalizedQuery)
         );
       } else if (selectedOption === 'Professor') {
-        // Filter by professor for "Professor"
-        filteredDecks = allDecks.filter(deck =>
+          // Filter by professor for "Professor"
+          filteredDecks = allDecks.filter(deck =>
           deck.professor.toLowerCase().includes(normalizedQuery)
         );
       } else if (selectedOption === 'Semester') {
-        // Filter by semester for "Semester"
-        filteredDecks = allDecks.filter(deck =>
+          // Filter by semester for "Semester"
+          filteredDecks = allDecks.filter(deck =>
           deck.semester.toLowerCase().includes(normalizedQuery)
         );
       }

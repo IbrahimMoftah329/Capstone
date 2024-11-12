@@ -6,11 +6,8 @@ import ResultsDeck from '../../Components/ResultsDeck/ResultsDeck';
 const SearchResults = () => {
 
   return (
-    <div classname = "results-container">
-      <h1 className='results-title'>Search Results</h1>
-      <ResultsDeck/>
-
-    </div>
+    
+    <ResultsDeck/>
     
   );
 

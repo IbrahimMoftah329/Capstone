@@ -1,14 +1,5 @@
 
 .results-container {
   padding: 20px;
-  height: 100vh;
-}
-
-
-.results-title {
-  justify-self: center;
-  text-align: center;
-  padding-top: 40px;
-  padding-bottom: 30px;
-  width: 50vw;
+  height: 90vh;
 }
