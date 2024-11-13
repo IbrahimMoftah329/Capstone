@@ -98,7 +98,7 @@ const Navbar = () => {
       </Link>
 
       <form onSubmit={handleSearchSubmit} className="search-bar">
-        <div className="dropdown">
+        {/* <div className="dropdown">
           <div
             className="dropdown-button" // Updated class name
             onClick={handleDropdownToggle}
@@ -118,7 +118,7 @@ const Navbar = () => {
               ))}
             </div>
           )}
-        </div>
+        </div> */}
         <input
           type="text"
           value={searchQuery}
@@ -127,7 +127,10 @@ const Navbar = () => {
           className="search-input"
         />
         <button type="submit" className="search-button">
-          Search
+          <svg className = "search-icon" viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="8" />
+            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+          </svg>
         </button>
       </form>
 

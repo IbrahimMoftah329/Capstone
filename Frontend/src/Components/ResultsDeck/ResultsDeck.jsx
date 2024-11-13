@@ -81,51 +81,54 @@ const ResultsDeck = () => {
   };
 
   return (
-    <div className='results-container'>
+    <div className='results-page'>
       <div className='results-title'>Search Results</div>
-      <div className='results-list' style={{ width: '25%', float: 'left' }}>
-        <h1 id='deck-quiz'>Decks</h1>
-        {filteredResults.length > 0 ? (
-          filteredResults.map(deck => (
-            <div className='deck-item' key={deck._id} onClick={() => handleDeckSelect(deck)}>
-              <h2 className='deck-name'>{deck.name}</h2>
-              <p className='deck-info'>
-                {deck.__v} Cards | Professor: {deck.professor}
-              </p>
-            </div>
-          ))
+      <div className = 'results-container'>
+        <div className='results-list' style={{ width: '30%', float: 'left' }}>
+          <h1 id='deck-quiz'>Decks</h1>
+          {filteredResults.length > 0 ? (
+            filteredResults.map(deck => (
+              <div className='result-deck-item' key={deck._id} onClick={() => handleDeckSelect(deck)}>
+                <h2 className='deck-name'>{deck.name}</h2>
+                <p className='deck-info'>
+                  {deck.__v} Cards | Professor: {deck.professor}
+                </p>
+              </div>
+            ))
+          ) : (
+            <p className='no-results'>No results found.</p>
+          )}
+        </div>
+
+
+        <div className='deck-details' style={{ width: '70%', float: 'right'}}>
+        <h1 id='deck-quiz'>Deck Preview</h1>
+        {filteredResults.length > 0 && selectedDeck ? (
+          <>
+            <h2 className='deck-name'>{selectedDeck.name}</h2>
+            {/* <p className='deck-description'>{selectedDeck.description}</p>
+            <p className='deck-professor'>Professor: {selectedDeck.professor}</p>
+            <p className='deck-semester'> Semester: {selectedDeck.semester}</p>
+            <h2>Flashcards:</h2> */}
+            {flashcards.length > 0 ? (
+              <div>
+                {flashcards.map((flashcard) => (
+                  <div className = 'result-flashcard-content'>
+                    <p className='flashcard-question'>{flashcard.question}</p>
+                    <p className='flashcard-answer'>{flashcard.answer}</p>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p>No flashcards available.</p>
+            )}
+          </>
         ) : (
           <p className='no-results'>No results found.</p>
         )}
       </div>
+      </div>
 
-
-      <div className='deck-details' style={{ width: '70%', float: 'right', marginLeft: '5%' }}>
-      <h1 id='deck-quiz'>Deck Preview</h1>
-      {filteredResults.length > 0 && selectedDeck ? (
-        <>
-          <h2 className='deck-name'>{selectedDeck.name}</h2>
-          <p className='deck-description'>{selectedDeck.description}</p>
-          <p className='deck-professor'>Professor: {selectedDeck.professor}</p>
-          <p className='deck-semester'> Semester: {selectedDeck.semester}</p>
-          <h2>Flashcards:</h2>
-          {flashcards.length > 0 ? (
-            <ul>
-              {flashcards.map((flashcard) => (
-                <li classname = 'flashcard-content'>
-                  <p>Q: {flashcard.question}</p>
-                  <p>A: {flashcard.answer}</p>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p>No flashcards available.</p>
-          )}
-        </>
-      ) : (
-        <h2>Flashcards</h2>
-      )}
-    </div>
     </div>
   );
 };
