@@ -68,7 +68,9 @@ const Navbar = () => {
           // Filter by name and description for "Topic" or "Filter"
           filteredDecks = allDecks.filter(deck =>
           deck.name.toLowerCase().includes(normalizedQuery) ||
-          deck.description.toLowerCase().includes(normalizedQuery)
+          deck.description.toLowerCase().includes(normalizedQuery) ||
+          deck.professor.toLowerCase().includes(normalizedQuery) ||
+          deck.semester.toLowerCase().includes(normalizedQuery)
         );
       } else if (selectedOption === 'Professor') {
           // Filter by professor for "Professor"
@@ -127,10 +129,7 @@ const Navbar = () => {
           className="search-input"
         />
         <button type="submit" className="search-button">
-          <svg className = "search-icon" viewBox="0 0 24 24">
-            <circle cx="11" cy="11" r="8" />
-            <line x1="21" y1="21" x2="16.65" y2="16.65" />
-          </svg>
+          Search
         </button>
       </form>
 
