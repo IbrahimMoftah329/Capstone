@@ -18,7 +18,7 @@ router.get('/alldecks', getAllDecks);
 // Route to GET all user decks
 router.get('/user/:userId/decks', getDecks);
 
-// Route to get a single deck by ID
+// Route to GET a single deck by ID
 router.get('/:deckId', getDeck);
 
 // Route to POST a new deck to a user

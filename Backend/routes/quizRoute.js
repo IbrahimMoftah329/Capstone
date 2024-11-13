@@ -4,6 +4,7 @@ const router = express.Router();
 const {
     getAllQuizzes,
     getQuizzes,
+    getQuiz,
     addQuizToUser,
     deleteQuiz,
     
@@ -14,6 +15,9 @@ router.get('/allquizzes', getAllQuizzes)
 
 // Route to GET all user quizs
 router.get('/user/:userId/quizzes', getQuizzes);
+
+// Route to GET a single quiz by ID
+router.get('/:quizId', getQuiz);
 
 // Route to POST a new quiz to a user
 router.post('/user/:userId/quiz', addQuizToUser);

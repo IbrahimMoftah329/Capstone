@@ -95,7 +95,7 @@ const ResultsDeck = () => {
   };
 
   return (
-    <div className='results-page'>
+    <div className='search-results-page'>
       <div className='results-title'>Search Results</div>
       <div className = 'results-container'>
         <div className='results-list'>
