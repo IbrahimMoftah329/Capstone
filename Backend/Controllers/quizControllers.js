@@ -6,6 +6,17 @@ const { generateQuestionFromFlashcard } = require('../utils/openaiHelpers');
 
 const mongoose = require('mongoose')
 
+// Get all quizzes from all users
+const getAllQuizzes = async (req, res) => {    
+    try {
+        const quizzes = await Quiz.find().populate('questions');
+        // const quizzes = await Quiz.find()
+        res.status(200).json(quizzes)
+    } catch (err) {
+        res.status(500).send(err.message);
+      }
+};
+
 
 // Get all quizzes for a user
 const getQuizzes = async (req, res) => {
@@ -133,6 +144,7 @@ const deleteQuiz = async (req, res) => {
 };
 
 module.exports = {
+    getAllQuizzes,
     addQuizToUser,
     getQuizzes,
     deleteQuiz

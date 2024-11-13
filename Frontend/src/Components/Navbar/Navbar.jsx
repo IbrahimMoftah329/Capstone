@@ -9,7 +9,7 @@ const Navbar = () => {
   const [bar, setBar] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [dropdownVisible, setDropdownVisible] = useState(false);
-  const [selectedOption, setSelectedOption] = useState('Filter'); // Default value for dropdown
+  const [selectedOption, setSelectedOption] = useState('Filter');
   const [filteredResults, setFilteredResults] = useState([]);
 
 
@@ -55,6 +55,8 @@ const Navbar = () => {
     try {
       const response = await fetch(`http://localhost:4000/api/decks/alldecks`);
       const allDecks = await response.json();
+      const response_2 = await fetch(`http://localhost:4000/api/quizzes/allquizzes`);
+      const allQuizzes = await response_2.json();
   
       // Normalize the search query
       const normalizedQuery = searchQuery
@@ -63,6 +65,8 @@ const Navbar = () => {
         .toLowerCase();           // this will make the query all lowercase for case insensitivity
   
       let filteredDecks;
+      let filteredQuizzes;
+
   
       if (selectedOption === 'Filter' || selectedOption === 'Topic') {
           // Filter by name and description for "Topic" or "Filter"
@@ -70,22 +74,34 @@ const Navbar = () => {
           deck.name.toLowerCase().includes(normalizedQuery) ||
           deck.description.toLowerCase().includes(normalizedQuery) ||
           deck.professor.toLowerCase().includes(normalizedQuery) ||
-          deck.semester.toLowerCase().includes(normalizedQuery)
-        );
-      } else if (selectedOption === 'Professor') {
-          // Filter by professor for "Professor"
-          filteredDecks = allDecks.filter(deck =>
-          deck.professor.toLowerCase().includes(normalizedQuery)
-        );
-      } else if (selectedOption === 'Semester') {
-          // Filter by semester for "Semester"
-          filteredDecks = allDecks.filter(deck =>
-          deck.semester.toLowerCase().includes(normalizedQuery)
+          deck.semester.toLowerCase().includes(normalizedQuery) 
         );
       }
+
+      if (selectedOption === 'Filter' || selectedOption === 'Topic') {
+        // Filter by name and description for "Topic" or "Filter"
+        filteredQuizzes = allQuizzes.filter(quiz =>
+        quiz.name.toLowerCase().includes(normalizedQuery) ||
+        quiz.description.toLowerCase().includes(normalizedQuery) ||
+        quiz.professor.toLowerCase().includes(normalizedQuery) ||
+        quiz.semester.toLowerCase().includes(normalizedQuery) 
+      );
+    } 
+
+      // else if (selectedOption === 'Professor') {
+      //     // Filter by professor for "Professor"
+      //     filteredDecks = allDecks.filter(deck =>
+      //     deck.professor.toLowerCase().includes(normalizedQuery)
+      //   );
+      // } else if (selectedOption === 'Semester') {
+      //     // Filter by semester for "Semester"
+      //     filteredDecks = allDecks.filter(deck =>
+      //     deck.semester.toLowerCase().includes(normalizedQuery)
+      //   );
+      // }
   
       // Navigate to /searchresults and pass the filtered results
-      navigate('/searchresults', { state: { filteredResults: filteredDecks } });
+      navigate('/searchresults', { state: { filteredResults: filteredDecks, filteredQuizzes } });
     } catch (error) {
       console.error('Error fetching decks:', error);
     }

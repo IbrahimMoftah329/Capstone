@@ -63,6 +63,10 @@ const ResultsDeck = () => {
 
   };
 
+  const handleQuizSelect = (quiz) => {
+    
+  }
+
   const getFlashcards = async (deck) => {
     
     if (deck && deck._id) {
@@ -76,6 +80,16 @@ const ResultsDeck = () => {
   
       } catch (error) {
         console.error("Error fetching flashcards", error);
+      }
+    }
+  };
+
+  const getQuestions = async (quiz) => {
+    if (quiz && quiz.id) {
+      try {
+        const response_2 = await fetch(``)
+      } catch (error) {
+        console.error("Error fetching quiz questions", error);
       }
     }
   };

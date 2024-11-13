@@ -2,12 +2,15 @@ const express = require('express');
 const router = express.Router();
 
 const {
+    getAllQuizzes,
     getQuizzes,
     addQuizToUser,
     deleteQuiz,
     
 } = require('../Controllers/quizControllers')
 
+// Route to GET all quizzes from all users
+router.get('/allquizzes', getAllQuizzes)
 
 // Route to GET all user quizs
 router.get('/user/:userId/quizzes', getQuizzes);
