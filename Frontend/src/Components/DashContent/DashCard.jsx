@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import './DashCard.css'; // Optional CSS file for styling
+import nextArrow from '../../assets/arrow.jpg';
+import backArrow from '../../assets/arrow2.jpg';
 import { useUser } from '@clerk/clerk-react';
 
 const DashCard = () => {
@@ -14,10 +16,12 @@ const DashCard = () => {
     const [editCardId, setEditCardId] = useState(null); // State to track which flashcard is being edited
     const [showDeletePopup, setShowDeletePopup] = useState(false); // State for delete popup visibility
     const [cardToDelete, setCardToDelete] = useState(null); // State for the card to be deleted
-    const { isSignedIn, user } = useUser();
-    if (!isSignedIn) {
-        return;
-    }
+
+    const [isStudyMode, setIsStudyMode] = useState(false);
+    const [currentCardIndex, setCurrentCardIndex] = useState(0);
+    const [isFlipped, setIsFlipped] = useState(false);
+
+    const { user } = useUser();
 
     // Function to add a flashcard
     const addFlashcard = () => {
@@ -144,6 +148,34 @@ const DashCard = () => {
         setCardToDelete(null);
     };
 
+    const startStudy = () => {
+        if (flashcards.length === 0) {
+            alert('Please add some flashcards first!');
+            return;
+        }
+        setIsStudyMode(true);
+        setCurrentCardIndex(0);
+        setIsFlipped(false);
+    };
+
+    const nextCard = () => {
+        if (currentCardIndex < flashcards.length - 1) {
+            setCurrentCardIndex(prev => prev + 1);
+            setIsFlipped(false);
+        }
+    };
+
+    const previousCard = () => {
+        if (currentCardIndex > 0) {
+            setCurrentCardIndex(prev => prev - 1);
+            setIsFlipped(false);
+        }
+    };
+
+    const flipCard = () => {
+        setIsFlipped(!isFlipped);
+    };
+
     return (
         <div className="flashcard-content">
             <h1 className="content-title">{deck.name}</h1>
@@ -160,6 +192,9 @@ const DashCard = () => {
                 <p>Semester: {deck.semester}</p> {/* Show creation date */}
                 <p>Number of Flashcards: {deck.flashcards.length} cards</p>
                 <button className="add-button" onClick={openFlashcardModal()}>+</button>
+
+                {/* Start Study Mode Button */}
+                <button className="study-button" onClick={startStudy}>Start Study Mode</button>
                 
                 <h2 style={{ paddingTop: "10px" }}>Flashcards:</h2>
                 <div className="flashcard-list" style={{ width: '100%' }}>
@@ -178,6 +213,36 @@ const DashCard = () => {
                         </div>
                     ))}
                 </div>
+
+                {/* Study Mode Flashcard Modal */}
+                {isStudyMode && (
+                    <div className="study-mode-modal">
+                        <div className="study-mode-modal-content">
+                            <div className="study-mode-container">
+                                <div className="study-mode">
+                                    <h2>Study Flashcards</h2>
+                                    <div className="card-info">Card {currentCardIndex + 1} of {flashcards.length}</div>
+                                    <div className="flashcard" onClick={flipCard}>
+                                        <div className="flashcard-contents">
+                                            {isFlipped ? flashcards[currentCardIndex].answer : flashcards[currentCardIndex].question}
+                                        </div>
+                                    </div>
+
+                                    <div className="card-buttons-studymode">
+                                        <button className="prev-button-studymode" onClick={previousCard} disabled={currentCardIndex === 0}>
+                                            <img src={backArrow} alt="previous" />
+                                        </button>
+                                        <button className="restart-button-studymode" onClick={() => { setCurrentCardIndex(0); setIsFlipped(false); }}>Restart</button>
+                                        <button className="exit-button-studymode" onClick={() => setIsStudyMode(false)}>Exit</button>
+                                        <button className="next-buttons-studymode" onClick={nextCard} disabled={currentCardIndex === flashcards.length - 1}>
+                                            <img src={nextArrow} alt="next" />
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )}
 
                 {/* Modal for Adding or Editing Flashcard */}
                 {isCardModalOpen && (

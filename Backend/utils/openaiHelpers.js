@@ -35,13 +35,17 @@ Explanation: <Explanation for correct answer>`;
         });
 
         const data = await response.json();
-        const questionText = data.choices[0].message.content;
+        const fullResponse = data.choices[0].message.content;
+
+        // Extract each component from the response using regular expressions
+        const questionMatch = fullResponse.match(/Question:\s(.+)/);
+        const questionText = questionMatch ? questionMatch[1].trim() : "No question provided";
 
         // Parse options from response text (Assume the function works as expected)
-        const options = parseOptions(questionText);
+        const options = parseOptions(fullResponse);
 
         // Extract Explanation
-        const explanationMatch = questionText.match(/Explanation:\s(.+)/);
+        const explanationMatch = fullResponse.match(/Explanation:\s(.+)/);
         const explanation = explanationMatch ? explanationMatch[1] : "No explanation provided";
 
         // Create and save the Question document

@@ -4,10 +4,7 @@ import './DashContent.css'; // Make sure the CSS file path is correct
 import { useUser } from '@clerk/clerk-react';
 
 const DashShuffle = () => {
-    const { isSignedIn, user } = useUser();
-    if (!isSignedIn) {
-        return;
-    }
+    const { user } = useUser();
 
     return (
         <div className="content">
