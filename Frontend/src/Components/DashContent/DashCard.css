@@ -437,10 +437,9 @@
         font-size: 18px;
     }
 }
-
-.restart-button-studymode, .shuffle-button-studymode, .exit-button-studymode {
-    display: block;
-    margin: 0 auto;
+.restart-button-studymode, .exit-button-studymode {
+    display: inline-block;
+    margin: 0.5rem;
     padding: 0.75rem 1.5rem;
     background-color: #124883;
     color: white;
@@ -449,6 +448,13 @@
     cursor: pointer;
     font-weight: 500;
     transition: background-color 0.2s ease;
+    width: 120px;      /* Fixed width for both buttons */
+    text-align: center; /* Center text within button */
+}
+
+/* Hover effect */
+.restart-button-studymode:hover, .exit-button-studymode:hover {
+    background-color: #1a5ca0;
 }
 
 /* Study button (initial state) */

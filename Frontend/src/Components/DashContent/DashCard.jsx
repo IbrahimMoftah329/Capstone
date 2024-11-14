@@ -182,13 +182,6 @@ const DashCard = () => {
         setIsFlipped(!isFlipped);
     };
 
-    const shuffleArray = (array) => {
-        return array.sort(() => Math.random() - 0.5);
-      };
-    
-      const shuffleCards = () => {
-        setFlashcards(shuffleArray([...flashcards]));
-      };
     
 
     return (
@@ -275,12 +268,7 @@ const DashCard = () => {
                                         >
                                             Exit
                                         </button>
-                                        <button 
-                                            className="shuffle-button-studymode" 
-                                            onClick={shuffleCards}
-                                        >
-                                            Shuffle
-                                        </button>
+
                                         <button 
                                             className="next-buttons-studymode" 
                                             onClick={nextCard} 
