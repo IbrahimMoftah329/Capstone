@@ -132,6 +132,7 @@
     border-radius: 30px;
     width: 69%;
     max-height: 90vh;
+    height: auto;
     overflow-y: auto;
     background-color: #ffffff;
     box-sizing: border-box;

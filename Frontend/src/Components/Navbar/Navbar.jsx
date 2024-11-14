@@ -133,7 +133,7 @@ const Navbar = () => {
       </form>
 
       {/* Navigation Links */}
-      <ul>
+      <ul className='links'>
         <li>
           <Link to="/about">About Us</Link>
         </li>

@@ -1,33 +1,3 @@
-// import React, { useState, useEffect } from 'react';
-// import { useLocation } from 'react-router-dom';
-// import './ResultsHome.css';
-
-
-// const ResultsHome = ({ onShowDeck, onShowQuiz }) => {
-//     const location = useLocation();
-//     const { filteredResults, filteredQuizzes, initialView } = location.state || { 
-//         filteredResults: [], 
-//         filteredQuizzes: [],
-//         initialView: 'home'
-//     };
-//     const [selectedQuiz, setSelectedQuiz] = useState(null);
-//     const [questions, setQuestions] = useState([]);
-
-
-//     return (
-//         <div className='search-results-page'>
-//             <div>
-//                 <h1>Welcome to Results Home</h1>
-//                 <button onClick={onShowDeck}>Show Results Deck</button>
-//                 <button onClick={onShowQuiz}>Show Results Quiz</button>
-//             </div>
-//         </div>
-//     );
-// };
-
-// export default ResultsHome;
-
-
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import './ResultsHome.css';
