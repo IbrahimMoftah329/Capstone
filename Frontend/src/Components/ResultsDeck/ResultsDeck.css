@@ -1,7 +1,7 @@
 .search-results-page {
   display: flex;
   flex-wrap: wrap;
-  height: 100vh;
+  height: 100%;
   width: 100%;
   background-color: #f0f0f0;
 }
@@ -22,9 +22,10 @@
   text-align: center;
   font-size: 30px;
   font-weight: bold;
+  margin-top: 20px;
+  margin-bottom: 10px;
   width: 100%;
   height: 40px;
-  margin-top: 20px;
   
 }
 
@@ -74,22 +75,6 @@
 
 .results-list-inner::-webkit-scrollbar-thumb:hover {
   background-color: #aaaaaa;
-}
-
-
-
-
-.results-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 20px;
-}
-
-
-.results-box {
-  display: block;
-  height: 100vh;
-  padding-left: 100px;
 }
 
 
@@ -192,6 +177,6 @@
 
 
 .flashcard-question {
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: bolder;
 }

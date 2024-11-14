@@ -109,12 +109,13 @@ nav ul li{
 .search-input {
     padding: 8px 12px;
     border: 1px solid #e0e0e0;
-    border-radius: 30px 0 0 30px;
+    border-radius: 20px 0 0 20px;
     font-size: 16px;
     outline: none;
     flex: 1;
     background-color: #ffffff;
     transition: all 0.2s ease; 
+    height: 38px;
 }
 
 /* Search button styles */
@@ -126,11 +127,41 @@ nav ul li{
     cursor: pointer;
     font-size: 16px;
     border: 1px solid #e0e0e0;
-    border-radius: 0 30px 30px 0;
+    border-radius: 0 20px 20px 0;
     display: flex;           /* Added to center the icon */
     align-items: center;     /* Vertical centering */
     justify-content: center; /* Horizontal centering */
     height: 38px;
+    width: 50px;
+    position: relative;
+}
+
+.search-button::before {
+    content: '';
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border: 2px solid #124883;
+    border-radius: 50%;
+    transform: translate(-2px, -2px);
+}
+
+.search-button::after {
+    content: '';
+    position: absolute;
+    width: 2px;
+    height: 8px;
+    background: #124883;
+    transform: translate(6px, 6px) rotate(-45deg);
+}
+
+.search-button:hover {
+    background-color: #2980b9;    /* Darker blue on hover */
+}
+
+.searchbar {
+    display:flex;
+    align-items: center;
 }
 
 .search-icon {
@@ -145,3 +176,4 @@ nav ul li{
     min-width: 20px;        /* Added to maintain size */
     min-height: 20px;       /* Added to maintain size */
 }
+

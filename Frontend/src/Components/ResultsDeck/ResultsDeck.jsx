@@ -1,42 +1,3 @@
-// import React, { useState, useEffect } from 'react';
-// import { useLocation } from 'react-router-dom';
-// import './ResultsDeck.css';
-
-// Below is the code for showing the deck results as a grid.
-// const ResultsDeck = () => {
-//     const location = useLocation();
-//     const { filteredResults } = location.state || { filteredResults: [] };
-
-//     return (
-//         <div className='results-box'>
-//             <h1 id = 'deck-quiz'>Decks</h1>
-//           {filteredResults.length > 0 ? (
-//             <div className='results-grid'>
-//               {filteredResults.map(deck => (
-//                 <div className='deck-card' key={deck._id}>
-//                   <h2 className='deck-name'>{deck.name}</h2>
-//                   <p className='deck-description'>{deck.description}</p>
-//                   <p className='deck-details'>
-//                     <span className='deck-professor'>Professor: {deck.professor}</span>
-//                     <span className='deck-semester'> Semester: {deck.semester}</span>
-//                   </p>
-//                   <button className='view-button'>View Details</button>
-//                 </div>
-//               ))}
-//             </div>
-//           ) : (
-//             <p className='no-results'>No results found.</p>
-//           )}
-//         </div>
-//       );
-// }
-
-// export default ResultsDeck
-
-
-
-
-
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import './ResultsDeck.css';
@@ -80,16 +41,6 @@ const ResultsDeck = () => {
   
       } catch (error) {
         console.error("Error fetching flashcards", error);
-      }
-    }
-  };
-
-  const getQuestions = async (quiz) => {
-    if (quiz && quiz.id) {
-      try {
-        const response_2 = await fetch(``)
-      } catch (error) {
-        console.error("Error fetching quiz questions", error);
       }
     }
   };

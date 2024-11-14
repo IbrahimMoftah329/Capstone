@@ -64,49 +64,35 @@ const Navbar = () => {
         .replace(/\s+/g, ' ')     // this will convert any multiple spaces to a single space 
         .toLowerCase();           // this will make the query all lowercase for case insensitivity
   
-      let filteredDecks;
-      let filteredQuizzes;
+      let filteredDecks = [];
+      let filteredQuizzes = [];
 
-  
       if (selectedOption === 'Filter' || selectedOption === 'Topic') {
-          // Filter by name and description for "Topic" or "Filter"
+        // Filter decks
           filteredDecks = allDecks.filter(deck =>
           deck.name.toLowerCase().includes(normalizedQuery) ||
           deck.description.toLowerCase().includes(normalizedQuery) ||
           deck.professor.toLowerCase().includes(normalizedQuery) ||
-          deck.semester.toLowerCase().includes(normalizedQuery) 
+          deck.semester.toLowerCase().includes(normalizedQuery)
         );
-      }
 
-      if (selectedOption === 'Filter' || selectedOption === 'Topic') {
-        // Filter by name and description for "Topic" or "Filter"
-        filteredQuizzes = allQuizzes.filter(quiz =>
-        quiz.name.toLowerCase().includes(normalizedQuery) ||
-        quiz.description.toLowerCase().includes(normalizedQuery) ||
-        quiz.professor.toLowerCase().includes(normalizedQuery) ||
-        quiz.semester.toLowerCase().includes(normalizedQuery) 
-      );
-    } 
-
-      // else if (selectedOption === 'Professor') {
-      //     // Filter by professor for "Professor"
-      //     filteredDecks = allDecks.filter(deck =>
-      //     deck.professor.toLowerCase().includes(normalizedQuery)
-      //   );
-      // } else if (selectedOption === 'Semester') {
-      //     // Filter by semester for "Semester"
-      //     filteredDecks = allDecks.filter(deck =>
-      //     deck.semester.toLowerCase().includes(normalizedQuery)
-      //   );
-      // }
-  
-      // Navigate to /searchresults and pass the filtered results
-      navigate('/searchresults', { state: { filteredResults: filteredDecks, filteredQuizzes } });
+        // Filter quizzes
+          filteredQuizzes = allQuizzes.filter(quiz =>
+          quiz.name.toLowerCase().includes(normalizedQuery) ||
+          quiz.description.toLowerCase().includes(normalizedQuery) ||
+          quiz.professor.toLowerCase().includes(normalizedQuery) ||
+          quiz.semester.toLowerCase().includes(normalizedQuery)
+        );
+    }  
+      navigate('/searchresults', { state: { filteredResults: filteredDecks, filteredQuizzes, initialView: 'home' } });
     } catch (error) {
       console.error('Error fetching decks:', error);
     }
   };
   
+    // Navigate to /searchresults and pass the filtered results
+    // navigate('/searchresults', { state: { filteredResults: filteredDecks, filteredQuizzes } });
+
 
   return (
     <nav className={`container ${bar ? 'dark-nav' : ''}`}>
@@ -137,16 +123,13 @@ const Navbar = () => {
             </div>
           )}
         </div> */}
-        <input
-          type="text"
-          value={searchQuery}
-          onChange={handleSearchChange}
-          placeholder="Search..."
-          className="search-input"
-        />
-        <button type="submit" className="search-button">
-          Search
-        </button>
+
+        <div className='searchbar'>
+          <input type="text" value={searchQuery} onChange={handleSearchChange} placeholder="Search..." className="search-input"/>
+          <button type="submit" className="search-button">
+          </button>
+        </div>
+        
       </form>
 
       {/* Navigation Links */}
