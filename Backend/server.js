@@ -2,12 +2,21 @@ require('dotenv').config({ path: '.env.local' });
 
 const express = require('express');
 const mongoose = require('mongoose');
-const flashcardRoutes = require('./routes/flashcards');
+const flashcardRoutes = require('./routes/flashCardRoute')
+const userRoutes = require('./routes/userRoute')
+const deckRoutes = require('./routes/deckRoute')
+const quizRoute = require('./routes/quizRoute');
+const questionRoutes = require('./routes/questionRoute');
+const quizAttemptRoutes = require('./routes/quizAttemptRoute');
 const helmet = require('helmet');
 const cors = require('cors');
 
 // express app
 const app = express();
+
+// middleware
+"parses request data to json which allows you see that/access the data "
+app.use(express.json())
 
 // Middleware
 app.use(helmet()); // Security headers
@@ -20,8 +29,13 @@ app.use((req, res, next) => {
     next();
 });
 
-// Routes
-app.use('/api/flashcards', flashcardRoutes);
+// routes
+app.use('/api/flashcards', flashcardRoutes)
+app.use('/api/users', userRoutes)
+app.use('/api/decks', deckRoutes)
+app.use('/api/quizzes', quizRoute);
+app.use('/api/questions', questionRoutes);
+app.use('/api/attempts', quizAttemptRoutes);
 
 // Ensure essential environment variables are set
 if (!process.env.MONGO_URI || !process.env.PORT) {
@@ -29,20 +43,14 @@ if (!process.env.MONGO_URI || !process.env.PORT) {
     process.exit(1); // Exit with failure
 }
 
-// Connect to MongoDB
+// connect to db
 mongoose.connect(process.env.MONGO_URI)
     .then(() => {
-        // Listen for requests
-        app.listen(process.env.PORT, () => {
-            console.log('Connected to db & listening on port', process.env.PORT);
-        });
+        // listen for requests 
+        app.listen(process.env.PORT, () =>{
+        console.log('connected to db & listening on port', process.env.PORT)
+        })
     }) 
     .catch((error) => {
-        console.error('MongoDB connection error:', error);
-    });
-
-// Error handling middleware
-app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).send('Something went wrong!');
-});
+        console.log(error)
+    })

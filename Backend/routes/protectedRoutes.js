@@ -1,6 +1,6 @@
 const express = require('express');
 const { requireAuth } = require('@clerk/clerk-sdk-node');
-const { getUser } = require('../controllers/userController');
+const { getUser } = require('../Controllers/userControllers');
 
 const router = express.Router();
 

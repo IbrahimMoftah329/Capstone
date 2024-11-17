@@ -1,15 +1,19 @@
 import React from 'react'
 import Navbar from './Components/Navbar/Navbar'
 import Hero from './Components/Hero/Hero'
+import AboutUs from './Components/About Us/AboutUs'
+import AboutUs2 from './Components/AboutUs2/AboutUs2'
 import Title from './Components/Title/Title'
 import SignUp from './Components/SignUp/SignUp'
 import Footer from './Components/Footer/Footer'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import AboutTitle from './Components/AboutTitle/AboutTitle'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/clerk-react';
 import About from './pages/AboutPage/About';
 import Dashboard from './pages/DashboardPage/Dashboard';
-import Carousel from './Components/Carousel/Carousel'
-import TitleC from './Components/Title/TitleC'
+import Quiz from './pages/QuizPage/Quiz';
+import Results from './pages/QuizPage/Results';
+
 
 const App = () => {
   return (
@@ -21,10 +25,9 @@ const App = () => {
             <>
               <Hero />
               <div className='container'>
-              <TitleC />
-              <Carousel />
-              <br></br>
-              <br></br>
+              <AboutTitle />
+              <AboutUs />
+              <AboutUs2 />
               <SignedOut>
                 <Title subtitle="Sign Up" title="Become a Mate" />
                 <SignUp />
@@ -36,6 +39,12 @@ const App = () => {
           <Route path="/about" element={<About />} />
           {/* Dashboard Page */}
           <Route path="/dashboard/*" element={<Dashboard />} />
+
+          <Route path="*" element={<Navigate to="/" />} /> {/* Redirect unknown routes */}
+          
+          {/* Quiz and Results Pages */}
+          <Route path="/quiz/:quizId" element={<Quiz />} />
+          <Route path="/results/:attemptId" element={<Results />} />
           
         </Routes>
         {/* Footer */}

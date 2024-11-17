@@ -251,6 +251,35 @@
 .flashcard-modal-content button[type="submit"]:hover {
     background-color: #45a049;
 }
+
+
+/* Modal Styles */
+/* Modal Overlay with Darker Background */
+.study-mode-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0.9, 0.9); /* Darker, semi-transparent background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* Modal Content Container - Reduced Width and Height */
+.study-mode-modal-content {
+    width: 90%; /* Increase width to 90% */
+    max-width: 900px; /* Increase the maximum width */
+    max-height: 90%; /* Increase maximum height to 90% */
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow-y: auto;
+}
+
 /* Study mode container */
 .study-mode-container {
     width: 100%;
@@ -273,7 +302,7 @@
     transition: background-color 0.2s ease;
 }
 
-/* Study mode layout */
+/* Study mode layout with slight padding adjustment */
 .study-mode {
     position: relative;
     width: 100%;
@@ -281,7 +310,7 @@
     flex-direction: column;
     align-items: center;
     gap: 1rem;
-    min-height: 70vh;
+    padding: 1rem;
 }
 
 /* Card counter */
@@ -292,21 +321,21 @@
     margin-top: 2rem;
 }
 
-/* Flashcard container - Added relative positioning for arrow placement */
+/* Flashcard container */
 .flashcard {
     width: 100%;
-    max-width: 400px;
+    max-width: 500px; /* Increase max-width to make the card larger */
     aspect-ratio: 3/4;
     position: relative;
     perspective: 1000px;
-    margin: 2rem 0;
+    margin: 1.5rem 0;
 }
 
 /* Flashcard content */
 .flashcard-contents {
     width: 100%;
     height: 100%;
-    padding: 2rem;
+    padding: 3rem; /* Increase padding for more space inside the card */
     background-color: white;
     border: 1px solid #e5e7eb;
     border-radius: 1rem;
@@ -318,25 +347,24 @@
     text-align: center;
     transition: transform 0.6s;
     transform-style: preserve-3d;
-    font-size: 1.125rem;
+    font-size: 1.5rem; /* Increase font size for larger text */
 }
 
-/* Button container - Modified for new arrow positioning */
+/* Button container */
 .card-buttons-studymode {
     width: 100%;
-    position: relative;
     display: flex;
     justify-content: center;
+    gap: 1rem;
     margin-top: 1rem;
 }
-
 
 /* Navigation buttons - Updated positioning */
 .prev-button-studymode,
 .next-buttons-studymode {
     position: absolute;
-    top: -400px; /* Adjust this value based on your card height */
-    transform: translateY(50%);
+    top: 50%; /* Center vertically with the flashcard */
+    transform: translateY(-50%); /* Adjust to align properly */
     padding: 0.75rem;
     border: none;
     border-radius: 50%;
@@ -345,21 +373,14 @@
     transition: all 0.2s ease;
     z-index: 10;
     box-shadow: none;
-    
 }
 
 .prev-button-studymode {
-    left: -5px; /* Adjust this value to position the button */
+    left: -60px; /* Adjust this value to position the button */
 }
 
 .next-buttons-studymode {
-    right: -5px; /* Adjust this value to position the button */
-}
-
-/* Hover state for navigation buttons */
-.prev-button-studymode:hover:not(:disabled),
-.next-buttons-studymode:hover:not(:disabled) {
-    transform: translateY(50%) scale(1.1);
+    right: -60px; /* Adjust this value to position the button */
 }
 
 /* Disabled state for navigation buttons */
@@ -372,8 +393,8 @@
 /* Style for the arrow images */
 .prev-button-studymode img,
 .next-buttons-studymode img {
-    width: 4rem;
-    height: 4rem;
+    width: 10rem;
+    height: 10rem;
 }
 
 /* Focus styles for accessibility */
@@ -382,12 +403,6 @@
 .exit-button-studymode:focus {
     outline: 2px solid #3b82f6;
     outline-offset: 2px;
-}
-
-/* Active states */
-.prev-button-studymode:active:not(:disabled),
-.next-buttons-studymode:active:not(:disabled) {
-    transform: translateY(50%) scale(0.95);
 }
 
 .exit-button-studymode:active {
@@ -417,8 +432,8 @@
     
     .prev-button-studymode img,
     .next-buttons-studymode img {
-        width: 1.25rem;
-        height: 1.25rem;
+        width: 5rem;
+        height: 5rem;
     }
 
     .flashcard-contents {

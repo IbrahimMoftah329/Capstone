@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { GiClubs } from "react-icons/gi";
 import './DashContent.css'; // Make sure the CSS file path is correct
+import { useUser } from '@clerk/clerk-react';
 
 const DashContact = () => {
+    const { user } = useUser();
     const [showPopup, setShowPopup] = useState(false);
 
     const handleUpdateClick = (event) => {

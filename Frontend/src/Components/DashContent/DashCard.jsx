@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import './DashCard.css';
-import nextArrow from '/Users/ninapham/Desktop/OCT /Capstone/Frontend/src/assets/arrow.jpg';
-import backArrow from '/Users/ninapham/Desktop/OCT /Capstone/Frontend/src/assets/arrow2.jpg';
+import './DashCard.css'; // Optional CSS file for styling
+import nextArrow from '../../assets/arrow.jpg';
+import backArrow from '../../assets/arrow2.jpg';
+import { useUser } from '@clerk/clerk-react';
 
 const DashCard = () => {
     const location = useLocation();
@@ -15,69 +16,127 @@ const DashCard = () => {
     const [editCardId, setEditCardId] = useState(null); // State to track which flashcard is being edited
     const [showDeletePopup, setShowDeletePopup] = useState(false); // State for delete popup visibility
     const [cardToDelete, setCardToDelete] = useState(null); // State for the card to be deleted
-    const [editingIndex, setEditingIndex] = useState(null);
 
     const [isStudyMode, setIsStudyMode] = useState(false);
     const [currentCardIndex, setCurrentCardIndex] = useState(0);
     const [isFlipped, setIsFlipped] = useState(false);
 
+    const { user } = useUser();
+
     // Function to add a flashcard
     const addFlashcard = () => {
-        if (newPrompt.trim() && newResponse.trim()) {
-            setFlashcards([
-                ...flashcards,
-                { id: flashcards.length + 1, prompt: newPrompt, response: newResponse }
-            ]);
-            resetModal();
+        const newFlashcard = {
+            question: newPrompt,
+            answer: newResponse,
+        };
+        fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/flashcards/deck/${deck._id}/flashcard`, {
+            headers: {
+                "Content-Type": "application/json",
+            },
+            method: "POST",
+            body: JSON.stringify(newFlashcard),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                setFlashcards(prevFlashcards => [...prevFlashcards, data]);
+                closeFlashcardModal();
+            })
+    };
+
+    const editFlashcard = (id, question, answer) => {
+        const updatedFlashcard = {
+            question,
+            answer,
+        };
+        return fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/flashcards/${id}`, {
+            headers: {
+                "Content-Type": "application/json",
+            },
+            method: "PATCH",
+            body: JSON.stringify(updatedFlashcard),
+        })
+            .then(response => response.json())
+            .then(data => {
+                setFlashcards(prevFlashcards =>
+                    prevFlashcards.map(flashcard => (flashcard._id === id ? { ...flashcard, ...data } : flashcard))
+                );
+                return data;
+            });
+    };
+
+    const deleteFlashcard = (id) => {
+        return fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/flashcards/${id}`, {
+            method: "DELETE",
+        })
+            .then(() => {
+                setFlashcards(prevFlashcards => prevFlashcards.filter(flashcard => flashcard._id !== id));
+            });
+    };
+
+    const getFlashcards = () => {
+        fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/flashcards/deck/${deck._id}/flashcards`)
+            .then((response) => response.json())
+            .then((data) => {
+                setFlashcards(data);
+            })
+    };
+
+    useEffect(() => {
+        getFlashcards();
+    }, []);
+
+    // Function to open the modal for editing an existing flashcard
+    const openFlashcardModal = (card = null) => (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (card) {
+            setIsEditing(true);
+            setEditCardId(card._id);
+            setNewPrompt(card.question);
+            setNewResponse(card.answer);
+        } else {
+            setIsEditing(false);
+            setEditCardId(null);
+            setNewPrompt('');
+            setNewResponse('');
+        }
+        setIsCardModalOpen(true);
+    };
+
+    // Function to close the flashcard modal
+    const closeFlashcardModal = () => {
+        setIsCardModalOpen(false);
+        setIsEditing(false);
+        setEditCardId(null);
+        setNewPrompt('');
+        setNewResponse('');
+    };
+
+    const handleFlashcardSubmit = async () => {
+        if (newPrompt && newResponse) {
+        if (isEditing && editCardId) {
+            await editFlashcard(editCardId, newPrompt, newResponse);
+        } else {
+            await addFlashcard(newPrompt, newResponse);
+        }
+        closeFlashcardModal();
+        } else {
+        alert("Please fill in all the fields before submitting.");
         }
     };
 
-    // Function to open the modal
-    const openModal = () => {
-        setIsCardModalOpen(true);
-    };
-
-    // Function to close the modal
-    const closeModal = () => {
-        resetModal();
-    };
-
-    // Function to reset modal states
-    const resetModal = () => {
-        setIsCardModalOpen(false);
-        setNewPrompt('');
-        setNewResponse('');
-        setIsEditing(false);
-        setEditCardId(null);
-    };
-
-    // Function to open the modal for editing an existing flashcard
-    const openEditModal = (card) => {
-        setIsEditing(true);
-        setEditCardId(card.id);
-        setNewPrompt(card.prompt);
-        setNewResponse(card.response);
-        setIsCardModalOpen(true);
-    };
-
-    // Function to save edited flashcard
-    const saveEditedFlashcard = () => {
-        setFlashcards(flashcards.map(card => 
-            card.id === editCardId ? { ...card, prompt: newPrompt, response: newResponse } : card
-        ));
-        resetModal();
-    };
-
     // Function to open the delete confirmation popup
-    const handleDeleteClick = (card) => {
-        setCardToDelete(card);
+    const handleDeleteClick = (id) => (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setCardToDelete(id);
         setShowDeletePopup(true);
     };
 
     // Function to confirm deletion of the flashcard
-    const confirmDeleteCard = () => {
-        if (cardToDelete) {
-            setFlashcards(flashcards.filter(card => card.id !== cardToDelete.id));
+    const confirmDeleteCard = async () => {
+        if (cardToDelete !== null) {
+            await deleteFlashcard(cardToDelete);
             setShowDeletePopup(false);
             setCardToDelete(null);
         }
@@ -117,134 +176,93 @@ const DashCard = () => {
         setIsFlipped(!isFlipped);
     };
 
-    const shuffleArray = (array) => {
-        return array.sort(() => Math.random() - 0.5);
-      };
-    
-      const shuffleCards = () => {
-        setFlashcards(shuffleArray([...flashcards]));
-      };
-    
-      
     return (
         <div className="flashcard-content">
-            <h1 className="content-title">{deck ? deck.name : "Deck Details"}</h1>
+            <h1 className="content-title">{deck.name}</h1>
             <div className="flashcard-box">
-                <p className="content-description">{deck?.description}</p> {/* Use deck description */}
-                <p>Created on: {deck?.createdAt}</p> {/* Show creation date */}
-                <p>Professor: {deck?.professor}</p> {/* Show creation date */}
-                <p>Semester: {deck?.semester}</p> {/* Show creation date */}
-                <button className="add-button" onClick={openModal}>+</button>
-                <h2>Flashcards</h2>
+                <p className="content-description" style={{ paddingBottom: "10px", paddingRight: "35px" }}>{deck.description}</p> {/* Use deck description */}
+                <p>Created on: {
+                    new Date(deck.createdAt).toLocaleDateString('en-US', {
+                        month: 'numeric',
+                        day: 'numeric',
+                        year: 'numeric'
+                    })
+                }</p> {/* Show creation date */}
+                <p>Professor: {deck.professor}</p> {/* Show creation date */}
+                <p>Semester: {deck.semester}</p> {/* Show creation date */}
+                <p>Number of Flashcards: {deck.flashcards.length} cards</p>
+                <button className="add-button" onClick={openFlashcardModal()}>+</button>
 
-
+                {/* Start Study Mode Button */}
+                <button className="study-button" onClick={startStudy}>Start Study Mode</button>
+                
+                <h2 style={{ paddingTop: "10px" }}>Flashcards:</h2>
                 <div className="flashcard-list" style={{ width: '100%' }}>
                     {flashcards.map((card) => (
-                        <div key={card.id} className="flashcard-item">
+                        <div key={card._id} className="flashcard-item">
                             <div className="flashcard-prompt">
-                                <p>{card.prompt}</p>
+                                <p>{card.question}</p>
                             </div>
                             <div className="flashcard-response">
-                                <p>{card.response}</p>
+                                <p>{card.answer}</p>
                             </div>
                             <div className="button-group">
-                                <button className="flashcard-button delete" type="button" onClick={() => handleDeleteClick(card)}>Delete</button>
-                                <button className="flashcard-button edit" type="button" onClick={() => openEditModal(card)}>Edit</button>
+                                <button className="flashcard-button delete" type="button" onClick={handleDeleteClick(card._id)}>Delete</button>
+                                <button className="flashcard-button edit" type="button" onClick={openFlashcardModal(card)}>Edit</button>
                             </div>
                         </div>
                     ))}
                 </div>
-                {/* study mode container flashcard setup */}
 
-                <div className="study-mode-container">
-                        {!isStudyMode ? (
-                        <button className="study-button" onClick={startStudy}>
-                        Study Flashcards
-                    </button>
-                        ) : (
-                        <div className="study-mode">
-                            <div className="card-info">
-                            Card {currentCardIndex + 1} of {flashcards.length}
-                            </div>
+                {/* Study Mode Flashcard Modal */}
+                {isStudyMode && (
+                    <div className="study-mode-modal">
+                        <div className="study-mode-modal-content">
+                            <div className="study-mode-container">
+                                <div className="study-mode">
+                                    <h2>Study Flashcards</h2>
+                                    <div className="card-info">Card {currentCardIndex + 1} of {flashcards.length}</div>
+                                    <div className="flashcard" onClick={flipCard}>
+                                        <div className="flashcard-contents">
+                                            {isFlipped ? flashcards[currentCardIndex].answer : flashcards[currentCardIndex].question}
+                                        </div>
+                                    </div>
 
-                            <div className="flashcard">
-                            <div className="flashcard-contents" onClick={flipCard}>
-                                {isFlipped ? flashcards[currentCardIndex].response : flashcards[currentCardIndex].prompt}
-                            </div>
-                            </div>
-
-                            <div className="card-buttons-studymode">
-                            <button className="prev-button-studymode" onClick={previousCard} disabled={currentCardIndex === 0}>
-                                <img src={backArrow } alt='previous-arrow'/>
-                            </button>
-                            <button className="restart-button-studymode" onClick={() => setCurrentCardIndex(0)}>
-                                Restart
-                            </button>
-                            <button className="exit-button-studymode" onClick={() => setIsStudyMode(false)}>
-                                Exit
-                            </button>
-                            <button className="shuffle-button-studymode" onClick={shuffleCards}>
-                                Shuffle
-                            </button>
-                            <button className="next-buttons-studymode" onClick={nextCard} disabled={currentCardIndex === flashcards.length - 1}>
-                                <img src= {nextArrow } alt = 'next-arrow' />
-                            </button>
+                                    <div className="card-buttons-studymode">
+                                        <button className="prev-button-studymode" onClick={previousCard} disabled={currentCardIndex === 0}>
+                                            <img src={backArrow} alt="previous" />
+                                        </button>
+                                        <button className="restart-button-studymode" onClick={() => { setCurrentCardIndex(0); setIsFlipped(false); }}>Restart</button>
+                                        <button className="exit-button-studymode" onClick={() => setIsStudyMode(false)}>Exit</button>
+                                        <button className="next-buttons-studymode" onClick={nextCard} disabled={currentCardIndex === flashcards.length - 1}>
+                                            <img src={nextArrow} alt="next" />
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        )}
                     </div>
+                )}
 
                 {/* Modal for Adding or Editing Flashcard */}
                 {isCardModalOpen && (
                     <div className="flashcard-modal">
                         <div className="flashcard-modal-content">
                             <h2>{isEditing ? "Edit Flashcard" : "Add New Flashcard"}</h2>
-                            <h3>Prompt</h3>
-                            <textarea
-                                type="text"
-                                rows="5"
-                                className='input'
-                                value={newPrompt}
-                                onChange={(e) => setNewPrompt(e.target.value)}
-                                required
-                                placeholder="Enter prompt"
-                            />
-                            <h3>Response</h3>
-                            <textarea
-                                type="text"
-                                rows="5"
-                                className='input'
-                                value={newResponse}
-                                onChange={(e) => setNewResponse(e.target.value)}
-                                required
-                                placeholder="Enter response"
-                            />
-                            <div className="modal-buttons">
-                                <button type="button" onClick={closeModal}>Cancel</button>
-                                {isEditing ? (
-                                    <button
-                                        type="submit"
-                                        onClick={saveEditedFlashcard}
-                                        disabled={!newPrompt.trim() || !newResponse.trim()}
-                                    >
-                                        Save Changes
-                                    </button>
-                                ) : (
-                                    <button
-                                        type="submit"
-                                        onClick={addFlashcard}
-                                        disabled={!newPrompt.trim() || !newResponse.trim()}
-                                    >
-                                        Add Flashcard
-                                    </button>
-                                    
-                                )}
-                            </div>
+                            <form onSubmit={(e) => { e.preventDefault(); handleFlashcardSubmit(); }}>
+                                <h3>Prompt</h3>
+                                <textarea type="text" rows="5" className='input' value={newPrompt} onChange={(e) => setNewPrompt(e.target.value)} required placeholder="Enter prompt" />
+                                <h3>Response</h3>
+                                <textarea type="text" rows="5" className='input' value={newResponse} onChange={(e) => setNewResponse(e.target.value)} required placeholder="Enter response" />
+                                <div className="modal-buttons">
+                                    <button type="button" onClick={() => closeFlashcardModal()}>Cancel</button>
+                                    <button type="submit">{isEditing ? "Save Changes" : "Add Flashcard"}</button>                              
+                                </div>
+                            </form>
                         </div>
                     </div>
                 )}
 
-    
                 {/* Styled Popup for Delete Confirmation */}
                 {showDeletePopup && (
                     <div className="popup-overlay">
