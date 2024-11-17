@@ -12,7 +12,7 @@ const getFlashcard = async (req, res) => {
     }
     res.status(200).json(flashcard);
   } catch (err) {
-    res.status(500).send(err.message);
+    res.status(500).json({ error: err.message });
   }
 };
 
@@ -30,22 +30,33 @@ const getAllFlashcardsInDeck = async (req, res) => {
     // Return the flashcards in the deck
     res.status(200).json(deck.flashcards);
   } catch (err) {
-    res.status(500).send(err.message);
+    res.status(500).json({ error: err.message });
   }
 };
 
 // Add a new flashcard to a deck
 const addFlashcardToDeck = async (req, res) => {
-    try {
-      const newFlashcard = new Flashcard({ ...req.body, deckId: req.params.deckId });
-      const savedFlashcard = await newFlashcard.save();
-  
-      await Deck.findByIdAndUpdate(req.params.deckId, { $push: { flashcards: savedFlashcard._id } });
-      res.json(savedFlashcard);
-    } catch (err) {
-      res.status(500).send(err.message);
+  const { deckId } = req.params;
+
+  try {
+    const deck = await Deck.findById(deckId);
+    if (!deck) {
+      return res.status(404).json({ error: 'Deck not found' });
     }
-  };
+
+    // Create and save the new flashcard
+    const newFlashcard = new Flashcard({ ...req.body, deckId });
+    const savedFlashcard = await newFlashcard.save();
+
+    // Add the new flashcard reference to the deck
+    deck.flashcards.push(savedFlashcard._id);
+    await deck.save();
+
+    res.status(201).json(savedFlashcard);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
 
 // Update a flashcard by ID
 const updateFlashcard = async (req, res) => {
@@ -58,7 +69,7 @@ const updateFlashcard = async (req, res) => {
     }
     res.status(200).json(updatedFlashcard);
   } catch (err) {
-    res.status(500).send(err.message);
+    res.status(500).json({ error: err.message });
   }
 };
 
@@ -72,11 +83,11 @@ const deleteFlashcard = async (req, res) => {
       return res.status(404).json({ error: 'Flashcard not found' });
     }
 
-    // Remove reference to the flashcard from the Deck
+    // Remove the flashcard reference from the deck's flashcards array
     await Deck.findByIdAndUpdate(deletedFlashcard.deckId, { $pull: { flashcards: flashcardId } });
     res.status(200).json({ message: 'Flashcard deleted successfully', flashcard: deletedFlashcard });
   } catch (err) {
-    res.status(500).send(err.message);
+    res.status(500).json({ error: err.message });
   }
 };
 

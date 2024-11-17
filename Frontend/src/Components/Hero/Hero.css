@@ -1,0 +1,30 @@
+/* Hero.css */
+
+.hero{
+    width: 100%;
+    min-height: 100vh;
+    background: linear-gradient(rgba(8,0,58,0.5),rgba(8,0,58,0.6)), url('../../assets/hero.jpg');
+    background-size: cover;
+    background-position: center;
+    color: #ffffff;
+    display:flex;
+    align-items:center;
+    justify-content: center;
+}
+
+.hero-text{
+    text-align:center;
+    max-width:800px;
+    font-size: 25px;
+}
+
+.hero-text h1{
+    font-size: 200 px;
+    font-weight: 600;
+}
+
+.hero-text p {
+    max-width: 750 px;
+    margin: 10px auto 20px;
+    line-height:1.5;
+}

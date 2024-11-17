@@ -1,0 +1,126 @@
+/* Quiz Page Styles */
+.quiz-page {
+    max-width: 75%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.quiz-page h1 {
+    padding: 20px;
+    text-align: center;
+}
+
+/* Question Block */
+.question-block {
+    margin-bottom: 25px;
+    padding: 15px;
+    background-color: #ffffff;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+}
+
+.question-block h3 {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+/* Options Styling */
+.options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Style for label associated with options */
+.options label {
+    font-size: 1rem;
+    color: #555;
+    padding: 12px;
+    background-color: #f2f2f2;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    border: 2px solid transparent;
+    display: inline-block;
+    width: 100%;
+}
+
+/* Hide the radio button */
+.options input[type="radio"] {
+    display: none;
+}
+
+/* Style for selected option - when radio is checked, change the associated label */
+.options input[type="radio"]:checked + label {
+    background-color: #d3d3d3; /* Change color for selected option */
+    font-weight: bold;
+}
+
+/* Hover effect */
+.options label:hover {
+    background-color: #e0e0e0;
+}
+
+/* Submit Button */
+.submit-button {
+    padding: 12px 24px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #124883;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 100%;
+    max-width: 200px;
+    margin: 20px auto 0;
+    display: block;
+}
+
+.submit-button:hover {
+    background-color: #45a049;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .quiz-page {
+        padding: 15px;
+    }
+
+    .question-block h3 {
+        font-size: 1.1rem;
+    }
+
+    .options label {
+        font-size: 0.9rem;
+    }
+
+    .submit-button {
+        font-size: 0.9rem;
+        padding: 10px 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .quiz-page {
+        padding: 10px;
+    }
+
+    .question-block h3 {
+        font-size: 1rem;
+    }
+
+    .options label {
+        font-size: 0.8rem;
+        padding: 6px 10px;
+    }
+
+    .submit-button {
+        font-size: 0.8rem;
+        padding: 8px 16px;
+    }
+}

@@ -29,4 +29,3 @@ router.delete('/:userId', deleteUser)
 router.patch('/:userId', updateUser)
 
 module.exports = router
-

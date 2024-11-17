@@ -1,0 +1,45 @@
+/* AboutUs.css */
+
+.about{
+    margin:100px auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    width: 90%;
+
+}
+
+.about-left{
+    flex-basis:40%;
+    position:relative;
+}
+
+.about-right{
+    flex-basis:56%;
+}
+
+.ai {
+    width: 100%;
+    border-radius: 10px;
+
+}
+
+.about h3 {
+    font-weight: 600px;
+    font-weight: 16 px;
+    color: #000000;
+}
+
+.about h2 {
+    font-size: 35px;
+    color: #124883;
+    margin: 10 px 0;
+    max-width: 400 px;
+}
+
+.about p {
+    color: #000000;
+    margin-bottom: 15px;
+}
+
+

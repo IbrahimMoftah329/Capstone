@@ -1,0 +1,467 @@
+/* DashCard.css */
+
+/* Main container */
+.flashcard-content {
+    flex: 1;
+    padding: 20px;
+    background-color: #f0f0f0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: left;
+    text-align: left;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-bottom-left-radius: 30px;
+}
+
+.flashcard-box {
+    padding: 20px;
+    border-radius: 30px;
+    background-color: #ffffff;
+    position: relative; /* Ensure the add-button positions correctly */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional: add a subtle shadow */
+}
+
+.flashcard-list {
+    display: flex;
+    flex-wrap: wrap; /* Allows deck items to wrap */
+    gap: 10px; /* Space between each deck item */
+    margin-top: 20px;
+}
+
+.deck-detail {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.flashcard-item {
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #f9f9f9;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    width: 100%; /* Ensure it takes full width of the container */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    transition: box-shadow 0.3s ease;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row; /* Align content horizontally */
+    flex-wrap: wrap; /* Allow the content to wrap to the next line */
+    justify-content: space-between; /* Space out content horizontally */
+    gap: 10px;
+    position: relative;
+}
+
+/* Title Styling */
+.flashcard-item h3 {
+    margin-top: 0;
+    font-size: 18px;
+    color: #333;
+    overflow: hidden; /* Hide overflow */
+    text-overflow: ellipsis; /* Show ellipsis if text is too long */
+    white-space: nowrap; /* Prevent line breaks */
+}
+
+/* Styling for the Prompt and Response areas */
+.flashcard-prompt, .flashcard-response {
+    flex: 1; /* Ensure these take up available space */
+    margin-right: 10px; /* Space between content and edit button */
+}
+
+/* Separate the sections clearly */
+.flashcard-prompt {
+    border-right: 2px solid #ddd; /* Separator between Prompt and Response */
+}
+
+/* Ensure headings inside flashcard items are styled */
+.flashcard-item strong {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #124883;
+}
+
+/* Ensure the flashcard item can adjust height based on content */
+.flashcard-item p {
+    margin: 0;
+    line-height: 1.5; /* Adjust line height for readability */
+}
+
+.deck-detail h2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+.deck-detail h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.flashcard-input {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.flashcard-input input {
+    flex: 1;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.flashcard-input button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.flashcard-input button:disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
+}
+
+.flashcard-input button:hover:not(:disabled) {
+    background-color: #0056b3;
+}
+
+/* Add button styling */
+.add-button {
+    position: absolute;
+    top: 20px; /* Adjust vertical positioning */
+    right: 20px; /* Align to the right side */
+    width: 30px;
+    height: 30px;
+    background-color: #124883;
+    color: white; /* White text */
+    border: none;
+    border-radius: 50%; /* Makes the button round */
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.add-button:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+.flashcard-button {
+    width: 60px;
+    height: 30px;
+    padding: 10px 20px;
+    background-color: #124883; /* Default blue background */
+    color: white; /* White text */
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+}
+
+/* Styling specific for the delete button */
+.flashcard-button.delete {
+    background-color: grey; /* Default grey background */
+    margin-bottom: 10px; /* Add space between buttons */
+}
+
+.flashcard-button.delete:hover {
+    background-color: red; /* Red background on hover */
+}
+
+.flashcard-button.edit {
+    background-color: #124883; /* Keep the edit button as blue */
+}
+
+.flashcard-button:hover {
+    background-color: #45a049; /* Darker green on hover for non-delete buttons */
+}
+
+/* Modal Styles */
+.flashcard-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Dark semi-transparent background */
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    z-index: 1000; /* Ensure it appears above other elements */
+}
+
+.flashcard-modal-content {
+    width: 85%; /* Increase the width slightly */
+    max-width: 1000px; /* Adjust maximum width */
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    max-height: 95%; /* Increase max-height to make it taller */
+    overflow-y: auto; /* Enable vertical scrolling */
+}
+
+/* Make the input fields wider */
+.flashcard-modal-content textarea {
+    width: 100%; /* Take full width */
+    padding: 10px; /* Add padding for a better user experience */
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px; /* Slightly larger font for better readability */
+    resize: vertical; /* Allow resizing only vertically */
+}
+
+.flashcard-modal-content button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.flashcard-modal-content button[type="button"] {
+    background-color: #ccc;
+    color: #333;
+}
+
+.flashcard-modal-content button[type="button"]:hover {
+    background-color: #bbb;
+}
+
+.flashcard-modal-content button[type="submit"] {
+    background-color: #124883;
+    color: #fff;
+}
+
+.flashcard-modal-content button[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+
+/* Modal Styles */
+/* Modal Overlay with Darker Background */
+.study-mode-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0.9, 0.9); /* Darker, semi-transparent background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* Modal Content Container - Reduced Width and Height */
+.study-mode-modal-content {
+    width: 90%; /* Increase width to 90% */
+    max-width: 900px; /* Increase the maximum width */
+    max-height: 90%; /* Increase maximum height to 90% */
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow-y: auto;
+}
+
+/* Study mode container */
+.study-mode-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+/* Study button (initial state) */
+.study-button {
+    display: block;
+    margin: 0 auto;
+    padding: 0.75rem 1.5rem;
+    background-color: #124883;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+}
+
+/* Study mode layout with slight padding adjustment */
+.study-mode {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+/* Card counter */
+.card-info {
+    text-align: center;
+    font-size: 1rem;
+    color: #4b5563;
+    margin-top: 2rem;
+}
+
+/* Flashcard container */
+.flashcard {
+    width: 100%;
+    max-width: 500px; /* Increase max-width to make the card larger */
+    aspect-ratio: 3/4;
+    position: relative;
+    perspective: 1000px;
+    margin: 1.5rem 0;
+}
+
+/* Flashcard content */
+.flashcard-contents {
+    width: 100%;
+    height: 100%;
+    padding: 3rem; /* Increase padding for more space inside the card */
+    background-color: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 1rem;
+    box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+    font-size: 1.5rem; /* Increase font size for larger text */
+}
+
+/* Button container */
+.card-buttons-studymode {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+/* Navigation buttons - Updated positioning */
+.prev-button-studymode,
+.next-buttons-studymode {
+    position: absolute;
+    top: 50%; /* Center vertically with the flashcard */
+    transform: translateY(-50%); /* Adjust to align properly */
+    padding: 0.75rem;
+    border: none;
+    border-radius: 50%;
+    background: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    z-index: 10;
+    box-shadow: none;
+}
+
+.prev-button-studymode {
+    left: -60px; /* Adjust this value to position the button */
+}
+
+.next-buttons-studymode {
+    right: -60px; /* Adjust this value to position the button */
+}
+
+/* Disabled state for navigation buttons */
+.prev-button-studymode:disabled,
+.next-buttons-studymode:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Style for the arrow images */
+.prev-button-studymode img,
+.next-buttons-studymode img {
+    width: 10rem;
+    height: 10rem;
+}
+
+/* Focus styles for accessibility */
+.prev-button-studymode:focus,
+.next-buttons-studymode:focus,
+.exit-button-studymode:focus {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+}
+
+.exit-button-studymode:active {
+    background-color: #b91c1c;
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 640px) {
+    .flashcard {
+        max-width: 320px;
+        aspect-ratio: 2/3;
+    }
+
+    .prev-button-studymode,
+    .next-buttons-studymode {
+        padding: 0.5rem;
+    }
+    
+    /* Adjust arrow positions for mobile */
+    .prev-button-studymode {
+        left: -40px;
+    }
+
+    .next-buttons-studymode {
+        right: -40px;
+    }
+    
+    .prev-button-studymode img,
+    .next-buttons-studymode img {
+        width: 5rem;
+        height: 5rem;
+    }
+
+    .flashcard-contents {
+        padding: 1.5rem;
+        font-size: 1rem;
+    }
+}
+
+/* Additional media query for very small screens */
+@media (max-width: 480px) {
+    .prev-button-studymode {
+        left: -30px;
+    }
+
+    .next-buttons-studymode {
+        right: -30px;
+    }
+}
+
+.restart-button-studymode, .shuffle-button-studymode, .exit-button-studymode {
+    display: block;
+    margin: 0 auto;
+    padding: 0.75rem 1.5rem;
+    background-color: #124883;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+}

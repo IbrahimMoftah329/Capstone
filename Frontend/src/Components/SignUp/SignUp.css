@@ -1,0 +1,61 @@
+/* SignUp.css */
+
+.signUp{
+   margin: 80px auto;
+   max-width: 90%;
+   display: flex;
+   align-center: center;
+   justify-content: space-between; 
+}
+
+.small-image {
+    width: 5%; /* or any percentage or value */
+    height: auto; /* keeps the aspect ratio */
+}
+
+.col{
+    flex-basis: 48%;
+    color: #000000;
+}
+
+.col h3{
+    color: #124883;
+    font-weight: 500;
+    font-size: 25px;
+    display: flex;
+    align-items: center;    
+    margin-bottom: 20 px;
+}
+
+.col p{
+    max-width: 450 px;
+    line-style: 0.3;
+}
+
+.col ul li{
+    display:flex;
+    align-items: center;
+}
+
+.col form input {
+    display:block;
+    width:100%;
+    background: #D9D9D9;
+    padding: 15px;
+    border: 0;
+    outline: 0;
+    margin-bottom: 15px;
+    margin-top: 10px;
+    resize: none;
+}
+
+.col button{
+    display:block;
+    padding: 7px;
+    padding-top: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin:5px ;
+    font-size: 14px;
+    background: #D3D3D3;
+}

@@ -1,0 +1,17 @@
+/* AboutTitle.css */
+
+.title{
+    text-align:center;
+    font-size: 15px;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin: 40px 0;
+    margin-top: 70px;
+}
+
+.title h3{
+    font-size:32px;
+    color: #124883;
+    margin-top: 5px;
+    text-transform: none;
+}

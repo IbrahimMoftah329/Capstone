@@ -1,13 +1,42 @@
-body {
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+
+*{
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Outfit", sans-serif;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+body{
+  background: #FFFFFF;
+  padding-top: 70px;
+}
+
+.container{
+  padding-left:9%;
+  padding-right:10%;
+}
+
+.button{
+  background: #D9D9D9;
+  color: #000000;
+  padding: 8px 16px;
+  font-size: 16px;
+  border-radius: 30px;
+  cursor:pointer;
+  border:0;
+  outline: 0;
+  display:inline-flex;
+}
+
+.signupbutton{
+  background: #D9D9D9;
+  color: #000000;
+  padding: 15px 24px;
+  font-size: 20px;
+  border-radius: 30px;
+  cursor:pointer;
+  border:0;
+  outline: 0;
+  display:inline-flex;
 }
