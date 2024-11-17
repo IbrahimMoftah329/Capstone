@@ -173,8 +173,30 @@ const DashCard = () => {
     };
 
     const flipCard = () => {
-        setIsFlipped(!isFlipped);
+        setIsFlipped((prevIsFlipped) => !prevIsFlipped); // Toggle isFlipped state on each call
     };
+
+    // Event listener for keyboard navigation
+    useEffect(() => {
+        const handleKeyDown = (event) => {
+            if (isStudyMode) {
+                if (event.key === 'ArrowLeft') {
+                    previousCard();
+                } else if (event.key === 'ArrowRight') {
+                    nextCard();
+                } else if (event.key === ' ') {
+                    event.preventDefault(); // Prevent page scrolling on spacebar press
+                    flipCard();
+                }
+            }
+        };
+    
+        window.addEventListener('keydown', handleKeyDown);
+    
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [isStudyMode, currentCardIndex, isFlipped]);
 
     return (
         <div className="flashcard-content">
