@@ -20,7 +20,7 @@ const DashContact = () => {
     const handleUpdateClick = async (event) => {
         event.preventDefault();
         setShowPopup(true);
-
+    
         // Send form data to the backend to send the email
         try {
             const response = await fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/send-email`, {
@@ -36,13 +36,20 @@ const DashContact = () => {
                     userName: formData.name // User's name for confirmation
                 }),
             });
-
+    
             if (!response.ok) throw new Error('Error sending email');
             console.log("Email successfully sent to both CardMates and the user.");
+    
+            // Clear form fields upon successful submission
+            setFormData({
+                name: '',
+                email: '',
+                message: ''
+            });
         } catch (error) {
             console.error("Error occurred during email submission:", error);
         }
-
+    
         setTimeout(() => {
             setShowPopup(false);
         }, 3000);
