@@ -26,7 +26,6 @@ const ResultsDeck = ({ onShowHome, onShowDeck, onShowQuiz }) => {
 
 
   const getFlashcards = async (deck) => {
-    
     if (deck && deck._id) {
       try{
         const response = await fetch(`http://localhost:4000/api/flashcards/deck/${deck._id}/flashcards`);
@@ -49,7 +48,7 @@ const ResultsDeck = ({ onShowHome, onShowDeck, onShowQuiz }) => {
           {/* This is the filter bar to switch between results home, deck, and quizzes */}
           <div className='filter-bar'>
             <button className='filter-button' onClick={onShowHome}>All Results</button>
-            <button className='filter-button' onClick={onShowDeck}>Decks</button>
+            <button className='filter-button active' onClick={onShowDeck}>Decks</button>
             <button className='filter-button' onClick={onShowQuiz}>Quizzes</button>
           </div>
 

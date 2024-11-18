@@ -52,7 +52,7 @@ const ResultsQuiz = ({ onShowHome, onShowDeck, onShowQuiz }) => {
           <div className='filter-bar'>
             <button className='filter-button' onClick={onShowHome}>All Results</button>
             <button className='filter-button' onClick={onShowDeck}>Decks</button>
-            <button className='filter-button' onClick={onShowQuiz}>Quizzes</button>
+            <button className='filter-button active' onClick={onShowQuiz}>Quizzes</button>
           </div>
 
             <div className = 'results-container'>
