@@ -13,11 +13,9 @@ const DashLibrary = () => {
     const [decks, setDecks] = useState([]);
     const [isEditing, setIsEditing] = useState(false);
     const [editDeckId, setEditDeckId] = useState(null);
-
-    const [isDeck, setIsDeck] = useState(true); // Flag to track whether it's a deck or quiz being deleted
     const [showDeletePopup, setShowDeletePopup] = useState(false);
-    const [itemToDelete, setItemToDelete] = useState(null); // Stores the ID of the deck or quiz to delete
-
+    const [itemToDelete, setItemToDelete] = useState(null);
+    const [deleteType, setDeleteType] = useState(''); // Track delete type ('deck', 'quiz', or 'attempt')
     const [isQuizModalOpen, setIsQuizModalOpen] = useState(false);
     const [quizName, setQuizName] = useState('');
     const [quizDescription, setQuizDescription] = useState('');
@@ -25,14 +23,12 @@ const DashLibrary = () => {
     const selectedDeckName = selectedDeckId
     ? decks.find(deck => deck._id === selectedDeckId)?.name
     : ""; // Derive selected deck name from selectedDeckId
-
     const [quizzes, setQuizzes] = useState([]);
-    
+    const [attempts, setAttempts] = useState([]);
     const navigate = useNavigate();
-    const { isSignedIn, user } = useUser();
-    if (!isSignedIn) {
-        return;
-    }
+    const { user } = useUser();
+    const [isLoading, setIsLoading] = useState(true);
+    const [favoritedDecks, setFavoritedDecks] = useState([]);
 
     // deck functions
     const addDeck = (name, description, professor, semester) => {
@@ -79,6 +75,7 @@ const DashLibrary = () => {
     };
 
     const deleteDeck = (id) => {
+        console.log("Deleting deck with ID:", id);
         return fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/decks/${id}`, {
             method: "DELETE",
         })
@@ -140,40 +137,41 @@ const DashLibrary = () => {
         }
     };
 
-    // Handle delete button click for decks
+    // Handle delete button clicks for decks
     const handleDeckDeleteClick = (id) => (e) => {
         e.preventDefault();
         e.stopPropagation();
         setItemToDelete(id);
-        setIsDeck(true); // Set flag to indicate we're deleting a deck
+        setDeleteType('deck');
         setShowDeletePopup(true);
+        console.log("Delete deck clicked:", id);
     };
+
 
     const navigateToDeckDetail = (deck) => {
         navigate(`/dashboard/library/${deck._id}`, { state: { deck } });
     };
 
-
-
-    // shared between deck and quiz
-    // Confirm deletion based on whether it's a deck or quiz
+    // Confirm deletion based on `deleteType`
     const confirmDelete = async () => {
-        if (itemToDelete !== null) {
-            if (isDeck) {
-                await deleteDeck(itemToDelete); // Call the delete function for decks
-            } else {
-                await deleteQuiz(itemToDelete); // Call the delete function for quizzes
+        if (!itemToDelete) return;
+
+        try {
+            if (deleteType === 'deck') {
+                await deleteDeck(itemToDelete);
+            } else if (deleteType === 'quiz') {
+                await deleteQuiz(itemToDelete);
+            } else if (deleteType === 'attempt') {
+                await deleteAttempt(itemToDelete);
             }
+        } catch (error) {
+            console.error("Error deleting item:", error);
+        } finally {
             setShowDeletePopup(false);
             setItemToDelete(null);
+            setDeleteType('');
         }
     };
-
-    const cancelDelete = () => {
-        setShowDeletePopup(false);
-        setDeckToDelete(null);
-    };
-
 
 
     // quiz functions
@@ -188,6 +186,7 @@ const DashLibrary = () => {
             name,
             description,
             deckId,
+            deckName: associatedDeckInfo.name,
             semester: associatedDeckInfo.semester,
             professor: associatedDeckInfo.professor,
         };
@@ -220,6 +219,7 @@ const DashLibrary = () => {
     
 
     const deleteQuiz = (id) => {
+        console.log("Deleting quiz with ID:", id);
         return fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/quizzes/${id}`, {
             method: "DELETE",
         })
@@ -279,9 +279,11 @@ const DashLibrary = () => {
         e.preventDefault();
         e.stopPropagation();
         setItemToDelete(id);
-        setIsDeck(false); // Set flag to indicate we're deleting a quiz
+        setDeleteType('quiz');
         setShowDeletePopup(true);
+        console.log("Delete quiz clicked:", id);
     };
+
 
     // Handle deck selection
     const handleDeckSelection = (e) => {
@@ -291,11 +293,80 @@ const DashLibrary = () => {
         setSelectedDeckId(selectedDeck ? selectedDeck._id : null);
     };
 
+    const navigateToQuizTaker = (quiz) => {
+        navigate(`/quiz/${quiz._id}`, { state: { quiz } });
+    };
 
+    const deleteAttempt = (id) => {
+        console.log("Deleting attempt with ID:", id);
+        return fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/attempts/${id}`, {
+            method: "DELETE",
+        })
+            .then(() => {
+                // Remove the quiz from the `quizzes` state only
+                setAttempts(prevAttempts => prevAttempts.filter(attempt => attempt._id !== id));
+            })
+            .catch(error => console.error("Error deleting attempt:", error));
+    };
+
+    const getAttempts = () => {
+        fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/attempts/user/${user.id}/attempts`, {
+            headers: { "Content-Type": "application/json" },
+            method: "GET",
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log("Fetched attempts data:", data); // Log fetched attempts to verify structure
+                setAttempts(data);
+            })
+            .catch(error => console.error("Error fetching attempts:", error));
+    };
+
+    // Handle delete button click for attempts
+    const handleAttemptDeleteClick = (id) => (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setItemToDelete(id);
+        setDeleteType('attempt');
+        setShowDeletePopup(true);
+        console.log("Delete attempt clicked:", id);
+    };
+
+    // Updated function to navigate to quiz attempt results
+    const navigateToQuizAttempt = (attempt) => {
+        const associatedQuiz = quizzes.find(quiz => quiz._id === attempt.quizId);
+        if (associatedQuiz) {
+            navigate(`/results/${attempt.attemptId}`, { state: { attempt, quiz: associatedQuiz } });
+        } else {
+            console.error("Associated quiz not found for attempt:", attempt);
+        }
+    };
+
+
+
+    // Fetch data on component mount
     useEffect(() => {
-        getDecks();
-        getQuizzes(); // Fetch quizzes when the component loads
-    }, []);    
+        Promise.all([getDecks(), getQuizzes(), getAttempts()])
+            .then(() => setIsLoading(false)) // Data is fully loaded
+            .catch((error) => {
+                console.error("Error fetching data:", error);
+                setIsLoading(false); // Stop loading on error as well
+            });
+    }, []);
+
+    //favorited deck functions 
+    const getFavoritedDecks = () => {
+        fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/decks/user/${user.id}/favorites`)
+            .then((response) => response.json())
+            .then((data) => {
+                setFavoritedDecks(data);
+            })
+            .catch(error => console.error("Error fetching favorited decks:", error));
+    };
+
+
+    // Display loading message while decks and quizzes are loading
+    if (isLoading) return <div>Loading...</div>;
 
     return (
         <div className="library-content">
@@ -332,15 +403,12 @@ const DashLibrary = () => {
         <button className="add-button" onClick={() => openQuizModal(null)}>+</button>
         <div className="quiz-list">
             {quizzes && quizzes.map((quiz) => {
-
-                const associatedDeck = decks.find(deck => String(deck._id) === String(quiz.deckId));
-
                 return (
-                    <div key={quiz._id} className="quiz-item">
+                    <div key={quiz._id} className="quiz-item" onClick={() => navigateToQuizTaker(quiz)}>
                         <div>
                             <h3>{quiz.name}</h3>
                             <p>{quiz.description}</p>
-                            <p>Associated Deck:<br />{associatedDeck.name}</p>
+                            <p>Associated Deck:<br />{quiz.deckName}</p>
                             <p>Number of Questions: {quiz.numQuestions}</p>
                             <p>Created on: {
                                 new Date(quiz.createdAt).toLocaleDateString('en-US', {
@@ -352,6 +420,34 @@ const DashLibrary = () => {
                         </div>
                         <div className="quiz-item-buttons">
                             <button className="quiz-button delete" type="button" onClick={handleQuizDeleteClick(quiz._id)}>Delete</button>
+                        </div>
+                    </div>
+                );
+            })}
+        </div>
+        <h1 className="library-content-title" style={{ paddingTop: "10px" }}>Quiz Attempts</h1>
+        <p className="library-content-description">Manage your attempts here.</p>
+        <div className="quiz-list">
+            {attempts && attempts.map((attempt) => {
+                console.log("Attempt ID:", attempt.attemptId); // Debug log to check _id
+                return (
+                    <div key={attempt.attemptId} className="quiz-item" onClick={() => navigateToQuizAttempt(attempt)}>
+                        <div>
+                            <h3>Associated Quiz:<br />{attempt.quizName}</h3>
+                            <p>Score: {attempt.score} / {attempt.totalQuestions}</p>
+                            <p>Attempted on: {
+                                new Date(attempt.createdAt).toLocaleString('en-US', {
+                                    month: 'numeric',
+                                    day: 'numeric',
+                                    year: 'numeric',
+                                    hour: 'numeric',
+                                    minute: 'numeric',
+                                    hour12: true // For 12-hour format; set to false for 24-hour format
+                                })
+                            }</p>
+                        </div>
+                        <div className="quiz-item-buttons">
+                            <button className="quiz-button delete" type="button" onClick={handleAttemptDeleteClick(attempt.attemptId)}>Delete</button>
                         </div>
                     </div>
                 );
@@ -430,10 +526,13 @@ const DashLibrary = () => {
                 <div className="popup-overlay">
                     <div className="popup-content">
                         <h2>Confirm Deletion</h2>
-                        <p>{isDeck ? "Are you sure you want to delete this deck? This action cannot be undone." : "Are you sure you want to delete this quiz? This action cannot be undone."}</p>
+                        <p>{deleteType === 'deck' ? "Are you sure you want to delete this deck? This action cannot be undone." 
+                            : deleteType === 'quiz' ? "Are you sure you want to delete this quiz? This action cannot be undone."
+                            : "Are you sure you want to delete this attempt? This action cannot be undone."}
+                        </p>                        
                         <div className="popup-buttons">
-                            <button className="popup-button confirm" onClick={confirmDelete}>Yes, Delete</button>
-                            <button className="popup-button cancel" onClick={cancelDelete}>Cancel</button>
+                        <button className="popup-button confirm" onClick={confirmDelete}>Yes, Delete</button>
+                        <button className="popup-button cancel" onClick={() => setShowDeletePopup(false)}>Cancel</button>
                         </div>
                     </div>
                 </div>

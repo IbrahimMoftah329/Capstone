@@ -3,18 +3,12 @@ import './DashSidebar.css';
 import { ImSpades } from "react-icons/im";
 import { BsSuitDiamondFill } from "react-icons/bs";
 import { GiClubs } from "react-icons/gi";
+import { GiCardJoker } from "react-icons/gi";
 import { IoIosHeart } from "react-icons/io";
 import logo from '../../assets/logo2.png';
 import { Link } from 'react-router-dom';
 
   const DashSidebar = () => {
-    const items = [
-      { label: 'Library', icon: < ImSpades />, link: '/dashboard/library' },
-      { label: 'Profile', icon: <IoIosHeart />, link: '/dashboard/profile' },
-      { label: 'Settings', icon: <GiClubs />, link: '/dashboard/contact' },
-      { label: 'Logout', icon: <BsSuitDiamondFill />, link: '/dashboard/shuffle' },
-    ];
-  
     return (
       
       <div className='sidebar'>
@@ -32,9 +26,11 @@ import { Link } from 'react-router-dom';
             <a href='/dashboard/contact'> <GiClubs /> Contact </a>
           </li>
           <li>
-            <a href='/dashboard/shuffle'> <IoIosHeart /> Shuffle </a>
+            <a href = '/dashboard/favorites'> <IoIosHeart/> Favorites </a>
           </li>
-  
+          <li>
+            <a href='/dashboard/shuffle'> <GiCardJoker />Shuffle </a>
+          </li>
       </ul>
       </div>
       );

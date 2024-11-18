@@ -5,6 +5,9 @@ const mongoose = require('mongoose');
 const flashcardRoutes = require('./routes/flashCardRoute')
 const userRoutes = require('./routes/userRoute')
 const deckRoutes = require('./routes/deckRoute')
+const quizRoute = require('./routes/quizRoute');
+const questionRoutes = require('./routes/questionRoute');
+const quizAttemptRoutes = require('./routes/quizAttemptRoute');
 const helmet = require('helmet');
 const cors = require('cors');
 
@@ -30,6 +33,9 @@ app.use((req, res, next) => {
 app.use('/api/flashcards', flashcardRoutes)
 app.use('/api/users', userRoutes)
 app.use('/api/decks', deckRoutes)
+app.use('/api/quizzes', quizRoute);
+app.use('/api/questions', questionRoutes);
+app.use('/api/attempts', quizAttemptRoutes);
 
 // Ensure essential environment variables are set
 if (!process.env.MONGO_URI || !process.env.PORT) {

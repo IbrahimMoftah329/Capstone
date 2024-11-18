@@ -24,6 +24,10 @@ const quizSchema = new Schema({
         ref: 'Deck',  // Reference to the Deck model
         required: true
     },
+    deckName: {
+        type: String,
+        required: false
+    },
     createdBy: {
         type: String,
         ref: 'User', // Reference to the User model
@@ -31,7 +35,7 @@ const quizSchema = new Schema({
     },
     questions: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Question' // Reference to the Question model, if using separate question documents
+        ref: 'Question' // Reference to the Question model
     }],
 }, { timestamps: true });
 

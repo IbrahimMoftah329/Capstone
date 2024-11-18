@@ -18,6 +18,8 @@
     "express": "^4.21.1",
     "helmet": "^8.0.0",
     "mongodb": "^6.9.0",
-    "mongoose": "^8.7.2"
+    "mongoose": "^8.7.2",
+    "node-fetch": "^3.3.2",
+    "openai": "^4.70.2"
   }
 }

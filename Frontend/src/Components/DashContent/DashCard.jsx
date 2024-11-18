@@ -283,29 +283,29 @@ const DashCard = () => {
                                 </div>
                             )}
 
-      {/* Regular Study Button (when modal is closed) */}
-      {!isStudyMode && (
-        <button className="study-button" onClick={startStudy}>
-          Study Flashcards
-        </button>
-      )}
+                            {/* Regular Study Button (when modal is closed) */}
+                            {!isStudyMode && (
+                                <button className="study-button" onClick={startStudy}>
+                                Study Flashcards
+                                </button>
+                            )}
     
-                {/* Styled Popup for Delete Confirmation */}
-                {showDeletePopup && (
-                    <div className="popup-overlay">
-                        <div className="popup-content">
-                            <h2>Confirm Deletion</h2>
-                            <p>Are you sure you want to delete this flashcard? This action cannot be undone.</p>
-                            <div className="popup-buttons">
-                                <button className="popup-button confirm" onClick={confirmDeleteCard}>Yes, Delete</button>
-                                <button className="popup-button cancel" onClick={cancelDelete}>Cancel</button>
-                            </div>
+                            {/* Styled Popup for Delete Confirmation */}
+                            {showDeletePopup && (
+                                <div className="popup-overlay">
+                                    <div className="popup-content">
+                                        <h2>Confirm Deletion</h2>
+                                        <p>Are you sure you want to delete this flashcard? This action cannot be undone.</p>
+                                        <div className="popup-buttons">
+                                            <button className="popup-button confirm" onClick={confirmDeleteCard}>Yes, Delete</button>
+                                            <button className="popup-button cancel" onClick={cancelDelete}>Cancel</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     </div>
-                )}
-            </div>
-        </div>
-    );
+                );
 };
 
 export default DashCard;

@@ -4,11 +4,7 @@ import './DashContent.css'; // Make sure the CSS file path is correct
 import { useUser } from '@clerk/clerk-react';
 
 const DashContact = () => {
-    const { isSignedIn, user } = useUser();
-    if (!isSignedIn) {
-        return;
-    }
-
+    const { user } = useUser();
     const [showPopup, setShowPopup] = useState(false);
 
     const handleUpdateClick = (event) => {

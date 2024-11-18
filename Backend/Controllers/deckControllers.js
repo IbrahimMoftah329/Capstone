@@ -17,25 +17,25 @@ const getDecks = async (req, res) => {
   }
 }
 
-// get a single Deck
-/**
-const getDeck = async(req, res) => {
-    const {id} = req.params
+// Get a single deck by ID, including associated flashcards
+const getDeck = async (req, res) => {
+  const { deckId } = req.params;
 
-    if(!mongoose.Types.ObjectId.isValid(id)){
-        return res.status(404).json({error: "invalid object ID"})
+  if (!mongoose.Types.ObjectId.isValid(deckId)) {
+    return res.status(404).json({ error: "Invalid deck ID" });
+  }
+
+  try {
+    const deck = await Deck.findById(deckId).populate('flashcards');
+    if (!deck) {
+      return res.status(404).json({ error: "No such deck exists" });
     }
 
-    const deck = await Deck.findById(id)
-
-    if(!deck){
-        res.status(404).json({error: "no such deck exists"})
-    }
-
-    res.status(200).json(deck)
-}
-*/
-
+    res.status(200).json(deck);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+};
 
 const addDeckToUser = async (req, res) => {
   try {
@@ -100,7 +100,7 @@ const updateDeck = async (req, res) => {
 module.exports = {
   addDeckToUser,
   getDecks,
-  //getDeck,
+  getDeck,
   deleteDeck,
   updateDeck
 }

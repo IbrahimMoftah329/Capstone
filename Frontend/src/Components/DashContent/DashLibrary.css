@@ -392,3 +392,27 @@
 .quiz-button:hover {
     background-color: #45a049; /* Darker green on hover for non-delete buttons */
 }
+.Library-button.favorite {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px 12px; /* Increased padding around the button */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 8px; /* Add spacing between buttons */
+}
+
+.heart-icon {
+    font-size: 1.5rem;
+    color: #666;
+    transition: color 0.3s ease;
+}
+
+.favorited .heart-icon {
+    color: #e31b23;
+}
+
+.Library-button.favorite:hover .heart-icon {
+    color: #e31b23;
+}
