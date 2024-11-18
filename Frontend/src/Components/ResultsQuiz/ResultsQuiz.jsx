@@ -105,7 +105,8 @@ const ResultsQuiz = ({ onShowHome, onShowDeck, onShowQuiz }) => {
                                             background: '#f0f0f0'
                                             }}
                                             >
-                                            {String.fromCharCode(65 + optIndex)}. {option.text}
+                                            {/* {String.fromCharCode(65 + optIndex)}. {option.text} */}
+                                            {option.text}
                                         </li>
                                         ))}
                                     </ul>

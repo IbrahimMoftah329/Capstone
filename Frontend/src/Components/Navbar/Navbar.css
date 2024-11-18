@@ -168,3 +168,48 @@ nav ul li{
     display:flex;
     align-items: center;
 }
+
+
+.search-container {
+    position: relative;
+  }
+  
+  .suggestions-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%; /* Match the width of search input */
+    max-height: 300px;
+    overflow-y: auto;
+    background-color: white;
+    border: 1px solid #e0e0e0;
+    border-top: none;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    z-index: 10;
+  }
+  
+  .suggestion-item {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .suggestion-item:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .suggestion-type {
+    font-size: 0.8em;
+    color: #666;
+  }
+  
+  .suggestion-name {
+    font-weight: bold;
+  }
+  
+  .suggestion-details {
+    font-size: 0.9em;
+    color: #888;
+  }

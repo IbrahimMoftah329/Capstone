@@ -89,9 +89,6 @@ const Navbar = () => {
       console.error('Error fetching decks:', error);
     }
   };
-  
-    // Navigate to /searchresults and pass the filtered results
-    // navigate('/searchresults', { state: { filteredResults: filteredDecks, filteredQuizzes } });
 
 
   return (
@@ -102,34 +99,11 @@ const Navbar = () => {
       </Link>
 
       <form onSubmit={handleSearchSubmit} className="search-bar">
-        {/* <div className="dropdown">
-          <div
-            className="dropdown-button" // Updated class name
-            onClick={handleDropdownToggle}
-          >
-            <span>{selectedOption}</span>
-          </div>
-          {dropdownVisible && (
-            <div className="dropdown-menu">
-              {options.map((option) => (
-                <div
-                  key={option}
-                  className="dropdown-item"
-                  onClick={() => handleOptionSelect(option)}
-                >
-                  {option}
-                </div>
-              ))}
-            </div>
-          )}
-        </div> */}
-
         <div className='searchbar'>
           <input type="text" value={searchQuery} onChange={handleSearchChange} placeholder="Search..." className="search-input"/>
           <button type="submit" className="search-button">
           </button>
         </div>
-        
       </form>
 
       {/* Navigation Links */}
