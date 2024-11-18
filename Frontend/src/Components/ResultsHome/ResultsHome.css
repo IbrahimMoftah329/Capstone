@@ -1,21 +1,39 @@
 .search-results-page {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    min-height: 90vh;
     padding: 20px;
+    flex-wrap: wrap;
     background-color: #f0f0f0;
 }
+
+.results-home-container {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding: 0 1rem 2rem;
+    margin: auto;
+    max-width: 70rem;
+    min-width: 65rem;
+    overflow: hidden;
+    flex-wrap: wrap;
+  }
+
+
 
 .filter-bar {
     display: flex;
     justify-content: center;
+    width: 70rem;
+    margin-right: auto;
+    margin-left: auto;
     gap: 20px;
     padding: 20px;
+    max-height: 5rem;
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     margin-bottom: 30px;
-    width: calc(100% - 40px);
 }
 
 .filter-button {
@@ -38,6 +56,22 @@
     color: white;
 }
 
+.row-description {
+    display: flex;
+    justify-content: space-between;
+}
+
+.view-results {
+    border: none;
+    background-color: transparent;
+    color: #124883;
+    font-size: 16px;    
+}
+
+.view-results:hover {
+    color: #1248cc;
+}
+
 .content-container {
     display: flex;
     flex-direction: column;
@@ -46,49 +80,40 @@
 }
 
 .content-row {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-}
-
-.content-box {
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    min-height: 150px;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-    transition: transform 0.3s ease;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    border-radius: 30px;
 }
 
-.content-box:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+/* Use grid for even spacing */
+.deck-row, .quiz-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Creates 4 equal columns */
+    gap: 20px;
+    height: 200px;
 }
 
-/* Responsive Design */
-@media (max-width: 1200px) {
-    .content-row {
-        grid-template-columns: repeat(3, 1fr);
-    }
+/* Ensures items are all equal size */
+.result-deck-item {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+    padding: 10px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    box-sizing: border-box;
 }
 
-@media (max-width: 900px) {
-    .content-row {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (max-width: 600px) {
-    .content-row {
-        grid-template-columns: 1fr;
-    }
-
-    .filter-bar {
-        flex-direction: column;
-        align-items: stretch;
-    }
+.deck-name {
+    height: 50px;
+    overflow: hidden;               /* Hides any text that overflows the container */
+    text-overflow: ellipsis;        /* Adds "..." at the end when the text is too long */
+    display: block;                 /* Ensures the text is treated as a block-level element */
+    width: 100%;                    /* Ensures it takes the full width of the parent element */
 }

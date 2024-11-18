@@ -1,6 +1,7 @@
 .search-results-page {
   display: flex;
   flex-wrap: wrap;
+  flex-direction: column;
   height: 100%;
   width: 100%;
   background-color: #f0f0f0;
@@ -8,11 +9,12 @@
 
 
 .results-container {
-  display: flex; 
+  display: flex;
   flex-grow: 1;
   padding: 0 1rem 2rem;
   margin: auto;
   max-width: 70rem;
+  min-width: 65rem;
   overflow: hidden;
 }
 
@@ -159,7 +161,6 @@
   border-radius: 10px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
   transition: box-shadow 0.3s ease;
-
   display: grid;
   gap: 20px;
 
@@ -173,10 +174,48 @@
 
 .result-flashcard-content {
   padding: 10px;
+  background-color: #f9f9f9;
 }
 
 
 .flashcard-question {
   font-size: 1rem;
   font-weight: bolder;
+}
+
+
+
+.filter-bar {
+  display: flex;
+  justify-content: center;
+  width: 70rem;
+  margin-left: auto;
+  margin-right: auto;
+  gap: 20px;
+  padding: 20px;
+  max-height: 5rem;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+.filter-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #f0f0f0;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.filter-button:hover {
+  background-color: #124883;
+  color: white;
+}
+
+.filter-button.active {
+  background-color: #124883;
+  color: white;
 }

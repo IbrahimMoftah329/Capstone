@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import './ResultsDeck.css';
 
 
-const ResultsDeck = () => {
+const ResultsDeck = ({ onShowHome, onShowDeck, onShowQuiz }) => {
   const location = useLocation();
   const { filteredResults } = location.state || { filteredResults: [] };
   const [selectedDeck, setSelectedDeck] = useState(null);
@@ -24,9 +24,6 @@ const ResultsDeck = () => {
 
   };
 
-  const handleQuizSelect = (quiz) => {
-    
-  }
 
   const getFlashcards = async (deck) => {
     
@@ -47,75 +44,61 @@ const ResultsDeck = () => {
 
   return (
     <div className='search-results-page'>
-      <div className='results-title'>Search Results</div>
-      <div className = 'results-container'>
-        <div className='results-list'>
-          <div className='results-list-inner'>
-          <div className ='deck-quiz'>Decks</div>
-            {filteredResults.length > 0 ? (
-              filteredResults.map(deck => (
-                <div className='result-deck-item' onClick={() => handleDeckSelect(deck)}>
-                  <div className='deck-name'>{deck.name}</div>
-                  <div className='deck-info'>
-                    {deck.__v} Cards | Professor: {deck.professor}
-                  </div>
-                </div>
-              ))
-            ) : (
-              <p className='no-results'>No results found.</p>
-            )}
+      {/* <div className='results-title'>Search Results</div> */}
+
+          {/* This is the filter bar to switch between results home, deck, and quizzes */}
+          <div className='filter-bar'>
+            <button className='filter-button' onClick={onShowHome}>All Results</button>
+            <button className='filter-button' onClick={onShowDeck}>Decks</button>
+            <button className='filter-button' onClick={onShowQuiz}>Quizzes</button>
           </div>
-        </div>
 
-
-        <div className='deck-details'>
-          <div className='deck-details-inner'>
-            <div className = 'deck-quiz'>Preview</div>
-              {filteredResults.length > 0 && selectedDeck ? (
-              <>
-                <h2 className='deck-name'>{selectedDeck.name}</h2>          
-                {flashcards.length > 0 ? (
-                  <div>
-                    {flashcards.map((flashcard) => (
-                      <div className = 'result-flashcard-content'>
-                        <p className='flashcard-question'>{flashcard.question}</p>
-                        <p className='flashcard-answer'>{flashcard.answer}</p>
+          <div className = 'results-container'>
+            {/* This is the deck results list */}
+            <div className='results-list'>
+              <div className='results-list-inner'>
+                <div className ='deck-quiz'>Decks</div>
+                  {filteredResults.length > 0 ? (
+                    filteredResults.map(deck => (
+                      <div className='result-deck-item' onClick={() => handleDeckSelect(deck)}>
+                        <div className='deck-name'>{deck.name}</div>
+                        <div className='deck-info'>
+                          {deck.__v} Cards | Professor: {deck.professor}
+                        </div>
                       </div>
-                    ))}
-                  </div>
-                ) : (
-                  <p>No flashcards available.</p>
-                )}
-              </>
-              ) : (
-              <p className='no-results'>No results found.</p>
-              )}
-            </div>
-
-        </div>
-        {/* <div className = 'deck-quiz'>Preview</div>
-          {filteredResults.length > 0 && selectedDeck ? (
-          <>
-            <h2 className='deck-name'>{selectedDeck.name}</h2>          
-            {flashcards.length > 0 ? (
-              <div>
-                {flashcards.map((flashcard) => (
-                  <div className = 'result-flashcard-content'>
-                    <p className='flashcard-question'>{flashcard.question}</p>
-                    <p className='flashcard-answer'>{flashcard.answer}</p>
-                  </div>
-                ))}
+                    ))
+                  ) : (
+                    <p className='no-results'>No results found.</p>
+                  )}
               </div>
-            ) : (
-              <p>No flashcards available.</p>
-            )}
-          </>
-          ) : (
-          <p className='no-results'>No results found.</p>
-          )}
-        </div> */}
-      </div>
-
+            </div>
+                
+            {/* This is a preview of the deck details */}
+            <div className='deck-details'>
+              <div className='deck-details-inner'>
+                <div className = 'deck-quiz'>Preview</div>
+                  {filteredResults.length > 0 && selectedDeck ? (
+                  <>
+                    <h2 className='deck-name'>{selectedDeck.name}</h2>          
+                    {flashcards.length > 0 ? (
+                      <div>
+                        {flashcards.map((flashcard) => (
+                          <div className = 'result-flashcard-content'>
+                            <p className='flashcard-question'>{flashcard.question}</p>
+                            <p className='flashcard-answer'>{flashcard.answer}</p>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <p>No flashcards available.</p>
+                    )}
+                  </>
+                  ) : (
+                  <p className='no-results'>No results found.</p>
+                  )}
+                </div>
+            </div>
+          </div>
     </div>
   );
 };

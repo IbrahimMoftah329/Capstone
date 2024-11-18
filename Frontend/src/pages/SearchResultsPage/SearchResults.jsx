@@ -8,11 +8,12 @@ import ResultsHome from '../../Components/ResultsHome/ResultsHome';
 
 const SearchResults = () => {
   const location = useLocation();
-    const { filteredResults, filteredQuizzes, initialView } = location.state || {};
+    const { filteredResults, filteredDecks, filteredQuizzes, initialView } = location.state || {};
     
     // Default to 'home' if initialView is not passed
     const [currentView, setCurrentView] = useState(initialView || 'home');
 
+    const showResultsHome = () => setCurrentView('home');
     const showResultsDeck = () => setCurrentView('deck');
     const showResultsQuiz = () => setCurrentView('quiz');
 
@@ -26,20 +27,43 @@ const SearchResults = () => {
         <div>
             {currentView === 'home' && (
                 <ResultsHome 
-                    onShowDeck={showResultsDeck} 
-                    onShowQuiz={showResultsQuiz} 
+                    onShowDeck = {showResultsDeck} 
+                    onShowQuiz = {showResultsQuiz}
                     filteredResults={filteredResults} 
                     filteredQuizzes={filteredQuizzes} 
                 />
             )}
             {currentView === 'deck' && (
-                <ResultsDeck results={filteredResults} />
+                <ResultsDeck 
+                    onShowHome = {showResultsHome}
+                    onShowDeck = {showResultsDeck}
+                    onShowQuiz = {showResultsQuiz}
+                    decks = {filteredResults}
+                />
             )}
             {currentView === 'quiz' && (
-                <ResultsQuiz quizzes={filteredQuizzes} />
+                <ResultsQuiz
+                    onShowHome = {showResultsHome}
+                    onShowDeck = {showResultsDeck} 
+                    onShowQuiz = {showResultsQuiz}
+                    quizzes={filteredQuizzes}
+                />
             )}
         </div>
     );
 };
 
 export default SearchResults;
+
+
+
+/*
+Personal Notes:
+
+Features to implement:
+- favorites button in results home page items
+- creator name and profile picture in results home page items
+- preview button on results home page items
+
+
+*/
