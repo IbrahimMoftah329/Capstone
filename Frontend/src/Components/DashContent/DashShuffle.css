@@ -1,37 +1,139 @@
-/* Card Container */
-.card-container {
+/* Main container */
+.shuffle-content {
+    flex: 1;
+    padding: 20px;
+    background-color: #f0f0f0;
+    min-height: 100vh;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    gap: 15px;
+    flex-direction: column;
+    text-align: left;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-bottom-left-radius: 30px;
 }
 
-/* Styling for the cards */
-.card {
-    width: 80px;
-    height: 100px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.shuffle-title {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.shuffle-description {
+    font-size: 1.2rem;
+    color: #666;
+}
+
+.add-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: #124883;
+    color: white;
+    border-radius: 50%;
+    font-size: 1.5rem;
     cursor: pointer;
     display: flex;
-    justify-content: center;
     align-items: center;
-    transition: transform 0.3s ease;
+    justify-content: center;
 }
 
-/* Card pop-up animation */
-.card.pop-up {
-    transform: translateY(-10px); /* Cards move upward when clicked */
+/* Flashcard grid for 4x4 layout */
+.flashcard-grid {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Fixed 4 columns */
+    gap: 15px;
+    justify-content: center;
+    padding: 10px;
 }
 
-/* Front side of the card */
-.card-front {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    font-size: 16px;
+/* Styling for individual flashcards */
+.flashcard-card {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 10px; /* Rounded corners */
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    width: 120px; /* Set a fixed width */
+    height: 180px; /* Set a fixed height to make it card-shaped */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
+
+/* Flashcard content styling */
+.flashcard-card h3 {
+    margin: 0;
+    font-size: 16px;
+    color: #124883;
+}
+
+.flashcard-card p {
+    margin: 10px 0;
+    font-size: 14px;
+    color: #555;
+}
+
+/* Highlight selected cards */
+.flashcard-card.selected {
+    background-color: #ffeeba;
+    border-color: #ffc107;
+}
+
+/* Style matched cards */
+.flashcard-card.matched {
+    background-color: #d4edda;
+    border-color: #28a745;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+/* Modal grid responsiveness */
+@media (max-width: 768px) {
+    .flashcard-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Narrower cards on smaller screens */
+    }
+}
+
+.shuffle-list {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.shuffle-item {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: 0.3s;
+    text-align: left;
+}
+
+.shuffle-item h3 {
+    font-size: 18px;
+    color: #333;
+}
+
+.shuffle-item p {
+    font-size: 14px;
+    color: #666;
+}
+
+.shuffle-item:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.shuffle-button {
+    padding: 10px 20px;
+    background-color: #124883;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
