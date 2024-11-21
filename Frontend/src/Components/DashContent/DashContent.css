@@ -75,3 +75,73 @@ h3 {
     border-radius: 30px;     /* Optional: rounded corners */
     background-color: #ffffff; /* Optional: light background */
 }
+
+/* Add these styles to your existing DashContent.css */
+
+.favorites-container {
+    padding: 20px;
+  }
+  
+  .favorites-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  
+  .favorite-card {
+    background: white;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  
+  .favorite-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+  
+  .favorite-card-content {
+    flex: 1;
+  }
+  
+  .favorite-deck-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 8px;
+  }
+  
+  .favorite-deck-details {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  .card-count,
+  .professor-name {
+    font-size: 0.9rem;
+    color: #666;
+  }
+  
+  .favorite-heart-icon {
+    color: #e31b23;
+    font-size: 24px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+  
+  .favorite-heart-icon:hover {
+    transform: scale(1.1);
+  }
+  
+  .loading-message,
+  .no-favorites-message {
+    text-align: center;
+    padding: 40px;
+    color: #666;
+    font-size: 1.1rem;
+  }

@@ -211,6 +211,36 @@ const DashCard = () => {
                     ))}
                 </div>
 
+                {/* Study Mode Flashcard Modal */}
+                {isStudyMode && (
+                    <div className="study-mode-modal">
+                        <div className="study-mode-modal-content">
+                            <div className="study-mode-container">
+                                <div className="study-mode">
+                                    <h2>Study Flashcards</h2>
+                                    <div className="card-info">Card {currentCardIndex + 1} of {flashcards.length}</div>
+                                    <div className="flashcard" onClick={flipCard}>
+                                        <div className="flashcard-contents">
+                                            {isFlipped ? flashcards[currentCardIndex].answer : flashcards[currentCardIndex].question}
+                                        </div>
+                                    </div>
+
+                                    <div className="card-buttons-studymode">
+                                        <button className="prev-button-studymode" onClick={previousCard} disabled={currentCardIndex === 0}>
+                                            <img src={backArrow} alt="previous" />
+                                        </button>
+                                        <button className="restart-button-studymode" onClick={() => { setCurrentCardIndex(0); setIsFlipped(false); }}>Restart</button>
+                                        <button className="exit-button-studymode" onClick={() => setIsStudyMode(false)}>Exit</button>
+                                        <button className="next-buttons-studymode" onClick={nextCard} disabled={currentCardIndex === flashcards.length - 1}>
+                                            <img src={nextArrow} alt="next" />
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
                 {/* Modal for Adding or Editing Flashcard */}
                 {isCardModalOpen && (
                     <div className="flashcard-modal">
@@ -283,29 +313,29 @@ const DashCard = () => {
                                 </div>
                             )}
 
-                            {/* Regular Study Button (when modal is closed) */}
-                            {!isStudyMode && (
-                                <button className="study-button" onClick={startStudy}>
-                                Study Flashcards
-                                </button>
-                            )}
+      {/* Regular Study Button (when modal is closed) */}
+      {!isStudyMode && (
+        <button className="study-button" onClick={startStudy}>
+          Study Flashcards
+        </button>
+      )}
     
-                            {/* Styled Popup for Delete Confirmation */}
-                            {showDeletePopup && (
-                                <div className="popup-overlay">
-                                    <div className="popup-content">
-                                        <h2>Confirm Deletion</h2>
-                                        <p>Are you sure you want to delete this flashcard? This action cannot be undone.</p>
-                                        <div className="popup-buttons">
-                                            <button className="popup-button confirm" onClick={confirmDeleteCard}>Yes, Delete</button>
-                                            <button className="popup-button cancel" onClick={cancelDelete}>Cancel</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            )}
+                {/* Styled Popup for Delete Confirmation */}
+                {showDeletePopup && (
+                    <div className="popup-overlay">
+                        <div className="popup-content">
+                            <h2>Confirm Deletion</h2>
+                            <p>Are you sure you want to delete this flashcard? This action cannot be undone.</p>
+                            <div className="popup-buttons">
+                                <button className="popup-button confirm" onClick={confirmDeleteCard}>Yes, Delete</button>
+                                <button className="popup-button cancel" onClick={cancelDelete}>Cancel</button>
+                            </div>
                         </div>
                     </div>
-                );
+                )}
+            </div>
+        </div>
+    );
 };
 
 export default DashCard;

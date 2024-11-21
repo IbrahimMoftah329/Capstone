@@ -13,22 +13,26 @@ const DashLibrary = () => {
     const [decks, setDecks] = useState([]);
     const [isEditing, setIsEditing] = useState(false);
     const [editDeckId, setEditDeckId] = useState(null);
+
+    const [isDeck, setIsDeck] = useState(true); // Flag to track whether it's a deck or quiz being deleted
     const [showDeletePopup, setShowDeletePopup] = useState(false);
     const [itemToDelete, setItemToDelete] = useState(null);
     const [deleteType, setDeleteType] = useState(''); // Track delete type ('deck', 'quiz', or 'attempt')
+
     const [isQuizModalOpen, setIsQuizModalOpen] = useState(false);
     const [quizName, setQuizName] = useState('');
     const [quizDescription, setQuizDescription] = useState('');
     const [selectedDeckId, setSelectedDeckId] = useState(null); // For associating a quiz with a deck
+
     const selectedDeckName = selectedDeckId
     ? decks.find(deck => deck._id === selectedDeckId)?.name
     : ""; // Derive selected deck name from selectedDeckId
     const [quizzes, setQuizzes] = useState([]);
     const [attempts, setAttempts] = useState([]);
+    
     const navigate = useNavigate();
     const { user } = useUser();
     const [isLoading, setIsLoading] = useState(true);
-    const [favoritedDecks, setFavoritedDecks] = useState([]);
 
     // deck functions
     const addDeck = (name, description, professor, semester) => {
@@ -354,16 +358,6 @@ const DashLibrary = () => {
             });
     }, []);
 
-    //favorited deck functions 
-    const getFavoritedDecks = () => {
-        fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/decks/user/${user.id}/favorites`)
-            .then((response) => response.json())
-            .then((data) => {
-                setFavoritedDecks(data);
-            })
-            .catch(error => console.error("Error fetching favorited decks:", error));
-    };
-
 
     // Display loading message while decks and quizzes are loading
     if (isLoading) return <div>Loading...</div>;
@@ -420,6 +414,34 @@ const DashLibrary = () => {
                         </div>
                         <div className="quiz-item-buttons">
                             <button className="quiz-button delete" type="button" onClick={handleQuizDeleteClick(quiz._id)}>Delete</button>
+                        </div>
+                    </div>
+                );
+            })}
+        </div>
+        <h1 className="library-content-title" style={{ paddingTop: "10px" }}>Quiz Attempts</h1>
+        <p className="library-content-description">Manage your attempts here.</p>
+        <div className="quiz-list">
+            {attempts && attempts.map((attempt) => {
+                console.log("Attempt ID:", attempt.attemptId); // Debug log to check _id
+                return (
+                    <div key={attempt.attemptId} className="quiz-item" onClick={() => navigateToQuizAttempt(attempt)}>
+                        <div>
+                            <h3>Associated Quiz:<br />{attempt.quizName}</h3>
+                            <p>Score: {attempt.score} / {attempt.totalQuestions}</p>
+                            <p>Attempted on: {
+                                new Date(attempt.createdAt).toLocaleString('en-US', {
+                                    month: 'numeric',
+                                    day: 'numeric',
+                                    year: 'numeric',
+                                    hour: 'numeric',
+                                    minute: 'numeric',
+                                    hour12: true // For 12-hour format; set to false for 24-hour format
+                                })
+                            }</p>
+                        </div>
+                        <div className="quiz-item-buttons">
+                            <button className="quiz-button delete" type="button" onClick={handleAttemptDeleteClick(attempt.attemptId)}>Delete</button>
                         </div>
                     </div>
                 );
@@ -530,7 +552,13 @@ const DashLibrary = () => {
                             : deleteType === 'quiz' ? "Are you sure you want to delete this quiz? This action cannot be undone."
                             : "Are you sure you want to delete this attempt? This action cannot be undone."}
                         </p>                        
+                        <p>{deleteType === 'deck' ? "Are you sure you want to delete this deck? This action cannot be undone." 
+                            : deleteType === 'quiz' ? "Are you sure you want to delete this quiz? This action cannot be undone."
+                            : "Are you sure you want to delete this attempt? This action cannot be undone."}
+                        </p>                        
                         <div className="popup-buttons">
+                        <button className="popup-button confirm" onClick={confirmDelete}>Yes, Delete</button>
+                        <button className="popup-button cancel" onClick={() => setShowDeletePopup(false)}>Cancel</button>
                         <button className="popup-button confirm" onClick={confirmDelete}>Yes, Delete</button>
                         <button className="popup-button cancel" onClick={() => setShowDeletePopup(false)}>Cancel</button>
                         </div>

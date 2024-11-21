@@ -53,6 +53,11 @@ nav ul li{
     transition: .5s;
 }
 
+.links {
+    display: flex;
+    align-items: center;
+}
+
 /* Add styles for the search bar */
 .search-bar {
     display: flex;
@@ -108,22 +113,55 @@ nav ul li{
 /* Search input styles */
 .search-input {
     padding: 8px 12px;
-    border: none;
+    border: 1px solid #e0e0e0;
+    border-radius: 20px 0 0 20px;
     font-size: 16px;
     outline: none;
-    flex: 1; /* Allow input to take up remaining space */
+    flex: 1;
+    background-color: #ffffff;
+    transition: all 0.2s ease; 
+    height: 38px;
 }
 
 /* Search button styles */
 .search-button {
     padding: 8px 16px;
-    background-color: #D9D9D9;
+    background-color: #e0e0e0;
     color: #000000;
     border: none;
     cursor: pointer;
     font-size: 16px;
-    border-left: 1px solid #ccc; /* Border to separate button from input */
-    border-radius: 0 30px 30px 0; /* Rounded on the right side */
+    border: 1px solid #e0e0e0;
+    border-radius: 0 20px 20px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 38px;
+    width: 50px;
+    position: relative;
+}
+
+.search-button::before {
+    content: '';
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border: 2px solid #134883;
+    border-radius: 50%;
+    transform: translate(-2px, -2px);
+}
+
+.search-button::after {
+    content: '';
+    position: absolute;
+    width: 2px;
+    height: 8px;
+    background: #134883;
+    transform: translate(6px, 6px) rotate(-45deg);
+}
+
+.search-button:hover {
+    background-color: #c1c1c1;    /* Darker blue on hover */
 }
 
 .heading {
@@ -134,3 +172,8 @@ nav ul li{
   .heading img {
     margin-right: 10px; /* Adjust the margin as needed */
   }
+
+.searchbar {
+    display:flex;
+    align-items: center;
+}

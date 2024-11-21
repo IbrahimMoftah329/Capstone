@@ -5,6 +5,19 @@ const Quiz = require('../models/quiz')
 const QuizAttempt = require('../models/quizAttempt');
 const { generateQuestionFromFlashcard } = require('../utils/openaiHelpers');
 
+
+// Get all quizzes from all users in quizcontrollers.js
+const getAllQuizzes = async (req, res) => {    
+    try {
+        const quizzes = await Quiz.find().populate('questions');
+        // const quizzes = await Quiz.find()
+        res.status(200).json(quizzes)
+    } catch (err) {
+        res.status(500).send(err.message);
+      }
+};
+
+
 // Get all quizzes for a user
 const getQuizzes = async (req, res) => {
     try {
@@ -152,6 +165,7 @@ const deleteQuiz = async (req, res) => {
 };
 
 module.exports = {
+    getAllQuizzes,
     addQuizToUser,
     getQuizzes,
     getQuiz,
