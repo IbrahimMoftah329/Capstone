@@ -32,8 +32,8 @@ const DashShuffle = () => {
             .then((data) => {
                 const cards = [];
                 data.forEach((flashcard) => {
-                    cards.push({ id: flashcard.id, type: 'question', content: flashcard.question });
-                    cards.push({ id: flashcard.id, type: 'answer', content: flashcard.answer });
+                    cards.push({ id: flashcard._id, type: 'question', content: flashcard.question });
+                    cards.push({ id: flashcard._id, type: 'answer', content: flashcard.answer });
                 });
                 const shuffled = cards.sort(() => Math.random() - 0.5);
                 setShuffledCards(shuffled);
@@ -102,7 +102,7 @@ const DashShuffle = () => {
         <div className="shuffle-content">
             <h1 className="shuffle-title">Shuffle <BsSuitDiamondFill /></h1>
             <div className="shuffle-top">
-                <p className="shuffle-description">View and manage your shuffled decks here.</p>
+                <p className="shuffle-description">View your shuffled decks here.</p>
                 <div className="shuffle-list">
                     {isLoading ? (
                         <p>Loading decks...</p>
