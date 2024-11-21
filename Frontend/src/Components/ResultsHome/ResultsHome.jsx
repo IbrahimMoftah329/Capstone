@@ -132,7 +132,7 @@ const ResultsHome = ({ onShowDeck, onShowQuiz }) => {
 
                                     <div className='buttons'>
                                         <button className = 'preview' onClick={() => handleDeckPreview(deck)}>Preview</button>
-                                        <button className = 'add_favorite' onClick={handleFavorite(deck)}>Favorite</button>
+                                        {/* <button className = 'add_favorite' onClick={handleFavorite(deck)}>Favorite</button> */}
                                     </div>
                                     
                                 </div>
@@ -160,7 +160,7 @@ const ResultsHome = ({ onShowDeck, onShowQuiz }) => {
                                 </div>
                                 <div className='buttons'>
                                     <button className = 'preview' onClick={() => handleQuizPreview(quiz)}>Preview</button>
-                                    <button className = 'add_favorite' onClick={handleFavorite(quiz)}>Favorite</button>
+                                    {/* <button className = 'add_favorite' onClick={handleFavorite(quiz)}>Favorite</button> */}
                                 </div>
                             </div>
                             ))
