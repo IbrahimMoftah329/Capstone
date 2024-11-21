@@ -96,6 +96,10 @@ const ResultsHome = ({ onShowDeck, onShowQuiz }) => {
         }
       };
 
+      const handleFavorite = async (item) => {
+
+      }
+
 
 
     return (
@@ -125,7 +129,12 @@ const ResultsHome = ({ onShowDeck, onShowQuiz }) => {
                                     <div className='deck-info'>
                                         {deck.__v} Cards | Professor: {deck.professor}
                                     </div>
-                                    <button className = 'preview' onClick={() => handleDeckPreview(deck)}>Preview</button>
+
+                                    <div className='buttons'>
+                                        <button className = 'preview' onClick={() => handleDeckPreview(deck)}>Preview</button>
+                                        <button className = 'add_favorite' onClick={handleFavorite(deck)}>Favorite</button>
+                                    </div>
+                                    
                                 </div>
                                 ))
                                 ) : (
@@ -149,7 +158,10 @@ const ResultsHome = ({ onShowDeck, onShowQuiz }) => {
                                 <div className='deck-info'>
                                     Professor: {quiz.professor}
                                 </div>
-                                <button className = 'preview' onClick={() => handleQuizPreview(quiz)}>Preview</button>
+                                <div className='buttons'>
+                                    <button className = 'preview' onClick={() => handleQuizPreview(quiz)}>Preview</button>
+                                    <button className = 'add_favorite' onClick={handleFavorite(quiz)}>Favorite</button>
+                                </div>
                             </div>
                             ))
                             ) : (

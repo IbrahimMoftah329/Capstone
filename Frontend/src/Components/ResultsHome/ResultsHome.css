@@ -131,17 +131,6 @@
     font-weight: bolder;
 }
 
-.preview {
-    width: 4rem;
-    height: 2rem;
-    background-color: #f0f0f0;
-    border: none;
-}
-
-.preview:hover {
-    background-color: #c1c1c1;
-}
-
 
 .modal-content {
     position: relative;
@@ -169,6 +158,30 @@
     height: 30px;
 }
 
+
 .modal-button:hover {
+    background-color: #c1c1c1;
+}
+
+
+.buttons {
+    display: flex;
+    justify-content: space-between; 
+    width: 100%;
+}
+
+
+.preview, .add_favorite {
+    width: 4rem;
+    height: 2rem;
+    background-color: #f0f0f0;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    text-align: center;
+}
+
+
+.preview:hover, .add_favorite:hover {
     background-color: #c1c1c1;
 }

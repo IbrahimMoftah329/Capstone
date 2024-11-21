@@ -7,6 +7,7 @@ import Profile from '../../Components/DashContent/DashProfile';
 import Contact from '../../Components/DashContent/DashContact';
 import Shuffle from '../../Components/DashContent/DashShuffle';
 import DashCard from '../../Components/DashContent/DashCard';
+import Favorite from '../../Components/DashContent/DashFavorite';
 import ProtectedRoute from '../../Components/ProtectedRoute';
 
 const Dashboard = () => {
@@ -19,6 +20,7 @@ const Dashboard = () => {
         <Route path="profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
         <Route path="contact" element={<ProtectedRoute><Contact /></ProtectedRoute>} />
         <Route path="shuffle" element={<ProtectedRoute><Shuffle /></ProtectedRoute>} />
+        <Route path="favorite" element={<ProtectedRoute><Favorite /></ProtectedRoute>} />
         {/* Redirect /dashboard to /dashboard/library */}
         <Route path="/" element={<Navigate to="library" />} />
       </Routes>

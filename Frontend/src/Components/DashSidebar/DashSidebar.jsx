@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom';
 const DashSidebar = () => {
   const items = [
     { label: 'Library', icon: <span className="sidebar-icon"><ImSpades /></span>, link: '/dashboard/library' },
+    { label: 'Favorites', icon: <span className="sidebar-icon"><ImSpades /></span>, link: '/dashboard/favorite' },
     { label: 'Profile', icon: <span className="sidebar-icon"><IoIosHeart /></span>, link: '/dashboard/profile' },
     { label: 'Contact', icon: <span className="sidebar-icon"><GiClubs /></span>, link: '/dashboard/contact' },
     { label: 'Shuffle', icon: <span className="sidebar-icon"><BsSuitDiamondFill /></span>, link: '/dashboard/shuffle' },
