@@ -15,7 +15,7 @@ const getUser = async(req, res) => {
     const { userId: clerkId } = req.params;
 
     try {
-      const user = await User.findOne({ clerkId });
+      const user = await User.findOrCreateUserByClerkId(clerkId);
       if (!user) {
         return res.status(404).json({ error: 'User not found' });
       }
