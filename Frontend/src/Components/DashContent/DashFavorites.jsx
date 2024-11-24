@@ -11,6 +11,8 @@ const DashFavorites = () => {
             <h1 className="content-title">Favorites < BsSuitDiamondFill /> </h1>
         </div>
     );
+
+    
 };
 
 

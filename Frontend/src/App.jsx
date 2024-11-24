@@ -13,6 +13,7 @@ import About from './pages/AboutPage/About';
 import Dashboard from './pages/DashboardPage/Dashboard';
 import Quiz from './pages/QuizPage/Quiz';
 import Results from './pages/QuizPage/Results';
+import SearchResults from './pages/SearchResultsPage/SearchResults';
 
 
 const App = () => {
@@ -70,6 +71,8 @@ const App = () => {
           <Route path="/quiz/:quizId" element={<Quiz />} />
           <Route path="/results/:attemptId" element={<Results />} />
           
+          {/* Search Results Page */}
+          <Route path="/searchresults" element={<SearchResults />} />
         </Routes>
         {/* Footer */}
         <Footer />

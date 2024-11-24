@@ -1,16 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import './Navbar.css';
-import logo from '../../assets/logo2.png';
-import { Link } from 'react-router-dom'; // Import Link from react-router-dom
+import logo from '../../assets/navlogo.svg';
+import { Link, useNavigate } from 'react-router-dom'; // Import Link from react-router-dom
 import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/clerk-react';
+
 
 const Navbar = () => {
   const [bar, setBar] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [dropdownVisible, setDropdownVisible] = useState(false);
-  const [selectedOption, setSelectedOption] = useState('Filter'); // Default value for dropdown
+  const [selectedOption, setSelectedOption] = useState('Filter');
+  const [filteredResults, setFilteredResults] = useState([]);
 
-  const options = ['Campus', 'Professors', 'Topic', 'Major'];
+
+
+  const navigate = useNavigate();
+  const options = ['Topic', 'Professor', 'Semester'];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -37,59 +42,76 @@ const Navbar = () => {
     setSearchQuery(e.target.value);
   };
 
-  const handleSearchSubmit = (e) => {
+  
+  const handleSearchSubmit = async (e) => {
     e.preventDefault();
     console.log(`Search Query: ${searchQuery}, Selected Option: ${selectedOption}`);
-    // Handle the search action, such as filtering content or redirecting to a search page
+
+    if (!searchQuery.trim()) {
+      console.log("Search query is empty. Please enter a search term.");
+      return;
+    }
+  
+    try {
+      const response = await fetch(`http://localhost:4000/api/decks/alldecks`);
+      const allDecks = await response.json();
+      const response_2 = await fetch(`http://localhost:4000/api/quizzes/allquizzes`);
+      const allQuizzes = await response_2.json();
+  
+      // Normalize the search query
+      const normalizedQuery = searchQuery
+        .trim()   // this will remove beginning and trailing spaces
+        .replace(/\s+/g, ' ')     // this will convert any multiple spaces to a single space 
+        .toLowerCase();           // this will make the query all lowercase for case insensitivity
+  
+      let filteredDecks = [];
+      let filteredQuizzes = [];
+
+      if (selectedOption === 'Filter' || selectedOption === 'Topic') {
+        // Filter decks
+          filteredDecks = allDecks.filter(deck =>
+          deck.name.toLowerCase().includes(normalizedQuery) ||
+          deck.description.toLowerCase().includes(normalizedQuery) ||
+          deck.professor.toLowerCase().includes(normalizedQuery) ||
+          deck.semester.toLowerCase().includes(normalizedQuery)
+        );
+
+        // Filter quizzes
+          filteredQuizzes = allQuizzes.filter(quiz =>
+          quiz.name.toLowerCase().includes(normalizedQuery) ||
+          quiz.description.toLowerCase().includes(normalizedQuery) ||
+          quiz.professor.toLowerCase().includes(normalizedQuery) ||
+          quiz.semester.toLowerCase().includes(normalizedQuery)
+        );
+    }  
+      navigate('/searchresults', { state: { filteredResults: filteredDecks, filteredQuizzes, initialView: 'home' } });
+    } catch (error) {
+      console.error('Error fetching decks:', error);
+    }
   };
+
 
   return (
     <nav className={`container ${bar ? 'dark-nav' : ''}`}>
-
-      {/* <div className="navbar-sidebar">
-        <img src={logo} alt="Logo" className="logo-image" />
-      </div> */}
-
-      <Link to="/">
-        <h1 className="cm">Cardmates</h1>
-      </Link>
+      <div className="cm">
+        <Link to="/" className="logo-container">
+          <h1 className="heading">
+            <img src={logo} alt="Cardmates Logo" width="45" height="45" className="nav-logo" />
+            Cardmates
+          </h1>
+        </Link>
+      </div>
 
       <form onSubmit={handleSearchSubmit} className="search-bar">
-        <div className="dropdown">
-          <div
-            className="dropdown-button" // Updated class name
-            onClick={handleDropdownToggle}
-          >
-            <span>{selectedOption}</span>
-          </div>
-          {dropdownVisible && (
-            <div className="dropdown-menu">
-              {options.map((option) => (
-                <div
-                  key={option}
-                  className="dropdown-item"
-                  onClick={() => handleOptionSelect(option)}
-                >
-                  {option}
-                </div>
-              ))}
-            </div>
-          )}
+        <div className='searchbar'>
+          <input type="text" value={searchQuery} onChange={handleSearchChange} placeholder="Search..." className="search-input"/>
+          <button type="submit" className="search-button">
+          </button>
         </div>
-        <input
-          type="text"
-          value={searchQuery}
-          onChange={handleSearchChange}
-          placeholder="Search..."
-          className="search-input"
-        />
-        <button type="submit" className="search-button">
-          Search
-        </button>
       </form>
 
       {/* Navigation Links */}
-      <ul>
+      <ul className='links'>
         <li>
           <Link to="/about">About Us</Link>
         </li>
@@ -108,7 +130,7 @@ const Navbar = () => {
           <li>
             <Link to="/dashboard">Dashboard</Link>
           </li>
-          <li>
+          <li classname = "user-button">
             <UserButton />
           </li>
         </SignedIn>

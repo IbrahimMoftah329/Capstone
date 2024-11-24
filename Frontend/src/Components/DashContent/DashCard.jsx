@@ -4,6 +4,7 @@ import './DashCard.css'; // Optional CSS file for styling
 import nextArrow from '../../assets/arrow.jpg';
 import backArrow from '../../assets/arrow2.jpg';
 import { useUser } from '@clerk/clerk-react';
+import Suits from '../Suits/Suits';
 
 const DashCard = () => {
     const location = useLocation();
