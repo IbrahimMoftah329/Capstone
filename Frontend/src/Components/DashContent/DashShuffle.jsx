@@ -30,14 +30,18 @@ const DashShuffle = () => {
         fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/flashcards/deck/${deckId}/flashcards`)
             .then((response) => response.json())
             .then((data) => {
+                // Limit to the first 8 flashcards in a random order
+                const limitedFlashcards = data.sort(() => Math.random() - 0.5).slice(0, 8);
+
                 const cards = [];
-                data.forEach((flashcard) => {
+                limitedFlashcards.forEach((flashcard) => {
                     cards.push({ id: flashcard._id, type: 'question', content: flashcard.question });
                     cards.push({ id: flashcard._id, type: 'answer', content: flashcard.answer });
                 });
+
                 const shuffled = cards.sort(() => Math.random() - 0.5);
                 setShuffledCards(shuffled);
-                setDisplayedCards(shuffled.slice(0, 16)); // Display the first 16 cards
+                setDisplayedCards(shuffled.slice(0, 16)); // Display the first 16 cards (4x4 grid)
                 setRemainingCards(shuffled.slice(16)); // Store remaining cards
                 setSelectedDeckName(deckName);
                 setIsFlashcardModalOpen(true);
@@ -53,7 +57,7 @@ const DashShuffle = () => {
 
     // Handle card selection
     const handleCardClick = (index) => {
-        if (selectedCards.length === 2 || !displayedCards[index]) return;
+        if (selectedCards.length === 2 || !displayedCards[index] || displayedCards[index].matched) return;
 
         const newSelectedCards = [...selectedCards, index];
         setSelectedCards(newSelectedCards);
@@ -80,11 +84,12 @@ const DashShuffle = () => {
     // Handle matched cards
     const handleMatch = (firstIndex, secondIndex) => {
         const newDisplayedCards = [...displayedCards];
-        newDisplayedCards[firstIndex] = remainingCards[0] || null;
-        newDisplayedCards[secondIndex] = remainingCards[1] || null;
+        // Mark matched cards as null or placeholder
+        newDisplayedCards[firstIndex] = { matched: true };
+        newDisplayedCards[secondIndex] = { matched: true };
 
-        setDisplayedCards(newDisplayedCards.filter(Boolean)); // Remove nulls
-        setRemainingCards(remainingCards.slice(2)); // Update remaining cards
+        setDisplayedCards(newDisplayedCards);
+        setRemainingCards(remainingCards); // Remaining cards remain unaffected
         setSelectedCards([]);
     };
 
@@ -139,11 +144,15 @@ const DashShuffle = () => {
                                         key={index}
                                         className={`flashcard-card ${
                                             selectedCards.includes(index) ? 'selected' : ''
-                                        }`}
+                                        } ${card.matched ? 'matched' : ''}`}
                                         onClick={() => handleCardClick(index)}
                                     >
-                                        <h3>{card.type === 'question' ? 'Q:' : 'A:'}</h3>
-                                        <p>{card.content}</p>
+                                        {!card.matched && (
+                                            <>
+                                                <h3>{card.type === 'question' ? 'Q:' : 'A:'}</h3>
+                                                <p>{card.content}</p>
+                                            </>
+                                        )}
                                     </div>
                                 ))}
                             </div>
@@ -159,4 +168,5 @@ const DashShuffle = () => {
 };
 
 export default DashShuffle;
+
 

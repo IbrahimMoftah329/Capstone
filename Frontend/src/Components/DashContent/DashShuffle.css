@@ -88,6 +88,19 @@
     border-color: #28a745;
     cursor: not-allowed;
     box-shadow: none;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #28a745;
+    font-style: italic;
+}
+
+/* Placeholder text for matched cards */
+.flashcard-card.matched::before {
+    content: "Matched";
+    font-size: 14px;
+    color: #28a745;
 }
 
 /* Ensure empty grid slots are hidden */
