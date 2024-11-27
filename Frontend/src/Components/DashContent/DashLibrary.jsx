@@ -193,6 +193,7 @@ const DashLibrary = () => {
             deckName: associatedDeckInfo.name,
             semester: associatedDeckInfo.semester,
             professor: associatedDeckInfo.professor,
+            university: associatedDeckInfo.university,
         };
     
         fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/quizzes/user/${user.id}/quiz`, {
