@@ -182,7 +182,6 @@ const DashCard = () => {
         setIsFlipped(!isFlipped);
     };
 
-    
 
     return (
         <div className="flashcard-content">
@@ -259,7 +258,6 @@ const DashCard = () => {
                         </div>
                     </div>
                 )}
-
 
                  {/* Study Mode Flashcard Modal */}
                 {isStudyMode && (

@@ -1,0 +1,114 @@
+/* Privacy Policy Styles */
+.privacy-page {
+    background-color: #f9f9f9;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+}
+
+.privacy-container {
+    max-width: 90%;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    position: relative;
+    overflow: hidden;
+}
+
+.privacy-container::before,
+.privacy-container::after {
+    content: '♠';
+    position: absolute;
+    font-size: 120px;
+    color: rgba(0, 0, 0, 0.05);
+    z-index: 1;
+}
+
+.privacy-container::before {
+    top: -50px;
+    left: -30px;
+    transform: rotate(-15deg);
+}
+
+.privacy-container::after {
+    bottom: -50px;
+    right: -30px;
+    transform: rotate(15deg);
+}
+
+.privacy-page h1 {
+    text-align: center;
+    color: #124883;
+    margin-bottom: 30px;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+.privacy-page h1::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 3px;
+    background-color: #124883;
+}
+
+.policy-section {
+    margin-bottom: 25px;
+    padding: 20px;
+    background-color: #f7f9fa;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.policy-section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.policy-section h2 {
+    color: #124883;
+    margin-bottom: 15px;
+    border-bottom: 2px solid rgba(18, 72, 131, 0.2);
+    padding-bottom: 10px;
+}
+
+.policy-section ul {
+    list-style-type: none;
+    padding-left: 20px;
+}
+
+.policy-section ul li {
+    margin-bottom: 10px;
+    position: relative;
+    padding-left: 20px;
+}
+
+.policy-section ul li::before {
+    content: '♣';
+    position: absolute;
+    left: 0;
+    color: #124883;
+}
+
+.policy-footer {
+    text-align: center;
+    margin-top: 30px;
+    font-style: italic;
+    color: #666;
+}
+
+@media (max-width: 768px) {
+    .privacy-container {
+        padding: 20px;
+        margin: 0 10px;
+    }
+
+    .policy-section {
+        padding: 15px;
+    }
+}

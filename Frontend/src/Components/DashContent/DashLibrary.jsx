@@ -447,34 +447,6 @@ const DashLibrary = () => {
                 );
             })}
         </div>
-        <h1 className="library-content-title" style={{ paddingTop: "10px" }}>Quiz Attempts</h1>
-        <p className="library-content-description">Manage your attempts here.</p>
-        <div className="quiz-list">
-            {attempts && attempts.map((attempt) => {
-                console.log("Attempt ID:", attempt.attemptId); // Debug log to check _id
-                return (
-                    <div key={attempt.attemptId} className="quiz-item" onClick={() => navigateToQuizAttempt(attempt)}>
-                        <div>
-                            <h3>Associated Quiz:<br />{attempt.quizName}</h3>
-                            <p>Score: {attempt.score} / {attempt.totalQuestions}</p>
-                            <p>Attempted on: {
-                                new Date(attempt.createdAt).toLocaleString('en-US', {
-                                    month: 'numeric',
-                                    day: 'numeric',
-                                    year: 'numeric',
-                                    hour: 'numeric',
-                                    minute: 'numeric',
-                                    hour12: true // For 12-hour format; set to false for 24-hour format
-                                })
-                            }</p>
-                        </div>
-                        <div className="quiz-item-buttons">
-                            <button className="quiz-button delete" type="button" onClick={handleAttemptDeleteClick(attempt.attemptId)}>Delete</button>
-                        </div>
-                    </div>
-                );
-            })}
-        </div>
     </div>
 
             {/* Modal for Adding New Deck */}

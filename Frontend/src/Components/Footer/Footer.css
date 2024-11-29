@@ -11,6 +11,14 @@
 
 .footer ul li{
     list-style: none;
+    cursor: pointer; /* Add pointer cursor */
     display: inline-block;
     margin-left: 20px;
 }
+
+  .footer a {
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+  }
+ 

@@ -1,30 +1,120 @@
+/* Results Page Styles with Playing Card Elements */
+:root {
+    --card-red: #d32f2f;
+    --card-black: #212121;
+    --card-background: #f9f9f9;
+    --card-blue: #124883;
+}
+
 .results-page {
-    max-width: 75%;
+    max-width: 90%;
     margin: 0 auto;
     padding: 20px;
-    background-color: #f9f9f9;
+    background-color: var(--card-background);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+}
+
+.results-page::before,
+.results-page::after {
+    content: '♠';
+    position: absolute;
+    font-size: 120px;
+    color: rgba(0, 0, 0, 0.05);
+    z-index: 1;
+}
+
+.results-page::before {
+    top: -50px;
+    left: -30px;
+    transform: rotate(-15deg);
+}
+
+.results-page::after {
+    bottom: -50px;
+    right: -30px;
+    transform: rotate(15deg);
+}
+
+.results-page h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    position: relative;
+    padding: 20px;
+}
+
+.results-page h1::before,
+.results-page h1::after {
+    content: '♠';
+    position: absolute;
+    font-size: 40px;
+    color: rgba(0, 0, 0, 0.1);
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.results-page h1::before {
+    left: 0;
+}
+
+.results-page h1::after {
+    right: 0;
 }
 
 .score {
     text-align: center;
     margin-bottom: 20px;
     font-size: 1.1rem;
-}
-
-.results-page h1 {
-    text-align: center;
-    margin-bottom: 20px;
+    font-weight: bold;
 }
 
 .result-item {
-    margin-bottom: 20px;
-    padding: 15px;
-    border-radius: 8px;
-    background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 25px;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
 }
 
+.result-item::before {
+    content: attr(data-suit);
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 40px;
+    color: rgba(0, 0, 0, 0.1);
+    z-index: 1;
+}
+
+.result-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.15);
+}
+
+.result-item h3 {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 15px;
+    font-weight: 600;
+    position: relative;
+}
+
+.result-item h3::before {
+    content: '♣';
+    position: absolute;
+    left: -30px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgba(0, 0, 0, 0.1);
+    font-size: 30px;
+}
+
+/* Suit Color Logic for Correctness */
 .result-item.correct {
     border-left: 5px solid #4CAF50; /* Green for correct answers */
 }
@@ -33,18 +123,15 @@
     border-left: 5px solid #FF5252; /* Red for incorrect answers */
 }
 
-.result-item h3 {
-    font-size: 1.1rem;
-    color: #333;
-    margin-bottom: 10px;
-}
-
 .result-item p {
     margin: 5px 0;
+    color: #555;
 }
 
 .status {
     font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .status.correct {
@@ -53,4 +140,35 @@
 
 .status.incorrect {
     color: #FF5252;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .results-page {
+        max-width: 90%;
+        padding: 15px;
+    }
+
+    .result-item h3 {
+        font-size: 1.1rem;
+    }
+
+    .status {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .results-page {
+        max-width: 95%;
+        padding: 10px;
+    }
+
+    .result-item h3 {
+        font-size: 1rem;
+    }
+
+    .score {
+        font-size: 1rem;
+    }
 }

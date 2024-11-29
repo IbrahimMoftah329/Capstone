@@ -14,6 +14,8 @@ import Results from './pages/QuizPage/Results';
 import Carousel from './Components/Carousel/Carousel'
 import TitleC from './Components/Title/TitleC'
 import SearchResults from './pages/SearchResultsPage/SearchResults';
+import Privacy from './pages/PrivacyPage/Privacy';
+import Terms from './pages/Terms/Terms';
 
 const App = () => {
   return (
@@ -47,6 +49,8 @@ const App = () => {
           <Route path="/results/:attemptId" element={<Results />} />
           {/* Search Results Page */}
           <Route path="/searchresults" element={<SearchResults />} />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/terms" element= {<Terms />} />
         </Routes>
         {/* Footer */}
         <Footer />

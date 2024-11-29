@@ -1,52 +1,172 @@
-/* Quiz Page Styles */
+/* Quiz Page Styles with Playing Card Elements */
+:root {
+    --card-red: #d32f2f;
+    --card-black: #212121;
+    --card-background: #f9f9f9;
+    --card-blue: #124883;
+}
+
 .quiz-page {
-    max-width: 75%;
+    max-width: 90%;
     margin: 0 auto;
     padding: 20px;
-    background-color: #f9f9f9;
+    background-color: var(--card-background);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+}
+
+.quiz-page::before,
+.quiz-page::after {
+    content: '♠';
+    position: absolute;
+    font-size: 120px;
+    color: rgba(0, 0, 0, 0.05);
+    z-index: 1;
+}
+
+.quiz-page::before {
+    top: -50px;
+    left: -30px;
+    transform: rotate(-15deg);
+}
+
+.quiz-page::after {
+    bottom: -50px;
+    right: -30px;
+    transform: rotate(15deg);
 }
 
 .quiz-page h1 {
     padding: 20px;
     text-align: center;
+    position: relative;
 }
 
-/* Question Block */
+.quiz-page h1::before,
+.quiz-page h1::after {
+    content: '♠';
+    position: absolute;
+    font-size: 40px;
+    color: rgba(0, 0, 0, 0.1);
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.quiz-page h1::before {
+    left: 0;
+}
+
+.quiz-page h1::after {
+    right: 0;
+}
+
+/* Question Block - Card-like Styling */
 .question-block {
     margin-bottom: 25px;
-    padding: 15px;
+    padding: 20px;
     background-color: #ffffff;
-    border-radius: 6px;
-    border: 1px solid #ddd;
+    border-radius: 12px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.question-block::before {
+    content: attr(data-suit);
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 40px;
+    color: rgba(0, 0, 0, 0.1);
+    z-index: 1;
+}
+
+.question-block:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.15);
 }
 
 .question-block h3 {
     font-size: 1.2rem;
     color: #333;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
+    font-weight: 600;
+    position: relative;
 }
 
-/* Options Styling */
+.question-block h3::before {
+    content: '♣';
+    position: absolute;
+    left: -30px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgba(0, 0, 0, 0.1);
+    font-size: 30px;
+}
+
+/* Suit Color Logic */
+.question-block[data-suit="♠"],
+.question-block[data-suit="♣"] {
+    border-left: 5px solid var(--card-black);
+}
+
+.question-block[data-suit="♥"],
+.question-block[data-suit="♦"] {
+    border-left: 5px solid var(--card-blue);
+}
+.question-block:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Submit Button - Card-like */
+.submit-button {
+    padding: 15px 30px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #124883;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    max-width: 200px;
+    margin: 20px auto 0;
+    display: block;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.submit-button:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.25);
+}
+
+
+/* Options Styling - Card-like */
 .options {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
 }
 
-/* Style for label associated with options */
 .options label {
     font-size: 1rem;
     color: #555;
-    padding: 12px;
-    background-color: #f2f2f2;
-    border-radius: 4px;
+    padding: 15px;
+    background-color: #f7f7f7;
+    border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.2s;
-    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     display: inline-block;
     width: 100%;
+    position: relative;
+    overflow: hidden;
 }
 
 /* Hide the radio button */
@@ -54,73 +174,17 @@
     display: none;
 }
 
-/* Style for selected option - when radio is checked, change the associated label */
+/* Style for selected option */
 .options input[type="radio"]:checked + label {
-    background-color: #d3d3d3; /* Change color for selected option */
+    background-color: #e0e0e0;
     font-weight: bold;
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+    transform: scale(1.02);
 }
 
 /* Hover effect */
 .options label:hover {
-    background-color: #e0e0e0;
-}
-
-/* Submit Button */
-.submit-button {
-    padding: 12px 24px;
-    font-size: 1rem;
-    color: #fff;
-    background-color: #124883;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    width: 100%;
-    max-width: 200px;
-    margin: 20px auto 0;
-    display: block;
-}
-
-.submit-button:hover {
-    background-color: #45a049;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .quiz-page {
-        padding: 15px;
-    }
-
-    .question-block h3 {
-        font-size: 1.1rem;
-    }
-
-    .options label {
-        font-size: 0.9rem;
-    }
-
-    .submit-button {
-        font-size: 0.9rem;
-        padding: 10px 20px;
-    }
-}
-
-@media (max-width: 480px) {
-    .quiz-page {
-        padding: 10px;
-    }
-
-    .question-block h3 {
-        font-size: 1rem;
-    }
-
-    .options label {
-        font-size: 0.8rem;
-        padding: 6px 10px;
-    }
-
-    .submit-button {
-        font-size: 0.8rem;
-        padding: 8px 16px;
-    }
+    background-color: #eeeeee;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.12);
+    transform: translateY(-3px);
 }
