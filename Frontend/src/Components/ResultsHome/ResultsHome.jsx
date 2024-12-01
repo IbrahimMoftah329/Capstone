@@ -103,14 +103,7 @@ const ResultsHome = ({ onShowDeck, onShowQuiz }) => {
 
 
     return (
-        <div className='search-results-page'>
-            {/* Filter Bar */}
-            {/* <div className='filter-bar'>
-                <button className='filter-button active'>All Results</button>
-                <button className='filter-button' onClick={onShowDeck}>Decks</button>
-                <button className='filter-button' onClick={onShowQuiz}>Quizzes</button>
-            </div> */}
-            
+        <div className='search-results-page'>            
             <div className='results-home-container'>
                 <div className='filter-bar'>
                     <button className='filter-button active'>All Results</button>

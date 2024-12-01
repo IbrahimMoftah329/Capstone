@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './Navbar.css';
 import logo from '../../assets/logo2.png';
 import { Link, useNavigate } from 'react-router-dom'; // Import Link from react-router-dom
-import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/clerk-react';
+import { SignedIn, SignedOut, SignInButton, UserButton, useUser } from '@clerk/clerk-react';
 
 
 const Navbar = () => {
@@ -11,6 +11,9 @@ const Navbar = () => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [selectedOption, setSelectedOption] = useState('Filter');
   const [filteredResults, setFilteredResults] = useState([]);
+
+  const { user } = useUser();             // Get user context from Clerk
+  const userId = user ? user.id : null;   // Get the logged-in user's ID
 
 
 
@@ -60,30 +63,28 @@ const Navbar = () => {
   
       // Normalize the search query
       const normalizedQuery = searchQuery
-        .trim()   // this will remove beginning and trailing spaces
+        .trim()                   // this will remove beginning and trailing spaces
         .replace(/\s+/g, ' ')     // this will convert any multiple spaces to a single space 
         .toLowerCase();           // this will make the query all lowercase for case insensitivity
+       
+      const filteredDecks = allDecks.filter(
+        (deck) =>
+          (deck.name.toLowerCase().includes(normalizedQuery) ||
+            deck.description.toLowerCase().includes(normalizedQuery) ||
+            deck.professor.toLowerCase().includes(normalizedQuery) ||
+            deck.semester.toLowerCase().includes(normalizedQuery)) &&
+            deck.clerkId !== userId       // Exclude decks that belong to the logged-in user
+      );
   
-      let filteredDecks = [];
-      let filteredQuizzes = [];
+      const filteredQuizzes = allQuizzes.filter(
+        (quiz) =>
+          (quiz.name.toLowerCase().includes(normalizedQuery) ||
+            quiz.description.toLowerCase().includes(normalizedQuery) ||
+            quiz.professor.toLowerCase().includes(normalizedQuery) ||
+            quiz.semester.toLowerCase().includes(normalizedQuery)) &&
+            quiz.createdBy !== userId     // Exclude quizzes that belong to the logged-in user
+      );
 
-      if (selectedOption === 'Filter' || selectedOption === 'Topic') {
-        // Filter decks
-          filteredDecks = allDecks.filter(deck =>
-          deck.name.toLowerCase().includes(normalizedQuery) ||
-          deck.description.toLowerCase().includes(normalizedQuery) ||
-          deck.professor.toLowerCase().includes(normalizedQuery) ||
-          deck.semester.toLowerCase().includes(normalizedQuery)
-        );
-
-        // Filter quizzes
-          filteredQuizzes = allQuizzes.filter(quiz =>
-          quiz.name.toLowerCase().includes(normalizedQuery) ||
-          quiz.description.toLowerCase().includes(normalizedQuery) ||
-          quiz.professor.toLowerCase().includes(normalizedQuery) ||
-          quiz.semester.toLowerCase().includes(normalizedQuery)
-        );
-    }  
       navigate('/searchresults', { state: { filteredResults: filteredDecks, filteredQuizzes, initialView: 'home' } });
     } catch (error) {
       console.error('Error fetching decks:', error);

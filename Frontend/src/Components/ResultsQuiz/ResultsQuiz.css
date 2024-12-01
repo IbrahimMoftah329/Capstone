@@ -9,12 +9,10 @@
   
   
   .results-container {
-    display: flex; 
+    display: flex;
     flex-grow: 1;
-    padding: 0 1rem 2rem;
     margin: auto;
-    max-width: 70rem;
-    min-width: 65rem;
+    width: 70rem;
     overflow: hidden;
   }
   
