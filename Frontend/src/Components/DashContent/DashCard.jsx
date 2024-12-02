@@ -4,6 +4,7 @@ import './DashCard.css'; // Optional CSS file for styling
 import nextArrow from '../../assets/arrow.jpg';
 import backArrow from '../../assets/arrow2.jpg';
 import { useUser } from '@clerk/clerk-react';
+import Suits from '../Suits/Suits';
 
 const DashCard = () => {
     const location = useLocation();
@@ -172,9 +173,48 @@ const DashCard = () => {
         }
     };
 
-    const flipCard = () => {
-        setIsFlipped(!isFlipped);
+    // Function to exit the study mode
+    const exitStudyMode = () => {
+        setIsStudyMode(false);
+        setCurrentCardIndex(0); // Optionally reset the index when exiting
+        setIsFlipped(false); // Reset the flip state
     };
+
+    // Function to start/restart the study mode
+    const restartStudy = () => {
+        setCurrentCardIndex(0);
+        setIsFlipped(false);
+    };
+
+    const flipCard = () => {
+        setIsFlipped((prevIsFlipped) => !prevIsFlipped); // Toggle isFlipped state on each call
+    };
+
+    // Event listener for keyboard navigation
+    useEffect(() => {
+        const handleKeyDown = (event) => {
+            if (isStudyMode) {
+                if (event.key === 'ArrowLeft') {
+                    previousCard();
+                } else if (event.key === 'ArrowRight') {
+                    nextCard();
+                } else if (event.key === ' ') {
+                    event.preventDefault(); // Prevent page scrolling on spacebar press
+                    flipCard();
+                } else if (event.key === 'Escape') {
+                    exitStudyMode(); // Exit study mode on Esc key
+                } else if (event.key.toLowerCase() === 'r') {
+                    restartStudy(); // Restart study mode on R key
+                }
+            }
+        };
+    
+        window.addEventListener('keydown', handleKeyDown);
+    
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [isStudyMode, currentCardIndex, isFlipped]);
 
     return (
         <div className="flashcard-content">
@@ -232,8 +272,8 @@ const DashCard = () => {
                                         <button className="prev-button-studymode" onClick={previousCard} disabled={currentCardIndex === 0}>
                                             <img src={backArrow} alt="previous" />
                                         </button>
-                                        <button className="restart-button-studymode" onClick={() => { setCurrentCardIndex(0); setIsFlipped(false); }}>Restart</button>
-                                        <button className="exit-button-studymode" onClick={() => setIsStudyMode(false)}>Exit</button>
+                                        <button className="restart-button-studymode" onClick={restartStudy}>Restart</button>
+                                        <button className="exit-button-studymode" onClick={exitStudyMode}>Exit</button>
                                         <button className="next-buttons-studymode" onClick={nextCard} disabled={currentCardIndex === flashcards.length - 1}>
                                             <img src={nextArrow} alt="next" />
                                         </button>

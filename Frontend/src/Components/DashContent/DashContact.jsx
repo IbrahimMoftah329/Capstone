@@ -6,15 +6,50 @@ import { useUser } from '@clerk/clerk-react';
 const DashContact = () => {
     const { user } = useUser();
     const [showPopup, setShowPopup] = useState(false);
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        message: ''
+    });
 
-    const handleUpdateClick = (event) => {
-        // Prevent the form from submitting if there's an actual submit behavior in the future
+    const handleInputChange = (e) => {
+        const { id, value } = e.target;
+        setFormData({ ...formData, [id]: value });
+    };
+
+    const handleUpdateClick = async (event) => {
         event.preventDefault();
-
-        // Show the popup when the button is clicked
         setShowPopup(true);
-
-        // Hide the popup after 3 seconds (optional)
+    
+        // Send form data to the backend to send the email
+        try {
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/send-email`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    to: 'cardmatesai@gmail.com', // Main recipient email
+                    subject: `Contact Form Message from ${formData.name}`,
+                    text: `Name: ${formData.name}\nEmail: ${formData.email}\nMessage: ${formData.message}\nUserID: ${user.id}`,
+                    userEmail: formData.email, // User's email for confirmation
+                    userName: formData.name // User's name for confirmation
+                }),
+            });
+    
+            if (!response.ok) throw new Error('Error sending email');
+            console.log("Email successfully sent to both CardMates and the user.");
+    
+            // Clear form fields upon successful submission
+            setFormData({
+                name: '',
+                email: '',
+                message: ''
+            });
+        } catch (error) {
+            console.error("Error occurred during email submission:", error);
+        }
+    
         setTimeout(() => {
             setShowPopup(false);
         }, 3000);
@@ -29,14 +64,14 @@ const DashContact = () => {
                 <div className='form'>
                     <form onSubmit={handleUpdateClick}>
                         <h3>Full name</h3>
-                        <input type='text' id = "name" className='input' required placeholder='Enter name'  />
+                        <input type='text' id = "name" className='input' required placeholder='Enter name' value={formData.name} onChange={handleInputChange} />
 
                         <h3>Email</h3>
-                        <input type='text' id = "Email" className='input' required placeholder='Enter email'  />
+                        <input type='text' id = "email" className='input' required placeholder='Enter email' value={formData.email} onChange={handleInputChange} />
 
                         <div className='name'>
                             <h3>Message</h3>
-                            <textarea id= "message" rows="8" className='input' required placeholder='Enter message'  />
+                            <textarea id= "message" rows="8" className='input' required placeholder='Enter message' value={formData.message} onChange={handleInputChange} />
                         </div>
 
                         <button className="btn">Submit</button>

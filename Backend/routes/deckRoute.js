@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const {
+    getAllDecks,
     getDecks,
     getDeck,
     addDeckToUser,
@@ -10,6 +11,9 @@ const {
     
 } = require('../Controllers/deckControllers')
 
+
+// Route to GET all decks from all users
+router.get('/alldecks', getAllDecks);
 
 // Route to GET all user decks
 router.get('/user/:userId/decks', getDecks);

@@ -1,9 +1,25 @@
 const Deck = require('../models/deck')
 const Flashcard = require('../models/flashcard');
 const User = require('../models/user')
+const Quiz = require('../models/quiz')
 
 const mongoose = require('mongoose')
 
+// Get all decks from all users
+const getAllDecks = async (req, res) => {
+  try {
+    // Fetch all decks from the database
+    const decks = await Deck.find()   // This will display all decks, and the unique object id given to each flashcard within that deck
+    
+    // The line below can be used instead of the line above this one if you would like the populate flashcards,
+    // meaning "http://localhost:4000/api/decks/alldecks" will show the contents for each flashcard within each deck
+    // const decks = await Deck.find().populate('flashcards'); // Optionally populate flashcards if needed
+    
+    res.status(200).json(decks);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+}
 
 // Get all decks for a user
 const getDecks = async (req, res) => {
@@ -40,7 +56,7 @@ const getDeck = async (req, res) => {
 const addDeckToUser = async (req, res) => {
   try {
     const user = await User.findOrCreateUserByClerkId(req.params.userId);
-    const newDeck = new Deck({ ...req.body, clerkId: req.params.userId });
+    const newDeck = new Deck({ ...req.body, clerkId: req.params.userId, university: user.university, });
     const savedDeck = await newDeck.save();
 
     user.decks.push(savedDeck._id);
@@ -86,18 +102,41 @@ const updateDeck = async (req, res) => {
   const { deckId } = req.params;
 
   try {
+    // Step 1: Update the deck and confirm it exists
     const updatedDeck = await Deck.findByIdAndUpdate(deckId, req.body, { new: true });
     if (!updatedDeck) {
       return res.status(404).json({ error: 'Deck not found' });
     }
+    console.log('Deck updated:', updatedDeck);
+
+    // Step 2: Check which fields were updated
+    const updatedFields = {};
+    if (req.body.professor) updatedFields.professor = req.body.professor;
+    if (req.body.semester) updatedFields.semester = req.body.semester;
+    if (req.body.university) updatedFields.university = req.body.university;
+    if (req.body.name) updatedFields.deckName = req.body.name;
+    console.log('Updated fields for quizzes:', updatedFields);
+
+    // Step 3: If any relevant fields were updated, propagate changes to quizzes
+    if (Object.keys(updatedFields).length > 0) {
+      const quizzesUpdateResult = await Quiz.updateMany(
+        { deckId: deckId }, 
+        { $set: updatedFields }
+      );
+      console.log('Quizzes update result:', quizzesUpdateResult);
+    } else {
+      console.log('No relevant fields updated for quizzes.');
+    }
+
     res.status(200).json(updatedDeck);
   } catch (err) {
+    console.error('Error in updateDeck:', err);
     res.status(500).send(err.message);
   }
-}
-
+};
 
 module.exports = {
+  getAllDecks,
   addDeckToUser,
   getDecks,
   getDeck,

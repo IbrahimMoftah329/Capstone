@@ -19,6 +19,10 @@ const quizSchema = new Schema({
         type: String,
         required: false
     },
+    university: { 
+      type: String, 
+      required: false
+    },
     deckId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Deck',  // Reference to the Deck model

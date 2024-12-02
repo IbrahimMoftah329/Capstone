@@ -5,6 +5,7 @@ import { ImSpades } from "react-icons/im";
 import { BsSuitDiamondFill } from "react-icons/bs";
 import { GiClubs } from "react-icons/gi";
 import { IoIosHeart } from "react-icons/io";
+import { GiCardJoker } from "react-icons/gi";
 import { Link } from 'react-router-dom';
 
 const DashSidebar = () => {
@@ -12,7 +13,8 @@ const DashSidebar = () => {
     { label: 'Library', icon: <span className="sidebar-icon"><ImSpades /></span>, link: '/dashboard/library' },
     { label: 'Profile', icon: <span className="sidebar-icon"><IoIosHeart /></span>, link: '/dashboard/profile' },
     { label: 'Contact', icon: <span className="sidebar-icon"><GiClubs /></span>, link: '/dashboard/contact' },
-    { label: 'Shuffle', icon: <span className="sidebar-icon"><BsSuitDiamondFill /></span>, link: '/dashboard/shuffle' },
+    { label: 'Favorites', icon: <span className="sidebar-icon"><BsSuitDiamondFill /></span>, link: '/dashboard/favorites' },
+    { label: 'Shuffle', icon: <span className="sidebar-icon"><GiCardJoker /></span>, link: '/dashboard/shuffle' },
   ];
 
   return (
