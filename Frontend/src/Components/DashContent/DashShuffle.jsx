@@ -30,11 +30,14 @@ const DashShuffle = () => {
         fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/flashcards/deck/${deckId}/flashcards`)
             .then((response) => response.json())
             .then((data) => {
+                // Limit to the first 8 flashcards in a random order
+                const limitedFlashcards = data.sort(() => Math.random() - 0.5).slice(0, 8);
                 const cards = [];
-                data.forEach((flashcard) => {
+                limitedFlashcards.forEach((flashcard) => {
                     cards.push({ id: flashcard._id, type: 'question', content: flashcard.question });
                     cards.push({ id: flashcard._id, type: 'answer', content: flashcard.answer });
                 });
+
                 const shuffled = cards.sort(() => Math.random() - 0.5);
                 setShuffledCards(shuffled);
                 setDisplayedCards(shuffled.slice(0, 16)); // Display the first 16 cards
@@ -53,7 +56,7 @@ const DashShuffle = () => {
 
     // Handle card selection
     const handleCardClick = (index) => {
-        if (selectedCards.length === 2 || !displayedCards[index]) return;
+        if (selectedCards.length === 2 || !displayedCards[index] || displayedCards[index].matched) return;
 
         const newSelectedCards = [...selectedCards, index];
         setSelectedCards(newSelectedCards);
@@ -80,11 +83,11 @@ const DashShuffle = () => {
     // Handle matched cards
     const handleMatch = (firstIndex, secondIndex) => {
         const newDisplayedCards = [...displayedCards];
-        newDisplayedCards[firstIndex] = remainingCards[0] || null;
-        newDisplayedCards[secondIndex] = remainingCards[1] || null;
+        newDisplayedCards[firstIndex] = { matched: true };
+        newDisplayedCards[secondIndex] = { matched: true };
 
-        setDisplayedCards(newDisplayedCards.filter(Boolean)); // Remove nulls
-        setRemainingCards(remainingCards.slice(2)); // Update remaining cards
+        setDisplayedCards(newDisplayedCards);
+        setRemainingCards(remainingCards); // Remaining cards remain unaffected
         setSelectedCards([]);
     };
 
@@ -103,7 +106,7 @@ const DashShuffle = () => {
             <h1 className="shuffle-title">Shuffle <GiCardJoker /></h1>  
             <p>View your shuffled decks here.</p>  
             <br></br>
-            <div className="library-content-bottom">
+            <div className="shuffle-content-list">
                 <div className="shuffle-top">
                     <div className="shuffle-list">
                         {isLoading ? (
@@ -115,12 +118,9 @@ const DashShuffle = () => {
                                 <div key={deck._id} className="shuffle-item">
                                     <h3>{deck.name}</h3>
                                     <p>{deck.flashcards.length} cards</p>
-                                    <button
-                                        className="shuffle-button"
-                                        onClick={() => getFlashcards(deck._id, deck.name)}
-                                    >
-                                        Shuffle
-                                    </button>
+                                    <div className="shuffle-item-buttons">
+                                        <button className="shuffle-button" onClick={() => getFlashcards(deck._id, deck.name)}>Shuffle</button>
+                                    </div>
                                 </div>
                             ))
                         )}
@@ -141,11 +141,14 @@ const DashShuffle = () => {
                                         key={index}
                                         className={`flashcard-card ${
                                             selectedCards.includes(index) ? 'selected' : ''
-                                        }`}
+                                        } ${card.matched ? 'matched' : ''}`}
                                         onClick={() => handleCardClick(index)}
                                     >
-                                    
-                                        <p>{card.content}</p>
+                                        {!card.matched && (
+                                            <>
+                                                <p>{card.content}</p>
+                                            </>
+                                        )}
                                     </div>
                                 ))}
                             </div>

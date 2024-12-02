@@ -3,12 +3,25 @@
     flex: 1;
     padding: 20px;
     background-color: #f0f0f0;
-    min-height: 100vh;
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
     text-align: left;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-bottom-left-radius: 30px;
+}
+
+.shuffle-content-list {
+    flex: 0; /* Change from flex: 1 to flex: 0 */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    text-align: left;
+    background-color: #e0e0e0;
+    border-radius: 30px;
+    position: relative;
+    flex-basis: auto;
 }
 
 .shuffle-title {
@@ -87,6 +100,19 @@
     border-color: #28a745;
     cursor: not-allowed;
     box-shadow: none;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #28a745;
+    font-style: italic;
+}
+
+/* Placeholder text for matched cards */
+.flashcard-card.matched::before {
+    content: "Matched";
+    font-size: 14px;
+    color: #28a745;
 }
 
 /* Ensure empty grid slots are hidden */
@@ -102,40 +128,65 @@
 }
 
 .shuffle-list {
-    margin-top: 20px;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 20px;
 }
 
 .shuffle-item {
-    background-color: #f9f9f9;
     padding: 15px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
     border-radius: 10px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    transition: 0.3s;
-    text-align: left;
-}
-
-.shuffle-item h3 {
-    font-size: 18px;
-    color: #333;
-}
-
-.shuffle-item p {
-    font-size: 14px;
-    color: #666;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    transition: box-shadow 0.3s ease;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column; /* Flex column layout */
+    justify-content: space-between; /* Space between top (content) and bottom (buttons) */
+    cursor: pointer;
+    min-height: 350px; /* Set a minimum height */
+    height: 100%; /* Ensure full height for proper spacing */
 }
 
 .shuffle-item:hover {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
+.shuffle-item h3 {
+    font-size: 18px;
+    color: #333;
+    margin: 0; /* Remove default margin */
+}
+
+.shuffle-item p {
+    font-size: 14px;
+    color: #666;
+    margin: 5px 0; /* Add slight spacing */
+}
+
+.shuffle-item-buttons {
+    display: flex;
+    gap: 10px; /* Space between buttons */
+    justify-content: center; /* Center align buttons */
+    margin-top: auto; /* Push buttons to the bottom */
+}
+
 .shuffle-button {
-    padding: 10px 20px;
-    background-color: #124883;
-    color: white;
+    padding: 5px 15px; /* Adjust padding for better fit */
+    background-color: #124883; /* Default blue background */
+    color: white; /* White text */
+    border: none;
     border-radius: 5px;
-    cursor: pointer;
     font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+    flex: 1; /* Ensure buttons stretch equally */
+}
+
+.shuffle-button:hover {
+    background-color: #45a049; /* Darker green on hover for non-delete buttons */
 }
