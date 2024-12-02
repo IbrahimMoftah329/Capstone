@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import { useUser } from '@clerk/clerk-react';
 import './ResultsHome.css';
 
 
 const ResultsHome = ({ onShowDeck, onShowQuiz }) => {
     const location = useLocation();
+    const { user } = useUser();             // Get user context from Clerk
+    const userId = user ? user.id : null;   // Get the logged-in user's ID
+
+
     const { filteredResults, filteredDecks, filteredQuizzes, initialView } = location.state || { 
         filteredResults: [],
         filteredDecks: [], 
@@ -12,12 +17,19 @@ const ResultsHome = ({ onShowDeck, onShowQuiz }) => {
         initialView: 'home'
     };
 
+    // Usestate used for updating the favorite decks and quizzes for a user
+    const [favDeck, setFavDeck] = useState(user?.favoriteDecks || '');
+    const [favQuiz, setFavQuiz] = useState(user?.favoriteQuizzes || '');
+
+    // Usestate for retrieving the flashcard question and answer for a given deck
     const [selectedDeck, setSelectedDeck] = useState(null);
     const [flashcards, setFlashcards] = useState([])
 
+    // Usestate for retrieving the questions and answers for a given quiz
     const [selectedQuiz, setSelectedQuiz] = useState(null);
     const [questions, setQuestions] = useState([]);
 
+    // Usestates for showing the preview of decks and quizzes
     const [isDeckOpen, setDeckOpen] = useState(false);
     const [isQuizOpen, setQuizOpen] = useState(false);
 
@@ -55,52 +67,82 @@ const ResultsHome = ({ onShowDeck, onShowQuiz }) => {
         setQuestions(quiz);
         setSelectedQuiz(quiz);
         getQuestions(quiz);
-        
     }
 
     const closeQuizModal = () => {
         setQuizOpen(false);
+
     }
 
     // Retrieves each flashcard using the deck id to be displayed during preview
+    
     const getFlashcards = async (deck) => {
         if (deck && deck._id) {
           try{
-            const response = await fetch(`http://localhost:4000/api/flashcards/deck/${deck._id}/flashcards`);
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/flashcards/deck/${deck._id}/flashcards`, {method: "GET",})
             const data = await response.json();
             if (response.ok) {
               setFlashcards(data);
               console.log(data);
             }
-      
           } catch (error) {
             console.error("Error fetching flashcards", error);
           }
         }
-      };    
+    };    
     
-      // Retrieves each quiestion using the quiz id to be displayed during preview
-      const getQuestions = async (quiz) => {
-          if (quiz && quiz._id) {
-          try{
-            const response = await fetch(`http://localhost:4000/api/questions/quiz/${quiz._id}/questions`);
-            const data = await response.json();
-            if (response.ok) {
-              setQuestions(data);
-              console.log(data);
-            }
-      
-          } catch (error) {
-            console.error("Error fetching flashcards", error);
-          }
+    // Retrieves each quiestion using the quiz id to be displayed during preview
+    const getQuestions = async (quiz) => {
+        if (quiz && quiz._id) {
+        try{
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/questions/quiz/${quiz._id}/questions`, {method: "GET",});
+        const data = await response.json();
+        if (response.ok) {
+            setQuestions(data);
+            console.log(data);
         }
-      };
+        } catch (error) {
+            console.error("Error fetching quiz questions", error);
+        }
+        }
+    };
 
-      const handleFavorite = async (item) => {
-
-      }
-
-
+    // This is used to add a deck id to the favoriteDecks array for a user
+      const addFavoriteDeck = async (deck) => {
+        const settings = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            deckId: deck._id,
+          })
+        }
+      
+        try {
+          if (!userId) {
+            alert('Please log in to add this deck to your favorites.');
+            return;
+          }
+        
+          // Update this line to match the backend route
+          const response = await fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/${userId}/addDeck`, settings);
+        
+          if (!response.ok) {
+            throw new Error('Failed to add favorite deck');
+          }
+        
+          const data = await response.json();
+          console.log('Favorite deck added successfully:', data);
+        
+          alert('Deck added to favorites!');
+        } catch (error) {
+          console.error('Error adding favorite deck:', error);
+          alert('Failed to add deck to favorites.');
+        }
+    };
+      
+      
 
     return (
         <div className='search-results-page'>            
@@ -130,7 +172,7 @@ const ResultsHome = ({ onShowDeck, onShowQuiz }) => {
 
                                     <div className='buttons'>
                                         <button className = 'preview' onClick={() => handleDeckPreview(deck)}>Preview</button>
-                                        {/* <button className = 'add_favorite' onClick={handleFavorite(deck)}>Favorite</button> */}
+                                        <button className = 'add_favorite' onClick={() => addFavoriteDeck(deck)}>Favorite</button>
                                     </div>
                                     
                                 </div>
@@ -158,7 +200,7 @@ const ResultsHome = ({ onShowDeck, onShowQuiz }) => {
                                 </div>
                                 <div className='buttons'>
                                     <button className = 'preview' onClick={() => handleQuizPreview(quiz)}>Preview</button>
-                                    {/* <button className = 'add_favorite' onClick={handleFavorite(quiz)}>Favorite</button> */}
+                                    {/* <button className = 'add_favorite' onClick={() => addFavoriteQuiz(quiz)}>Favorite</button> */}
                                 </div>
                             </div>
                             ))
