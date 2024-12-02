@@ -89,7 +89,6 @@
 /* Styling each deck item as a box */
 .deck-item {
     padding: 10px;
-    margin-bottom: 10px;
     background-color: #f9f9f9;
     align-items: center;
     border: 1px solid #ddd;
@@ -321,7 +320,7 @@
     flex-direction: column;
     justify-content: space-between;
     cursor: pointer;
-    min-height: 250px; /* Set a minimum height */
+    min-height: 350px; /* Set a minimum height */
     word-break: break-word;
 }
 
