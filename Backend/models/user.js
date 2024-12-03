@@ -11,8 +11,8 @@ const userSchema = new Schema({
   },
   username: { 
     type: String, 
-    // required: true, 
-    unique: true 
+    required: false, 
+    unique: true, 
   },
   university: { 
     type: String, 
@@ -41,7 +41,7 @@ userSchema.statics.findOrCreateUserByClerkId = async function (clerkId) {
   if (user) return user;
 
   // If user is not found, create it
-  user = new this({ clerkId });
+  user = new this({ clerkId, username: `${clerkId}` });
   await user.save();
   return user;
 };

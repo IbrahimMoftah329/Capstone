@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import './Navbar.css';
-import logo from '../../assets/logo2.png';
+import logo from '../../assets/navlogo.svg';
 import { Link, useNavigate } from 'react-router-dom'; // Import Link from react-router-dom
 import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/clerk-react';
 
@@ -13,7 +13,13 @@ const Navbar = () => {
   const [filteredResults, setFilteredResults] = useState([]);
 
 
+  const [selectedOption, setSelectedOption] = useState('Filter');
+  const [filteredResults, setFilteredResults] = useState([]);
 
+
+
+  const navigate = useNavigate();
+  const options = ['Topic', 'Professor', 'Semester'];
   const navigate = useNavigate();
   const options = ['Topic', 'Professor', 'Semester'];
 
@@ -89,9 +95,6 @@ const Navbar = () => {
       console.error('Error fetching decks:', error);
     }
   };
-  
-    // Navigate to /searchresults and pass the filtered results
-    // navigate('/searchresults', { state: { filteredResults: filteredDecks, filteredQuizzes } });
 
 
   return (
@@ -106,13 +109,11 @@ const Navbar = () => {
       </div>
 
       <form onSubmit={handleSearchSubmit} className="search-bar">
-
         <div className='searchbar'>
           <input type="text" value={searchQuery} onChange={handleSearchChange} placeholder="Search..." className="search-input"/>
           <button type="submit" className="search-button">
           </button>
         </div>
-      
       </form>
 
       {/* Navigation Links */}
@@ -135,6 +136,7 @@ const Navbar = () => {
           <li>
             <Link to="/dashboard">Dashboard</Link>
           </li>
+          <li classname = "user-button">
           <li classname = "user-button">
             <UserButton />
           </li>

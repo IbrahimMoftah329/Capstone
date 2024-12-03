@@ -20,6 +20,7 @@
     "mongodb": "^6.9.0",
     "mongoose": "^8.7.2",
     "node-fetch": "^3.3.2",
+    "nodemailer": "^6.9.16",
     "openai": "^4.70.2"
   }
 }

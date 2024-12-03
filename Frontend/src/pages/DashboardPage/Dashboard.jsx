@@ -5,6 +5,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import Library from '../../Components/DashContent/DashLibrary';
 import Profile from '../../Components/DashContent/DashProfile';
 import Contact from '../../Components/DashContent/DashContact';
+import Favorites from '../../Components/DashContent/DashFavorites';
 import Shuffle from '../../Components/DashContent/DashShuffle';
 import DashCard from '../../Components/DashContent/DashCard';
 import Favorites from '../../Components/DashContent/DashFav';
@@ -19,6 +20,7 @@ const Dashboard = () => {
         <Route path="library/:deckId" element={<ProtectedRoute><DashCard /></ProtectedRoute>} />
         <Route path="profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
         <Route path="contact" element={<ProtectedRoute><Contact /></ProtectedRoute>} />
+        <Route path="favorites" element={<ProtectedRoute><Favorites /></ProtectedRoute>} />
         <Route path="shuffle" element={<ProtectedRoute><Shuffle /></ProtectedRoute>} />
         <Route path ="favorites" element ={<ProtectedRoute><Favorites /></ProtectedRoute>} />
         {/* Redirect /dashboard to /dashboard/library */}

@@ -1,4 +1,6 @@
 const User = require('../models/user')
+const Deck = require('../models/deck')
+const Quiz = require('../models/quiz')
 
 const mongoose = require('mongoose')
 
@@ -15,7 +17,7 @@ const getUser = async(req, res) => {
     const { userId: clerkId } = req.params;
 
     try {
-      const user = await User.findOne({ clerkId });
+      const user = await User.findOrCreateUserByClerkId(clerkId);
       if (!user) {
         return res.status(404).json({ error: 'User not found' });
       }
@@ -55,24 +57,46 @@ const deleteUser = async(req, res) => {
 
 }
 
-// update a user
 const updateUser = async (req, res) => {
   const { userId: clerkId } = req.params;
 
   try {
-      // Find or create the user by clerkId
-      let user = await User.findOrCreateUserByClerkId(clerkId, req.body);
+    // Find or create the user by clerkId
+    let user = await User.findOrCreateUserByClerkId(clerkId);
 
-      // Update the user with new data
-      Object.assign(user, req.body);
-      await user.save();
+    // Check if university was updated
+    const wasUniversityUpdated = req.body.university && req.body.university !== user.university;
+    console.log('Was university updated:', wasUniversityUpdated);
 
-      res.status(200).json(user);
+    // Update user data
+    Object.assign(user, req.body);
+    await user.save();
+
+    // If university was updated, propagate to related decks and quizzes
+    if (wasUniversityUpdated) {
+      const updatedUniversity = req.body.university;
+
+      // Update decks
+      const decksUpdateResult = await Deck.updateMany(
+        { clerkId: clerkId },
+        { $set: { university: updatedUniversity } }
+      );
+      console.log('Decks updated:', decksUpdateResult);
+
+      // Update quizzes
+      const quizzesUpdateResult = await Quiz.updateMany(
+        { createdBy: clerkId },
+        { $set: { university: updatedUniversity } }
+      );
+      console.log('Quizzes updated:', quizzesUpdateResult);
+    }
+
+    res.status(200).json(user);
   } catch (err) {
-      res.status(500).send(err.message);
+    console.error('Error updating user:', err);
+    res.status(500).send(err.message);
   }
 };
-
 
 module.exports = {
     createUser,

@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import './ResultsQuiz.css';
 
 
-const ResultsQuiz = () => {
+const ResultsQuiz = ({ onShowHome, onShowDeck, onShowQuiz }) => {
     const location = useLocation();
     const { filteredResults, filteredQuizzes, initialView } = location.state || { 
         filteredResults: [], 
@@ -47,72 +47,82 @@ const ResultsQuiz = () => {
   
     return (
       <div className='search-results-page'>
-        <div className='results-title'>Search Results</div>
-        <div className = 'results-container'>
-          <div className='results-list'>
-            <div className='results-list-inner'>
-            <div className ='deck-quiz'>Quizzes</div>
-              {filteredQuizzes.length > 0 ? (
-                filteredQuizzes.map(quiz => (
-                  <div className='result-deck-item' onClick={() => handleQuizSelect(quiz)}>
-                    <div className='deck-name'>{quiz.name}</div>
-                    <div className='deck-info'>
-                      Professor: {quiz.professor}
-                    </div>
-                  </div>
-                ))
-              ) : (
-                <p className='no-results'>No results found.</p>
-              )}
-            </div>
+        {/* <div className='results-title'>Search Results</div> */}
+          {/* This is the filter bar to switch between results home, deck, and quizzes */}
+          <div className='filter-bar'>
+            <button className='filter-button' onClick={onShowHome}>All Results</button>
+            <button className='filter-button' onClick={onShowDeck}>Decks</button>
+            <button className='filter-button active' onClick={onShowQuiz}>Quizzes</button>
           </div>
 
-          <div className='quiz-details'>
-                <div className='quiz-details-inner'>
-                    <div className='deck-quiz'>Preview</div>
-                    {filteredQuizzes.length > 0 && selectedQuiz ? (
-                        <>
-                        <h2 className='quiz-name'>{selectedQuiz.name}</h2>          
-                        {questions.length > 0 ? ( // Assuming you have a questions state variable
-                        <div>
-                            {questions.map((question, index) => (
-                            <div key={question._id} className='result-flashcard-content'>
-                                <p className='flashcard-question'>
-                                    {index + 1}. {question.questionText}
-                                </p>
-
-                                <ul style={{ 
-                                    listStyle: 'none', 
-                                    padding: '0 0 0 20px', 
-                                    margin: '10px 0' 
-                                    }}>
-                                    {question.options.map((option, optIndex) => (
-                                    <li 
-                                        key={option._id}
-                                            style={{ 
-                                        padding: '5px 0',
-                                        marginBottom: '5px',
-                                        borderRadius: '5px',
-                                        background: '#f5f5f5'
-                                        }}
-                                        >
-                                        {String.fromCharCode(65 + optIndex)}. {option.text}
-                                    </li>
-                                    ))}
-                                </ul>
-                            </div>
-                            ))}
+            <div className = 'results-container'>
+              <div className='results-list'>
+                <div className='results-list-inner'>
+                <div className ='deck-quiz'>Quizzes</div>
+                  {filteredQuizzes.length > 0 ? (
+                    filteredQuizzes.map(quiz => (
+                      <div className='result-deck-item' onClick={() => handleQuizSelect(quiz)}>
+                        <div className='deck-name'>{quiz.name}</div>
+                        <div className='deck-info'>
+                          Professor: {quiz.professor}
                         </div>
+                      </div>
+                    ))
+                  ) : (
+                    <p className='no-results'>No results found.</p>
+                  )}
+                </div>
+              </div>
+              
+
+              <div className='quiz-details'>
+                    <div className='quiz-details-inner'>
+                        <div className='deck-quiz'>Preview</div>
+                        {filteredQuizzes.length > 0 && selectedQuiz ? (
+                            <>
+                            <h2 className='quiz-name'>{selectedQuiz.name}</h2>          
+                            {questions.length > 0 ? (
+                            
+                            <div>
+                                {questions.map((question, index) => (
+                                <div key={question._id} className='result-flashcard-content'>
+                                    <p className='flashcard-question'>
+                                        {index + 1}. {question.questionText}
+                                    </p>
+                                
+                                    <ul style={{ 
+                                        listStyle: 'none', 
+                                        padding: '0 0 0 20px', 
+                                        margin: '10px 0' 
+                                        }}>
+                                        {question.options.map((option, optIndex) => (
+                                        <li 
+                                            key={option._id}
+                                                style={{ 
+                                            padding: '5px 0',
+                                            marginBottom: '5px',
+                                            borderRadius: '5px',
+                                            background: '#f0f0f0'
+                                            }}
+                                            >
+                                            {/* {String.fromCharCode(65 + optIndex)}. {option.text} */}
+                                            {option.text}
+                                        </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                                ))}
+                            </div>
+                            ) : (
+                                <p>No questions available.</p>
+                            )}
+                            </>
                         ) : (
-                            <p>No questions available.</p>
+                            <p className='no-results'>No results found.</p>
                         )}
-                        </>
-                    ) : (
-                        <p className='no-results'>No results found.</p>
-                    )}
+                    </div>
                 </div>
             </div>
-        </div>
       </div>
     );
 };

@@ -1,56 +1,53 @@
 /* Navbar.css */
-
 nav {
     width: 100%;
     height: 80px;
     background-color: #124883;
     color: #ffffff;
-    padding: 4x 0;
-    position:fixed;
+    padding: 4px 0; /* Corrected '4x' to '4px' */
+    position: fixed;
     top: 0;
     left: 0;
     display: flex;
     align-items: center;
     justify-content: space-between;
     z-index: 10;
-    
 }
 
-/* Styling for the left sidebar */
+/* Styling for Sidebar */
 .navbar-sidebar {
-    width: 90px; /* Sidebar width set to 10% */
-    background-color: #fff; /* Sidebar background color */
+    width: 90px; /* Sidebar width */
+    background-color: #ffffff; /* Sidebar background color */
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: left; /* Center the logo horizontally */
+    justify-content: flex-start; /* Align content to the top */
     margin-right: auto;
 }
-  
-/* Logo styling */
-.logo-image {
-    width: 70px; /* Adjust the size of the logo */
-    height: auto;
+
+.heading {
+    display: flex;
+    align-items: center;
 }
 
-a{
-    text-decoration:none;
-    color:inherit;
+.heading img {
+    margin-right: 10px; /* Adjust spacing between the logo and text */
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
     line-height: 1;
     cursor: pointer;
 }
 
-nav ul li{
-    display:inline-block;
+/* Navbar Links */
+nav ul li {
+    display: inline-block;
     padding: 5px;
-    list-style:none;
-    margin:5px 20px;
+    list-style: none;
+    margin: 5px 20px;
     font-size: 16px;
-}
-
-.dark-nav{
-    background: #124883;
-    transition: .5s;
 }
 
 .links {
@@ -58,22 +55,89 @@ nav ul li{
     align-items: center;
 }
 
-/* Add styles for the search bar */
+/* Dark Navbar (On Scroll) */
+.dark-nav {
+    background: #124883;
+    transition: 0.5s;
+}
+
+/* Search Bar */
 .search-bar {
     display: flex;
     align-items: center;
     margin-left: auto;
-    margin-right: 20px; /* Adjust based on your layout */
+    margin-right: 20px;
+}
+
+.searchbar {
+    display: flex;
+    align-items: center;
 }
 
 .search-container {
     display: flex;
     align-items: center;
     border: 1px solid #ccc;
-    border-radius: 30px; /* Fully rounded borders */
+    border-radius: 30px; /* Rounded borders */
     overflow: hidden;
+    position: relative;
 }
 
+/* Search Input */
+.search-input {
+    padding: 8px 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 20px 0 0 20px;
+    font-size: 16px;
+    outline: none;
+    flex: 1;
+    background-color: #ffffff;
+    transition: all 0.2s ease;
+    height: 38px;
+}
+
+/* Search Button */
+.search-button {
+    padding: 8px 16px;
+    background-color: #e0e0e0;
+    color: #000000;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border: 1px solid #e0e0e0;
+    border-radius: 0 20px 20px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 38px;
+    width: 50px;
+    position: relative;
+}
+
+.search-button::before {
+    content: '';
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border: 2px solid #134883;
+    border-radius: 50%;
+    transform: translate(-2px, -2px);
+}
+
+.search-button::after {
+    content: '';
+    position: absolute;
+    width: 2px;
+    height: 8px;
+    background: #134883;
+    transform: translate(6px, 6px) rotate(-45deg);
+}
+
+.search-button:hover {
+    background-color: #c1c1c1;
+}
+
+/* Dropdown */
 .dropdown {
     position: relative;
 }
@@ -83,14 +147,14 @@ nav ul li{
     background: #D9D9D9;
     color: #000000;
     font-size: 16px;
-    border: none; /* Remove border */
+    border: none;
     cursor: pointer;
-    border-radius: 30px 0 0 30px; /* Rounded on the left side */
-    outline: none; /* Remove outline */
-    background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 6"%3E%3Cpath fill="%23000000" d="M0 0l5 6 5-6z"/%3E%3C/svg%3E'); /* Arrow as SVG */
+    border-radius: 30px 0 0 30px;
+    outline: none;
+    background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 6"%3E%3Cpath fill="%23000000" d="M0 0l5 6 5-6z"/%3E%3C/svg%3E'); /* Arrow */
     background-repeat: no-repeat;
-    background-position: right 8px center; /* Move the arrow closer to the right edge */
-    background-size: 9px 10px; /* Make the arrow smaller */
+    background-position: right 8px center;
+    background-size: 9px 10px;
 }
 
 .dropdown-menu {
@@ -98,38 +162,64 @@ nav ul li{
     top: 110%;
     left: 0;
     color: #000000;
-    background-color: #D9D9D9; /* Background color for the dropdown */
-    border: 1px solid #ccc; /* Optional border */
+    background-color: #D9D9D9;
+    border: 1px solid #ccc;
     border-radius: 10px;
     z-index: 10;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .dropdown-item {
-    padding: 8px 22px; /* Padding for dropdown items */
-    cursor: pointer; /* Pointer on hover */
-}
-
-/* Search input styles */
-.search-input {
-    padding: 8px 12px;
-    border: 1px solid #e0e0e0;
-    border-radius: 20px 0 0 20px;
-    font-size: 16px;
-    outline: none;
-    flex: 1;
-    background-color: #ffffff;
-    transition: all 0.2s ease; 
-    height: 38px;
-}
-
-/* Search button styles */
-.search-button {
-    padding: 8px 16px;
-    background-color: #e0e0e0;
-    color: #000000;
-    border: none;
+    padding: 8px 22px;
     cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.dropdown-item:hover {
+    background-color: #f0f0f0;
+}
+
+/* Suggestions Dropdown */
+.suggestions-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    max-height: 300px;
+    overflow-y: auto;
+    background-color: white;
+    border: 1px solid #e0e0e0;
+    border-top: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+}
+
+.suggestion-item {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.suggestion-item:hover {
+    background-color: #f0f0f0;
+}
+
+.suggestion-type {
+    font-size: 0.8em;
+    color: #666;
+}
+
+.suggestion-name {
+    font-weight: bold;
+}
+
+.suggestion-details {
+    font-size: 0.9em;
+    color: #888;
+}
+
     font-size: 16px;
     border: 1px solid #e0e0e0;
     border-radius: 0 20px 20px 0;

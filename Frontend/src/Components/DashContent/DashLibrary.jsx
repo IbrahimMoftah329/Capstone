@@ -193,6 +193,7 @@ const DashLibrary = () => {
             deckName: associatedDeckInfo.name,
             semester: associatedDeckInfo.semester,
             professor: associatedDeckInfo.professor,
+            university: associatedDeckInfo.university,
         };
     
         fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/quizzes/user/${user.id}/quiz`, {
@@ -392,62 +393,62 @@ const DashLibrary = () => {
                 </div>
             </div>
             <div className="library-content-bottom">
-        <h1 className="library-content-title">Quizzes</h1>
-        <p className="library-content-description">Manage your quizzes here.</p>
-        <button className="add-button" onClick={() => openQuizModal(null)}>+</button>
-        <div className="quiz-list">
-            {quizzes && quizzes.map((quiz) => {
-                return (
-                    <div key={quiz._id} className="quiz-item" onClick={() => navigateToQuizTaker(quiz)}>
-                        <div>
-                            <h3>{quiz.name}</h3>
-                            <p>{quiz.description}</p>
-                            <p>Associated Deck:<br />{quiz.deckName}</p>
-                            <p>Number of Questions: {quiz.numQuestions}</p>
-                            <p>Created on: {
-                                new Date(quiz.createdAt).toLocaleDateString('en-US', {
-                                    month: 'numeric',
-                                    day: 'numeric',
-                                    year: 'numeric'
-                                })
-                            }</p>
-                        </div>
-                        <div className="quiz-item-buttons">
-                            <button className="quiz-button delete" type="button" onClick={handleQuizDeleteClick(quiz._id)}>Delete</button>
-                        </div>
-                    </div>
-                );
-            })}
-        </div>
-        <h1 className="library-content-title" style={{ paddingTop: "10px" }}>Quiz Attempts</h1>
-        <p className="library-content-description">Manage your attempts here.</p>
-        <div className="quiz-list">
-            {attempts && attempts.map((attempt) => {
-                console.log("Attempt ID:", attempt.attemptId); // Debug log to check _id
-                return (
-                    <div key={attempt.attemptId} className="quiz-item" onClick={() => navigateToQuizAttempt(attempt)}>
-                        <div>
-                            <h3>Associated Quiz:<br />{attempt.quizName}</h3>
-                            <p>Score: {attempt.score} / {attempt.totalQuestions}</p>
-                            <p>Attempted on: {
-                                new Date(attempt.createdAt).toLocaleString('en-US', {
-                                    month: 'numeric',
-                                    day: 'numeric',
-                                    year: 'numeric',
-                                    hour: 'numeric',
-                                    minute: 'numeric',
-                                    hour12: true // For 12-hour format; set to false for 24-hour format
-                                })
-                            }</p>
-                        </div>
-                        <div className="quiz-item-buttons">
-                            <button className="quiz-button delete" type="button" onClick={handleAttemptDeleteClick(attempt.attemptId)}>Delete</button>
-                        </div>
-                    </div>
-                );
-            })}
-        </div>
-    </div>
+                <h1 className="library-content-title">Quizzes</h1>
+                <p className="library-content-description">Manage your quizzes here.</p>
+                <button className="add-button" onClick={() => openQuizModal(null)}>+</button>
+                <div className="quiz-list">
+                    {quizzes && quizzes.map((quiz) => {
+                        return (
+                            <div key={quiz._id} className="quiz-item" onClick={() => navigateToQuizTaker(quiz)}>
+                                <div>
+                                    <h3>{quiz.name}</h3>
+                                    <p>{quiz.description}</p>
+                                    <p>Associated Deck:<br />{quiz.deckName}</p>
+                                    <p>Number of Questions: {quiz.numQuestions}</p>
+                                    <p>Created on: {
+                                        new Date(quiz.createdAt).toLocaleDateString('en-US', {
+                                            month: 'numeric',
+                                            day: 'numeric',
+                                            year: 'numeric'
+                                        })
+                                    }</p>
+                                </div>
+                                <div className="quiz-item-buttons">
+                                    <button className="quiz-button delete" type="button" onClick={handleQuizDeleteClick(quiz._id)}>Delete</button>
+                                </div>
+                            </div>
+                        );
+                    })}
+                </div>
+                <h1 className="library-content-title" style={{ paddingTop: "10px" }}>Quiz Attempts</h1>
+                <p className="library-content-description">Manage your attempts here.</p>
+                <div className="quiz-list">
+                    {attempts && attempts.map((attempt) => {
+                        console.log("Attempt ID:", attempt.attemptId); // Debug log to check _id
+                        return (
+                            <div key={attempt.attemptId} className="quiz-item" onClick={() => navigateToQuizAttempt(attempt)}>
+                                <div>
+                                    <h3>Associated Quiz:<br />{attempt.quizName}</h3>
+                                    <p>Score: {attempt.score} / {attempt.totalQuestions}</p>
+                                    <p>Attempted on: {
+                                        new Date(attempt.createdAt).toLocaleString('en-US', {
+                                            month: 'numeric',
+                                            day: 'numeric',
+                                            year: 'numeric',
+                                            hour: 'numeric',
+                                            minute: 'numeric',
+                                            hour12: true // For 12-hour format; set to false for 24-hour format
+                                        })
+                                    }</p>
+                                </div>
+                                <div className="quiz-item-buttons">
+                                    <button className="quiz-button delete" type="button" onClick={handleAttemptDeleteClick(attempt.attemptId)}>Delete</button>
+                                </div>
+                            </div>
+                        );
+                    })}
+                </div>
+            </div>
 
             {/* Modal for Adding New Deck */}
             {isDeckModalOpen && (

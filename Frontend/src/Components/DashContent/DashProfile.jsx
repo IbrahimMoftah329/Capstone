@@ -45,7 +45,11 @@ const DashProfile = () => {
         fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/users/${user.id}`)
             .then((response) => response.json())
             .then((data) => {
-                setUsername(data.username || '');
+                if (data.username === user.id) {
+                    setUsername(''); // Set it to empty if they match
+                } else {
+                    setUsername(data.username || ''); // Otherwise, use the real username
+                }
                 setUniversity(data.university || '');
                 setMajor(data.major || '');
             })
