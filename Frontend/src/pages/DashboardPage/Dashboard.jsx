@@ -8,7 +8,6 @@ import Contact from '../../Components/DashContent/DashContact';
 import Favorites from '../../Components/DashContent/DashFavorites';
 import Shuffle from '../../Components/DashContent/DashShuffle';
 import DashCard from '../../Components/DashContent/DashCard';
-import Favorites from '../../Components/DashContent/DashFav';
 import ProtectedRoute from '../../Components/ProtectedRoute';
 
 const Dashboard = () => {

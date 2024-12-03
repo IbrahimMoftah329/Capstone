@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Navbar.css';
 import logo from '../../assets/navlogo.svg';
 import { Link, useNavigate } from 'react-router-dom'; // Import Link from react-router-dom
@@ -13,13 +13,7 @@ const Navbar = () => {
   const [filteredResults, setFilteredResults] = useState([]);
 
 
-  const [selectedOption, setSelectedOption] = useState('Filter');
-  const [filteredResults, setFilteredResults] = useState([]);
 
-
-
-  const navigate = useNavigate();
-  const options = ['Topic', 'Professor', 'Semester'];
   const navigate = useNavigate();
   const options = ['Topic', 'Professor', 'Semester'];
 
@@ -99,13 +93,13 @@ const Navbar = () => {
 
   return (
     <nav className={`container ${bar ? 'dark-nav' : ''}`}>
-      <div className='cm'>
-      <Link to="/">
-      <h1 className="heading"><img src="./public/navlogo.svg" onError={(e) => 
-      {
-        e.target.src = '/navlogo.svg'; // Replace with your fallback image path
-      }} alt="Cardmates Logo" width="45" height="45" />Cardmates</h1>
-      </Link>
+      <div className="cm">
+        <Link to="/" className="logo-container">
+          <h1 className="heading">
+            <img src={logo} alt="Cardmates Logo" width="45" height="45" className="nav-logo" />
+            Cardmates
+          </h1>
+        </Link>
       </div>
 
       <form onSubmit={handleSearchSubmit} className="search-bar">
@@ -136,7 +130,6 @@ const Navbar = () => {
           <li>
             <Link to="/dashboard">Dashboard</Link>
           </li>
-          <li classname = "user-button">
           <li classname = "user-button">
             <UserButton />
           </li>
