@@ -107,18 +107,17 @@ const ResultsHome = ({ onShowDeck, onShowQuiz }) => {
         }
     };
 
-
+    // Function used to send a post request of the deck._id to the backend server for adding/removing a favorite deck
     const toggleFavoriteDeck = async (deckID) => {
         try {
-
             // Check if there is a user logged in, if not prompt them to log in
             if (!userId) {
                 alert('Please log in to add this deck to your favorites.');
                 return;
             }
-
-
-            const response = await fetch(`http://localhost:4000/api/decks/${userId}/favDeck`, {
+            
+            // This response will send a POST to the server url with just the deck._id as the body, the backend server will handle the add/remove favorites
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/decks/${userId}/favDeck`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -127,18 +126,36 @@ const ResultsHome = ({ onShowDeck, onShowQuiz }) => {
                     deckId: deckID,
                 }),
             });
-
-            if (response.ok) {
-                // const result = await response.json();
-                console.log('POST request sent to server.');
-            } else {
-                console.error('Failed to toggle favorite status');
-            }
         } catch (error) {
             console.error('Error toggling favorite status', error);
         }
     };
 
+
+    // Function used to send a post request of the quiz._id to the backend server for adding/removing a favorite quiz
+    const toggleFavoriteQuiz = async (quizID) => {
+        try {
+            // Check if there is a user logged in, if not prompt them to log in
+            if (!userId) {
+                alert('Please log in to add this deck to your favorites.');
+                return;
+            }
+            
+            // This response will send a POST to the server url with just the deck._id as the body, the backend server will handle the add/remove favorites
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/quizzes/${userId}/favQuiz`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    quizId: quizID,
+                }),
+            });
+
+        } catch (error) {
+            console.error('Error toggling favorite status', error);
+        }
+    };
     
 
     return (
@@ -197,7 +214,7 @@ const ResultsHome = ({ onShowDeck, onShowQuiz }) => {
                                 </div>
                                 <div className='buttons'>
                                     <button className = 'preview' onClick={() => handleQuizPreview(quiz)}>Preview</button>
-                                    {/* <button className = 'add_favorite' onClick={() => addFavoriteQuiz(quiz)}>Favorite</button> */}
+                                    <button className = 'add_favorite' onClick={() => toggleFavoriteQuiz(quiz._id)}>Favorite</button>
                                 </div>
                             </div>
                             ))
@@ -279,6 +296,7 @@ const ResultsHome = ({ onShowDeck, onShowQuiz }) => {
                                             background: '#f0f0f0'
                                             }}
                                             >
+                                            {/* The line below will add an A, B, C, D... in front of the question answers */}
                                             {/* {String.fromCharCode(65 + optIndex)}. {option.text} */}
                                             {option.text}
                                         </li>

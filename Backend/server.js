@@ -8,7 +8,6 @@ const deckRoutes = require('./routes/deckRoute')
 const quizRoute = require('./routes/quizRoute');
 const questionRoutes = require('./routes/questionRoute');
 const quizAttemptRoutes = require('./routes/quizAttemptRoute');
-const favoriteRoutes = require('./routes/favoriteRoute');
 
 const helmet = require('helmet');
 const cors = require('cors');
@@ -38,7 +37,6 @@ app.use('/api/decks', deckRoutes)
 app.use('/api/quizzes', quizRoute);
 app.use('/api/questions', questionRoutes);
 app.use('/api/attempts', quizAttemptRoutes);
-app.use('/api/favorites', favoriteRoutes);
 
 // Ensure essential environment variables are set
 if (!process.env.MONGO_URI || !process.env.PORT) {

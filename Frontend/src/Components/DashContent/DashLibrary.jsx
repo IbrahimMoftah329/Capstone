@@ -317,17 +317,38 @@ const DashLibrary = () => {
             .catch(error => console.error("Error deleting attempt:", error));
     };
 
+    // const getAttempts = () => {
+    //     fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/attempts/user/${user.id}/attempts`, {
+    //         headers: { "Content-Type": "application/json" },
+    //         method: "GET",
+    //     })
+    //         .then(response => response.json())
+    //         .then(data => {
+    //             console.log("Fetched attempts data:", data);
+    //             setAttempts(data);
+    //         })
+    //         .catch(error => console.error("Error fetching attempts:", error));
+    // };
+
     const getAttempts = () => {
-        fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/attempts/user/${user.id}/attempts`, {
-            headers: { "Content-Type": "application/json" },
-            method: "GET",
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log("Fetched attempts data:", data); // Log fetched attempts to verify structure
-                setAttempts(data);
+        // First fetch the list of favorited quiz IDs
+        fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/quizzes/${user.id}/getFavQuizzes`)
+            .then(favQuizzesResponse => favQuizzesResponse.json())
+            .then(favQuizIds => {
+                // Fetch all attempts, favorited or not
+                fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/attempts/user/${user.id}/attempts`, {
+                    method: "GET",
+                    headers: { "Content-Type": "application/json" }
+                })
+                    .then(response => response.json())
+                    .then(allAttempts => {
+                        // Filter attempts to only include those whose quizId is NOT in the list of favorited quizzes
+                        const filteredAttempts = allAttempts.filter(attempt => !favQuizIds.includes(attempt.quizId));
+                        setAttempts(filteredAttempts);
+                    })
+                    .catch(error => console.error("Error fetching attempts:", error));
             })
-            .catch(error => console.error("Error fetching attempts:", error));
+            .catch(error => console.error("Error fetching favorited quizzes:", error));
     };
 
     // Handle delete button click for attempts

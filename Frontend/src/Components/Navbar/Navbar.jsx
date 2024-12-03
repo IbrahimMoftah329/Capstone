@@ -48,7 +48,7 @@ const Navbar = () => {
   
   const handleSearchSubmit = async (e) => {
     e.preventDefault();
-    console.log(`Search Query: ${searchQuery}, Selected Option: ${selectedOption}`);
+    // console.log(`Search Query: ${searchQuery}, Selected Option: ${selectedOption}`);
 
     if (!searchQuery.trim()) {
       console.log("Search query is empty. Please enter a search term.");

@@ -9,7 +9,7 @@ const {
     deleteDeck,
     updateDeck,
     toggleFavDeck,
-    toggleFavQuiz
+    getFavDecks
     
 } = require('../Controllers/deckControllers')
 
@@ -35,7 +35,8 @@ router.patch('/:deckId', updateDeck);
 // Route to toggle a deck for favorited or not
 router.post('/:userId/favDeck', toggleFavDeck);
 
-// Route to toggle a deck for favorited or not
-router.post('/:userId/favQuiz', toggleFavQuiz);
+// Route to get all favorited decks of a single user
+router.get('/:userId/getfavDecks', getFavDecks);
+
 
 module.exports = router;
