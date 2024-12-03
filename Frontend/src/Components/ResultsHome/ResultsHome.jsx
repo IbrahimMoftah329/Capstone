@@ -107,42 +107,39 @@ const ResultsHome = ({ onShowDeck, onShowQuiz }) => {
         }
     };
 
-    // This is used to add a deck id to the favoriteDecks array for a user
-      const addFavoriteDeck = async (deck) => {
-        const settings = {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            deckId: deck._id,
-          })
-        }
-      
+
+    const toggleFavoriteDeck = async (deckID) => {
         try {
-          if (!userId) {
-            alert('Please log in to add this deck to your favorites.');
-            return;
-          }
-        
-          // Update this line to match the backend route
-          const response = await fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/${userId}/addDeck`, settings);
-        
-          if (!response.ok) {
-            throw new Error('Failed to add favorite deck');
-          }
-        
-          const data = await response.json();
-          console.log('Favorite deck added successfully:', data);
-        
-          alert('Deck added to favorites!');
+
+            // Check if there is a user logged in, if not prompt them to log in
+            if (!userId) {
+                alert('Please log in to add this deck to your favorites.');
+                return;
+            }
+
+
+            const response = await fetch(`http://localhost:4000/api/decks/${userId}/favDeck`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    deckId: deckID,
+                }),
+            });
+
+            if (response.ok) {
+                // const result = await response.json();
+                console.log('POST request sent to server.');
+            } else {
+                console.error('Failed to toggle favorite status');
+            }
         } catch (error) {
-          console.error('Error adding favorite deck:', error);
-          alert('Failed to add deck to favorites.');
+            console.error('Error toggling favorite status', error);
         }
     };
-      
-      
+
+    
 
     return (
         <div className='search-results-page'>            
@@ -172,7 +169,7 @@ const ResultsHome = ({ onShowDeck, onShowQuiz }) => {
 
                                     <div className='buttons'>
                                         <button className = 'preview' onClick={() => handleDeckPreview(deck)}>Preview</button>
-                                        <button className = 'add_favorite' onClick={() => addFavoriteDeck(deck)}>Favorite</button>
+                                        <button className = 'add_favorite' onClick={() => toggleFavoriteDeck(deck._id)}>Favorite</button>
                                     </div>
                                     
                                 </div>

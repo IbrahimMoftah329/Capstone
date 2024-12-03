@@ -112,11 +112,96 @@ const updateDeck = async (req, res) => {
 }
 
 
+
+// In your controller file
+const toggleFavDeck = async (req, res) => { 
+    console.log('Toggle Favorite Deck - Backend Route Hit');
+    console.log('Request Parameters:', req.params);
+    console.log('Request Body:', req.body);
+
+    try { 
+        const { userId } = req.params; // Extract userId from params
+        const { deckId } = req.body; 
+
+    
+        // Find the user based on the userId sent from the frontend 
+        const user = await User.findOrCreateUserByClerkId(userId); 
+
+        if (!user) { 
+            console.warn('User not found for ID:', userId);
+            return res.status(404).json({ message: 'User not found' }); 
+        } 
+
+        if (!user.favoriteDecks.includes(deckId)) { 
+            user.favoriteDecks.push(deckId);
+            await user.save(); 
+            console.log('Deck added to favorites');
+            // return res.status(200).json({ message: 'Deck added to favorites', favoriteDecks: user.favoriteDecks }); 
+            return res.status(200).json({ message: 'Deck added to favorites' }); 
+        } else if (user.favoriteDecks.includes(deckId)) { 
+            console.log('Deck already in favorites, attempting to remove it');
+            
+            // user.favoriteDecks.push(user.favoriteDecks.filter(favDeck => favDeck !== deckId)); 
+            // user.favoriteDecks.push(...user.favoriteDecks.filter(favDeck => favDeck !== deckId));
+            const index = user.favoriteDecks.indexOf(deckId);
+            if (index !== -1) {
+              user.favoriteDecks.splice(index, 1); // Removes the element at the found index
+            }
+
+
+            
+            await user.save(); 
+            console.log('Deck removed from favorites');
+            return res.status(200).json({ message: 'Deck removed from favorites', favoriteDecks: user.favoriteDecks }); 
+          // return res.status(400).json({ message: 'Deck is already in your favorites' }); 
+        } 
+
+        
+        // else if (action === 'remove') { 
+        //     // Remove the deckId from the favoriteDecks array if it exists 
+            // if (user.favoriteDecks.includes(deckId)) { 
+            //     user.favoriteDecks = user.favoriteDecks.filter(favDeck => favDeck !== deckId); 
+            //     await user.save(); 
+            //     console.log('Deck removed from favorites');
+            //     return res.status(200).json({ message: 'Deck removed from favorites', favoriteDecks: user.favoriteDecks }); 
+        //     } else { 
+        //         console.log('Deck not in favorites');
+        //         return res.status(400).json({ message: 'Deck is not in your favorites' }); 
+        //     } 
+        // } 
+        
+        // else { 
+        //     console.warn('Invalid action');
+        //     return res.status(400).json({ message: 'Invalid action' }); 
+        // } 
+    } catch (error) { 
+        console.error('Error toggling favorite status:', error); 
+        res.status(500).json({ message: 'Error toggling favorite status', error: error.message }); 
+    } 
+};
+
+
+
+const toggleFavQuiz = async (req, res) => {
+  try {
+    const updatedDeck = await Deck.findByIdAndUpdate(deckId, req.body, { new: true });
+    if (!updatedDeck) {
+      return res.status(404).json({ error: 'Deck not found' });
+    }
+    res.status(200).json(updatedDeck);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+};
+
+
 module.exports = {
   getAllDecks,
   addDeckToUser,
   getDecks,
   getDeck,
   deleteDeck,
-  updateDeck
+  updateDeck,
+  toggleFavDeck,
+  toggleFavQuiz
 }
