@@ -92,7 +92,7 @@ const ResultsDeck = ({ onShowHome, onShowDeck, onShowQuiz }) => {
                         <div className='deck-info'>
                           {deck.__v} Cards | Professor: {deck.professor}
                         </div>
-                        <button className = 'add_favorite' onClick={() => toggleFavoriteDeck(deck._id)}>Favorite</button>
+                        <button className = 'add_favorite' onClick={(e) => {e.stopPropagation(), toggleFavoriteDeck(deck._id)}}>Favorite</button>
                       </div>
                     ))
                   ) : (

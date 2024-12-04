@@ -5,7 +5,8 @@ import { useUser } from '@clerk/clerk-react';
 
 const DashFavorite = () => {
     const navigate = useNavigate();
-    const { user } = useUser();
+    const { user } = useUser();             // Get user context from Clerk
+    const userId = user ? user.id : null;   // Get the logged-in user's ID  
     const [isLoading, setIsLoading] = useState(true);
 
     // The next three lines are used to get the correct decks, quizzes, and quiz attempts that have been favorited
@@ -171,6 +172,66 @@ const DashFavorite = () => {
     // Display loading message while decks and quizzes are loading
     if (isLoading) return <div>Loading...</div>;
 
+
+    // Function used to send a post request of the deck._id to the backend server for adding/removing a favorite deck
+    // This function is specific to the frontend since it will immediately remove the item from view when the function is called
+    const toggleFavoriteDeck = async (deckID) => {
+        try {
+            // Check if there is a user logged in, if not prompt them to log in
+            if (!userId) {
+                alert('Please log in to add this deck to your favorites.');
+                return;
+            }
+    
+            // Optimistically remove the deck from the frontend (update local state)
+            setDecks(prevDecks => prevDecks.filter(deck => deck._id !== deckID));
+    
+            // Send the POST request to toggle the favorite status on the server
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/decks/${userId}/favDeck`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    deckId: deckID,
+                }),
+            });
+    
+        } catch (error) {
+            console.error('Error toggling favorite status', error);
+            setDecks(prevDecks => [...prevDecks]);  // Reverts the state by just keeping the previous decks
+        }
+    };
+    
+    // Function used to send a post request of the quiz._id to the backend server for adding/removing a favorite quiz
+    const toggleFavoriteQuiz = async (quizID) => {
+        try {
+            // Check if there is a user logged in, if not prompt them to log in
+            if (!userId) {
+                alert('Please log in to add this deck to your favorites.');
+                return;
+            }
+            
+            // Optimistically remove the deck from the frontend (update local state)
+            setQuizzes(prevQuizzes => prevQuizzes.filter(quiz => quiz._id !== quizID));
+
+            // This response will send a POST to the server url with just the deck._id as the body, the backend server will handle the add/remove favorites
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/quizzes/${userId}/favQuiz`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    quizId: quizID,
+                }),
+            });
+
+        } catch (error) {
+            console.error('Error toggling favorite status', error);
+        }
+    };
+
+
     return (
         <div className="library-content">
             {/* <h1 className="library-content-title">Favorites <ImSpades /></h1> */}
@@ -192,6 +253,9 @@ const DashFavorite = () => {
                                     })
                                 }</p>
                             </div>
+                            <div>
+                                <button className = 'add_favorite' onClick={(e) => {e.stopPropagation(), toggleFavoriteDeck(deck._id)}}>Favorite</button>
+                            </div>
                         </div>
                     ))}
                 </div>
@@ -207,7 +271,7 @@ const DashFavorite = () => {
                             <h3>{quiz.name}</h3>
                             <p>{quiz.description}</p>
                             <p>Associated Deck:<br />{quiz.deckName}</p>
-                            <p>Number of Questions: {quiz.questions.length}</p>
+                            <p>Number of Questions: {quiz.questions ? quiz.questions.length : 0}</p>
                             <p>Created on: {
                                 new Date(quiz.createdAt).toLocaleDateString('en-US', {
                                     month: 'numeric',
@@ -215,6 +279,9 @@ const DashFavorite = () => {
                                     year: 'numeric'
                                 })
                             }</p>
+                        </div>
+                        <div>
+                            <button className = 'add_favorite' onClick={(e) => {e.stopPropagation(), toggleFavoriteQuiz(quiz._id)}}>Favorite</button>
                         </div>
                     </div>
                 );

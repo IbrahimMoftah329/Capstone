@@ -96,7 +96,7 @@ const ResultsQuiz = ({ onShowHome, onShowDeck, onShowQuiz }) => {
                         <div className='deck-info'>
                           Professor: {quiz.professor}
                         </div>
-                        <button className = 'add_favorite' onClick={() => toggleFavoriteQuiz(quiz._id)}>Favorite</button>
+                        <button className = 'add_favorite' onClick={(e) => {e.stopPropagation(), toggleFavoriteQuiz(quiz._id)}}>Favorite</button>
                       </div>
                     ))
                   ) : (
