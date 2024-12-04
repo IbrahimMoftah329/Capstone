@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ImSpades } from "react-icons/im";
-// import './DashFavorite.css';
+import { IoIosHeart } from "react-icons/io";
 import { useUser } from '@clerk/clerk-react';
 
 const DashFavorite = () => {
@@ -174,7 +173,8 @@ const DashFavorite = () => {
 
     return (
         <div className="library-content">
-            <h1 className="library-content-title">Favorites <ImSpades /></h1>
+            {/* <h1 className="library-content-title">Favorites <ImSpades /></h1> */}
+            <h1 className="library-content-title">Favorites<IoIosHeart /></h1>
             <div className="library-content-top">
                 <h1 className="library-content-title">Decks</h1>
                 <p className="library-content-description">Manage your favorited decks here.</p>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { IoIosHeart } from "react-icons/io";
+import { BsSuitDiamondFill } from "react-icons/bs";
 import './DashContent.css'; // Make sure the CSS file path is correct
 import { useUser } from '@clerk/clerk-react';
 
@@ -46,7 +46,11 @@ const DashProfile = () => {
         fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/users/${user.id}`)
             .then((response) => response.json())
             .then((data) => {
-                setUsername(data.username || '');
+                if (data.username === user.id) {
+                    setUsername(''); // Set it to empty if they match
+                } else {
+                    setUsername(data.username || ''); // Otherwise, use the real username
+                }
                 setUniversity(data.university || '');
                 setMajor(data.major || '');
             })
@@ -60,7 +64,7 @@ const DashProfile = () => {
 
     return (
         <div className="content">
-            <h1 className="content-title">Profile < IoIosHeart /> </h1>
+            <h1 className="content-title">Profile <BsSuitDiamondFill /></h1>
             <form className="profile-box" onSubmit={updateUserProfile}>
                 <h3>UserName</h3>
                 <input type='text' className='input' value={username} onChange={(e) => setUsername(e.target.value)} required placeholder='Enter UserName'  />

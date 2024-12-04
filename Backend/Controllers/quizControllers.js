@@ -5,8 +5,6 @@ const Quiz = require('../models/quiz')
 const QuizAttempt = require('../models/quizAttempt');
 const { generateQuestionFromFlashcard } = require('../utils/openaiHelpers');
 
-const mongoose = require('mongoose')
-
 
 // Get all quizzes from all users in quizcontrollers.js
 const getAllQuizzes = async (req, res) => {    
@@ -27,7 +25,6 @@ const getQuizzes = async (req, res) => {
         const user = await User.findOne({ clerkId: req.params.userId }).populate({
             path: 'quizzes',
             select: 'name description semester professor deckId deckName questions createdAt',
-            select: 'name description semester professor deckId deckName questions createdAt',
             populate: {
                 path: 'deckId',
                 select: 'name' // Only get the deck name
@@ -40,18 +37,13 @@ const getQuizzes = async (req, res) => {
         }
     
         // Format the quizzes data to include deck name, quiz ID, and other specified fields
-        // Format the quizzes data to include deck name, quiz ID, and other specified fields
         const quizzes = user.quizzes.map(quiz => ({
             _id: quiz._id,                           // Include the quiz ID
             name: quiz.name,
             description: quiz.description,
             semester: quiz.semester,
             professor: quiz.professor,
-            deckId: quiz.deckId._id,                 // Include the deck ID if it exists
-            deckName: quiz.deckId.name,              // Include deck name from populated data
-            createdAt: quiz.createdAt,
-            semester: quiz.semester,
-            professor: quiz.professor,
+            university: quiz.university,
             deckId: quiz.deckId._id,                 // Include the deck ID if it exists
             deckName: quiz.deckId.name,              // Include deck name from populated data
             createdAt: quiz.createdAt,
@@ -89,7 +81,7 @@ const getQuiz = async (req, res) => {
 
 const addQuizToUser = async (req, res) => {
     const { userId } = req.params;
-    const { deckId, name, description, semester, professor, deckName } = req.body;
+    const { deckId, name, description, semester, professor, university, deckName } = req.body;
     
     try {
         if (!name || !description || !deckId) {
@@ -112,7 +104,7 @@ const addQuizToUser = async (req, res) => {
             deckId,
             semester,
             professor,
-            deckName,
+            university,
             deckName,
             createdBy: user.clerkId,
             questions: [],
@@ -171,12 +163,9 @@ const deleteQuiz = async (req, res) => {
     
         res.status(200).json({
             message: 'Quiz, associated questions, and attempts deleted successfully',
-            message: 'Quiz, associated questions, and attempts deleted successfully',
             quiz: deletedQuiz,
             questionsDeleted: questionDeletionResult.deletedCount,
             attemptsDeleted: attemptDeletionResult.deletedCount,
-            questionsDeleted: questionDeletionResult.deletedCount,
-            attemptsDeleted: attemptDeletionResult.deletedCount
         });
     } catch (err) {
         console.error("Error in deleteQuiz:", err);

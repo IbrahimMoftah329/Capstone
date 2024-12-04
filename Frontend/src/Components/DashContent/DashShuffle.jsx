@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BsSuitDiamondFill } from "react-icons/bs";
+import { GiCardJoker } from "react-icons/gi";
 import './DashShuffle.css';
 import { useUser } from '@clerk/clerk-react';
 
@@ -32,7 +32,6 @@ const DashShuffle = () => {
             .then((data) => {
                 // Limit to the first 8 flashcards in a random order
                 const limitedFlashcards = data.sort(() => Math.random() - 0.5).slice(0, 8);
-
                 const cards = [];
                 limitedFlashcards.forEach((flashcard) => {
                     cards.push({ id: flashcard._id, type: 'question', content: flashcard.question });
@@ -41,7 +40,7 @@ const DashShuffle = () => {
 
                 const shuffled = cards.sort(() => Math.random() - 0.5);
                 setShuffledCards(shuffled);
-                setDisplayedCards(shuffled.slice(0, 16)); // Display the first 16 cards (4x4 grid)
+                setDisplayedCards(shuffled.slice(0, 16)); // Display the first 16 cards
                 setRemainingCards(shuffled.slice(16)); // Store remaining cards
                 setSelectedDeckName(deckName);
                 setIsFlashcardModalOpen(true);
@@ -84,7 +83,6 @@ const DashShuffle = () => {
     // Handle matched cards
     const handleMatch = (firstIndex, secondIndex) => {
         const newDisplayedCards = [...displayedCards];
-        // Mark matched cards as null or placeholder
         newDisplayedCards[firstIndex] = { matched: true };
         newDisplayedCards[secondIndex] = { matched: true };
 
@@ -105,28 +103,28 @@ const DashShuffle = () => {
 
     return (
         <div className="shuffle-content">
-            <h1 className="shuffle-title">Shuffle <BsSuitDiamondFill /></h1>
-            <div className="shuffle-top">
-                <p className="shuffle-description">View your shuffled decks here.</p>
-                <div className="shuffle-list">
-                    {isLoading ? (
-                        <p>Loading decks...</p>
-                    ) : decks.length === 0 ? (
-                        <p>No decks available. Create one to start shuffling!</p>
-                    ) : (
-                        decks.map((deck) => (
-                            <div key={deck._id} className="shuffle-item">
-                                <h3>{deck.name}</h3>
-                                <p>{deck.flashcards.length} cards</p>
-                                <button
-                                    className="shuffle-button"
-                                    onClick={() => getFlashcards(deck._id, deck.name)}
-                                >
-                                    Shuffle
-                                </button>
-                            </div>
-                        ))
-                    )}
+            <h1 className="shuffle-title">Shuffle <GiCardJoker /></h1>  
+            <p>View your shuffled decks here.</p>  
+            <br></br>
+            <div className="shuffle-content-list">
+                <div className="shuffle-top">
+                    <div className="shuffle-list">
+                        {isLoading ? (
+                            <p>Loading decks...</p>
+                        ) : decks.length === 0 ? (
+                            <p>No decks available. Create one to start shuffling!</p>
+                        ) : (
+                            decks.map((deck) => (
+                                <div key={deck._id} className="shuffle-item">
+                                    <h3>{deck.name}</h3>
+                                    <p>{deck.flashcards.length} cards</p>
+                                    <div className="shuffle-item-buttons">
+                                        <button className="shuffle-button" onClick={() => getFlashcards(deck._id, deck.name)}>Shuffle</button>
+                                    </div>
+                                </div>
+                            ))
+                        )}
+                    </div>
                 </div>
             </div>
 
@@ -134,7 +132,6 @@ const DashShuffle = () => {
             {isFlashcardModalOpen && (
                 <div className="modal">
                     <div className="modal-content">
-                        <h2>Match the Cards from {selectedDeckName}</h2>
                         {displayedCards.length === 0 ? (
                             <p>No cards remaining.</p>
                         ) : (
@@ -149,7 +146,6 @@ const DashShuffle = () => {
                                     >
                                         {!card.matched && (
                                             <>
-                                                <h3>{card.type === 'question' ? 'Q:' : 'A:'}</h3>
                                                 <p>{card.content}</p>
                                             </>
                                         )}
