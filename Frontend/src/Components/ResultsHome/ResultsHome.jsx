@@ -121,7 +121,7 @@ const ResultsHome = ({ onShowDeck, onShowQuiz }) => {
                 {/* Content */}
                 <div className='content-container'>
                     {/* First Row */}
-                    <div className='content-row' style = {{backgroundColor: '#ffffff'}}>
+                    <div className='content-section'>
                         <div className = 'row-description'>
                             <div className = 'deck-quiz'>Decks</div>
                             <button className = 'view-results' onClick={onShowDeck}>View all</button>
@@ -147,9 +147,10 @@ const ResultsHome = ({ onShowDeck, onShowQuiz }) => {
                                 )}
                             </div>
                     </div>
+                    <hr></hr>
                     
                     {/* Second Row */}
-                    <div className='content-row' style = {{backgroundColor: '#e0e0e0'}}>
+                    <div className='content-section'>
                         <div className = 'row-description'>
                             <div className = 'deck-quiz'>Quizzes</div>
                             <button className = 'view-results' onClick={onShowQuiz}>View all</button>
@@ -180,12 +181,11 @@ const ResultsHome = ({ onShowDeck, onShowQuiz }) => {
 
             {/* Modal to show the Deck details */}
             {isDeckOpen && (
-                <div className = 'modal'>
-                    <div className = 'modal-content'>
+                <div className = 'modals'>
+                    <div className = 'modal-contents'>
                         <div className='modal-header'>
-                            <button className = 'modal-button' onClick = {closeDeckModal}>X</button>
+                            <button className = 'modal-buttons' onClick = {closeDeckModal}>X</button>
                         </div>
-
 
                         {filteredResults.length > 0 ? (
                         <>
@@ -212,11 +212,11 @@ const ResultsHome = ({ onShowDeck, onShowQuiz }) => {
 
             {/* Modal to show the Quiz details */}
             {isQuizOpen && (
-                <div className = 'modal'>
-                <div className = 'modal-content'>
+                <div className = 'modals'>
+                <div className = 'modal-contents'>
                     
                     <div className='modal-header'>
-                        <button className = 'modal-button' onClick = {closeQuizModal}>X</button>
+                        <button className = 'modal-buttons' onClick = {closeQuizModal}>X</button>
                     </div>
                     
                     <div className='quiz-details-home'>
