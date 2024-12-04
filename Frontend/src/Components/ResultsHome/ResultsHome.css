@@ -65,7 +65,7 @@
     margin-bottom: 48px;
     background-color: #ffffff;
     border-radius: 12px;
-    padding: 32px;
+    padding: 5px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
@@ -73,8 +73,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 28px;
-    padding-bottom: 16px;
+    margin-bottom: 22px;
+    padding-bottom: 10px;
     border-bottom: 2px solid #e5e7eb;
     position: relative;
 }
@@ -385,7 +385,6 @@
     background-color: #124883;
     border-radius: 4px;
 }
-
 
 
 .result-deck-item-home:hover {
