@@ -14,6 +14,9 @@ const DashShuffle = () => {
     const { user } = useUser();
     const [isLoading, setIsLoading] = useState(true);
 
+    // Card suits for randomization
+    const suits = ['♠', '♥', '♦', '♣'];
+    const [cardSuits, setCardSuits] = useState([]);
 
     const getDecks = () => {
         fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/decks/user/${user.id}/decks`)
@@ -43,6 +46,13 @@ const DashShuffle = () => {
                     });
                 });
                 const shuffled = cards.sort(() => Math.random() - 0.5);
+                
+                // Generate random suits for the cards
+                const randomSuits = shuffled.map(() => 
+                    suits[Math.floor(Math.random() * suits.length)]
+                );
+                
+                setCardSuits(randomSuits);
                 setShuffledCards(shuffled);
                 setDisplayedCards(shuffled.slice(0, 16));
                 setRemainingCards(shuffled.slice(16));
@@ -138,17 +148,29 @@ const DashShuffle = () => {
                                 <p>No cards remaining.</p>
                             ) : (
                                 <div className="shuffle-flashcard-grid">
-                                    {displayedCards.map((card, index) => (
-                                        <div
-                                            key={index}
-                                            className={`shuffle-flashcard-card ${
-                                                selectedCards.includes(index) ? 'selected' : ''
-                                            }`}
-                                            onClick={() => handleCardClick(index)}
-                                        >
-                                            <p>{card.content}</p>
-                                        </div>
-                                    ))}
+                                    {displayedCards.map((card, index) => {
+                                        const suit = cardSuits[index] || '♠';
+                                        const isRedSuit = suit === '♥' || suit === '♦';
+                                        return (
+                                            <div
+                                                key={index}
+                                                className={`shuffle-flashcard-card ${
+                                                    selectedCards.includes(index) ? 'selected' : ''
+                                                } ${isRedSuit ? 'red-suit' : ''}`}
+                                                onClick={() => handleCardClick(index)}
+                                            >
+                                                <div className="card-corners">
+                                                    <span className="suit">{suit}</span>
+                                                </div>
+                                                <div className="shuffle-flashcard-card-content">
+                                                    <p>{card.content}</p>
+                                                </div>
+                                                <div className="card-corners-bottom-right">
+                                                    <span className="suit">{suit}</span>
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
                                 </div>
                             )}
                             <div className="modal-buttons">

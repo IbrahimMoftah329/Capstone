@@ -1,7 +1,4 @@
 /* Shuffle Page Styles */
-.shuffle-page-container {
-    padding: 20px;
-}
 
 .shuffle-content {
     max-width: 1200px;
@@ -14,7 +11,8 @@
     gap: 10px;
 }
 
- .shuffle-page-containers {
+.shuffle-page-containers {
+    padding: 20px;
     flex: 1;
     padding: 20px;
     background-color: #f0f0f0;
@@ -26,8 +24,8 @@
     text-align: left;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-bottom-left-radius: 30px;
-
 }
+
 .library-content-bottom {
     margin-top: 20px;
 }
@@ -45,6 +43,12 @@
     width: 270px;
     text-align: center;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.shuffle-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
 }
 
 .shuffle-button {
@@ -57,10 +61,10 @@
     transition: background-color 0.3s;
 }
 
-
 .shuffle-button:hover {
     background-color: #45a049;
 }
+
 /* Modal Styles */
 .modal {
     position: fixed;
@@ -68,7 +72,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0,0,0,0.9);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -77,68 +81,101 @@
 
 .modal-content {
     background-color: white;
-    border-radius: 10px;
-    width: 90%;
-    max-width: 1000px;
-    height: 80vh;
-    padding: 20px;
+    border-radius: 8px;
+    width: 98%; 
+    max-width: 1000px; 
+    height: 98vh;
+    padding: 20px; 
     display: flex;
     flex-direction: column;
+    align-items: center;
+
 }
 
 .shuffle-flashcard-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
+    gap: 28px; /* Further reduced gap */
     flex-grow: 1;
     overflow: hidden;
     padding: 10px;
 }
 
 .shuffle-flashcard-card {
-    background-color: white;
-    border: 1px solid #333;
-    border-radius: 8px;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    background: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    position: relative;
+    height: 200px; /* Reduced from 250px */
+    width: 190px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.shuffle-flashcard-card:hover {
+    transform: scale(1.05);
+}
+
+/* Card Corner Styles */
+
+
+.card-corners .suit {
+    font-size: 16px; /* Reduced from 20px */
+    line-height: 1;
+}
+
+.card-corners{
+    font-size: 14px; /* Reduced from 18px */
+    font-weight: bold;
+    margin-bottom: 2px;
+}
+
+.card-corners-bottom-right {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    transform: rotate(180deg);
+}
+
+.shuffle-flashcard-card .suit {
+    font-size: 24px;
+    line-height: 1;
+}
+
+.shuffle-flashcard-card .red-suit .suit,
+.shuffle-flashcard-card .red-suit .rank {
+    color: #e32424;
+}
+.shuffle-flashcard-card-content {
+    flex-grow: 1;
+    display: flex;
     align-items: center;
-    padding: 5px;
-    transition: transform 0.3s;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    transition: opacity 0.3s ease;
+    justify-content: center;
+    text-align: center;
+    padding: 8px; /* Reduced from 10px */
 }
 
 .shuffle-flashcard-card p {
-    text-align: center;
-    font-size: 12px;
+    font-size: 12px; /* Reduced from 13px */
     color: #333;
-    font-weight: bold;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 4;
-    -webkit-box-orient: vertical;
-    word-wrap: break-word;
-    padding: 0 5px;
+    max-height: 100%;
+    overflow: auto;
 }
-
 .shuffle-flashcard-card.selected {
-    transform: scale(1.05);
-    background-color: #f0f0f0;
-    border-color: #666;
-      opacity: 8;
+    background-color: #d9e8f5; /* Muted blue-gray */
+    border: 2px solid #124883; /* Same as your main color */
+    transform: scale(1.1);
 }
-
-
 
 .modal-buttons {
     display: flex;
     justify-content: center;
-    margin-top: 10px;
+    margin-top: 20px;
 }
 
 .modal-buttons button {
@@ -149,66 +186,3 @@
     border-radius: 5px;
     cursor: pointer;
 }
-
-/* Hover animations for shuffle items */
-.shuffle-item {
-    background-color: #ffffff;
-    border-radius: 15px;
-    padding: 15px;
-    width: 270px;
-    text-align: center;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.shuffle-item:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-}
-
-/* Shuffle flashcard hover and suit enhancements */
-.shuffle-flashcard-card {
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.shuffle-flashcard-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 4px;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.shuffle-flashcard-card:hover::before {
-    opacity: 1;
-}
-
-.shuffle-flashcard-card:hover {
-    transform: scale(1.02);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-}
-
-
-/* Highlight selected cards */
-.shuffle-flashcard-card.selected {
-    background-color: #ffeeba;
-    border-color: #ffc107;
-}
-.flashcard-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 15px;
-  justify-content: center;
-  padding: 10px;
-
-  /* New rule for 4 cards */
-  @media (min-width: 600px) {
-    grid-template-columns: repeat(2, 1fr); /* Force 2 columns */
-  }
-}
-
