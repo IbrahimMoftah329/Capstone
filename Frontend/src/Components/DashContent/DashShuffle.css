@@ -108,6 +108,64 @@
     display: block;
 }
 
+/* Timer display */
+.modal-content p {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+/* Completion modal */
+.completion-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #f7f7f7;
+    border: 2px solid #ccc;
+    padding: 30px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.completion-content h2 {
+    font-size: 2.5rem; /* Larger font size for emphasis */
+    color: #28a745;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.completion-content h2::after {
+    content: " 🎉"; /* Add a happy emoji */
+    font-size: 2rem;
+    margin-left: 10px;
+}
+
+.completion-content p {
+    font-size: 1.5rem; /* Larger font size for visibility */
+    color: #333;
+    margin-bottom: 25px;
+}
+
+.completion-content button {
+    padding: 12px 24px;
+    background-color: #124883;
+    color: white;
+    border-radius: 6px;
+    font-size: 1.2rem;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.completion-content button:hover {
+    background-color: #092a51;
+}
+
 /* Modal grid responsiveness */
 @media (max-width: 768px) {
     .flashcard-grid {
@@ -152,4 +210,107 @@
     border-radius: 5px;
     cursor: pointer;
     font-size: 1rem;
+}
+
+.shuffle-buttons {
+    display: flex;
+    gap: 10px; /* Add space between buttons */
+}
+
+.shuffle-button:hover {
+    background-color: #092a51;
+}
+
+
+/* Modal for displaying deck attempts */
+.modal-attempts {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-attempts-content {
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    width: 90%;
+    max-width: 500px;
+    animation: fadeIn 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.modal-attempts-content h2 {
+    font-size: 1.8rem;
+    color: #124883;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.modal-attempts-content ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 300px; /* Scrollable list */
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background-color: #f9f9f9;
+}
+
+.modal-attempts-content ul li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    font-size: 0.95rem;
+    color: #333;
+}
+
+.modal-attempts-content ul li:last-child {
+    border-bottom: none;
+}
+
+.modal-attempts-content ul li strong {
+    color: #28a745;
+}
+
+.modal-attempts-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.modal-attempts-buttons button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    background-color: #124883;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.modal-attempts-buttons button:hover {
+    background-color: #092a51;
+}
+
+/* Fade-in animation for modal */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
