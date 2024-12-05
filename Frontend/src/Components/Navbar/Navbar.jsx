@@ -81,7 +81,8 @@ const Navbar = () => {
           (quiz.name.toLowerCase().includes(normalizedQuery) ||
             quiz.description.toLowerCase().includes(normalizedQuery) ||
             quiz.professor.toLowerCase().includes(normalizedQuery) ||
-            quiz.semester.toLowerCase().includes(normalizedQuery)) &&
+            quiz.semester.toLowerCase().includes(normalizedQuery) ||
+            quiz.deckName.toLowerCase().includes(normalizedQuery)) &&
             quiz.createdBy !== userId     // Exclude quizzes that belong to the logged-in user
       );
 

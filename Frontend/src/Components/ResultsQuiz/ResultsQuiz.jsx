@@ -13,7 +13,7 @@ const ResultsQuiz = ({ onShowHome, onShowDeck, onShowQuiz }) => {
     };
     const [selectedQuiz, setSelectedQuiz] = useState(null);
     const [questions, setQuestions] = useState([]);
-
+  
     const { user } = useUser();             // Get user context from Clerk
     const userId = user ? user.id : null;   // Get the logged-in user's ID
   
@@ -49,7 +49,7 @@ const ResultsQuiz = ({ onShowHome, onShowDeck, onShowQuiz }) => {
       }
     };
 
-
+    
     // Function used to send a post request of the quiz._id to the backend server for adding/removing a favorite quiz
     const toggleFavoriteQuiz = async (quizID) => {
       try {

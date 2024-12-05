@@ -183,7 +183,7 @@ const DashFavorite = () => {
                 return;
             }
     
-            // Optimistically remove the deck from the frontend (update local state)
+            // Immediately remove the deck from the frontend (update local state)
             setDecks(prevDecks => prevDecks.filter(deck => deck._id !== deckID));
     
             // Send the POST request to toggle the favorite status on the server
@@ -212,7 +212,7 @@ const DashFavorite = () => {
                 return;
             }
             
-            // Optimistically remove the deck from the frontend (update local state)
+            // Immediately remove the deck from the frontend (update local state)
             setQuizzes(prevQuizzes => prevQuizzes.filter(quiz => quiz._id !== quizID));
 
             // This response will send a POST to the server url with just the deck._id as the body, the backend server will handle the add/remove favorites
@@ -254,7 +254,7 @@ const DashFavorite = () => {
                                 }</p>
                             </div>
                             <div>
-                                <button className = 'add_favorite' onClick={(e) => {e.stopPropagation(), toggleFavoriteDeck(deck._id)}}>Favorite</button>
+                                <button className = 'add_favorite' onClick={(e) => {e.stopPropagation(), toggleFavoriteDeck(deck._id)}}>Remove</button>
                             </div>
                         </div>
                     ))}
@@ -281,7 +281,7 @@ const DashFavorite = () => {
                             }</p>
                         </div>
                         <div>
-                            <button className = 'add_favorite' onClick={(e) => {e.stopPropagation(), toggleFavoriteQuiz(quiz._id)}}>Favorite</button>
+                            <button className = 'add_favorite' onClick={(e) => {e.stopPropagation(), toggleFavoriteQuiz(quiz._id)}}>Remove</button>
                         </div>
                     </div>
                 );

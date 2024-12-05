@@ -9,8 +9,8 @@ const { generateQuestionFromFlashcard } = require('../utils/openaiHelpers');
 // Get all quizzes from all users in quizcontrollers.js
 const getAllQuizzes = async (req, res) => {    
     try {
-        const quizzes = await Quiz.find().populate('questions');
-        // const quizzes = await Quiz.find()
+        // const quizzes = await Quiz.find().populate('questions');
+        const quizzes = await Quiz.find()
         res.status(200).json(quizzes)
     } catch (err) {
         res.status(500).send(err.message);
