@@ -37,7 +37,6 @@ app.use('/api/decks', deckRoutes)
 app.use('/api/quizzes', quizRoute);
 app.use('/api/questions', questionRoutes);
 app.use('/api/attempts', quizAttemptRoutes);
-app.use('/api/favorites', require('./routes/favoriteRoutes'));
 
 
 // Ensure essential environment variables are set

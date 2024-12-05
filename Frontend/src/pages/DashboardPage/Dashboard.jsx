@@ -19,9 +19,8 @@ const Dashboard = () => {
         <Route path="library/:deckId" element={<ProtectedRoute><DashCard /></ProtectedRoute>} />
         <Route path="profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
         <Route path="contact" element={<ProtectedRoute><Contact /></ProtectedRoute>} />
-        <Route path="favorites" element={<ProtectedRoute><Favorites /></ProtectedRoute>} />
+        <Route path="favorite" element={<ProtectedRoute><Favorites /></ProtectedRoute>} />
         <Route path="shuffle" element={<ProtectedRoute><Shuffle /></ProtectedRoute>} />
-        <Route path ="favorites" element ={<ProtectedRoute><Favorites /></ProtectedRoute>} />
         {/* Redirect /dashboard to /dashboard/library */}
         <Route path="/" element={<Navigate to="library" />} />
       </Routes>

@@ -163,6 +163,8 @@
   border: 1px solid #e5e7eb;
   border-radius: 8px;
   overflow: hidden;
+  height: 200px;
+
 }
 
 .flashcard-header {

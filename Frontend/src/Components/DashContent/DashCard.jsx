@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import nextArrow from '/Users/ninapham/Desktop/OCT /Capstone/Frontend/src/assets/arrow.jpg';
-import backArrow from '/Users/ninapham/Desktop/OCT /Capstone/Frontend/src/assets/arrow2.jpg';
+// import nextArrow from '/Users/ninapham/Desktop/OCT /Capstone/Frontend/src/assets/arrow.jpg';
+// import backArrow from '/Users/ninapham/Desktop/OCT /Capstone/Frontend/src/assets/arrow2.jpg';
+import nextArrow from '../../assets/arrow.jpg';
+import backArrow from '../../assets/arrow2.jpg';
 import './DashCard.css'; // Optional CSS file for styling
 import { useUser } from '@clerk/clerk-react';
 import Suits from '../Suits/Suits';
