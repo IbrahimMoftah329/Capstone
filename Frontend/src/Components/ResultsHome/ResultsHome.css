@@ -8,6 +8,7 @@
   max-width: 1350px;
   margin: 0 auto;
   width: 100%;
+  
 }
 
 .filter-bar {
@@ -46,6 +47,7 @@
     flex-direction: column;
     gap: 40px;
     padding: 0 16px;
+
 }
 
 .content-row {
@@ -54,6 +56,7 @@
     padding: 32px;
     border: 1px solid #d1d8e0; /* Darker border */
     transition: all 0.3s ease;
+    
 }
 
 .content-row:hover {
@@ -67,6 +70,7 @@
     border-radius: 12px;
     padding: 5px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    
 }
 
 .row-description {
@@ -77,6 +81,7 @@
     padding-bottom: 10px;
     border-bottom: 2px solid #e5e7eb;
     position: relative;
+
 }
 
 .row-description::after {
@@ -87,6 +92,7 @@
     width: 60px;
     height: 2px;
     background-color: #124883;
+    
 }
 
 .deck-quiz {
@@ -123,6 +129,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 24px;
+    
 }
 
 .view-results {
@@ -251,7 +258,7 @@
 .modal-contents {
     background-color: #ffffff;
     border-radius: 16px;
-    padding: 32px;
+    padding: 20px;
     max-width: 800px;
     width: 100%;
     max-height: 85vh;

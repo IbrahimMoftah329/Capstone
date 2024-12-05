@@ -106,8 +106,8 @@
     border-radius: 10px;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
     position: relative;
-    height: 200px; /* Reduced from 250px */
-    width: 190px;
+    height: 201px; /* Reduced from 250px */
+    width: 164px;
     display: flex;
     flex-direction: column;
     cursor: pointer;

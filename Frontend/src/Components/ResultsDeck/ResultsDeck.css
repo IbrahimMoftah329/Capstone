@@ -130,7 +130,7 @@
 }
 
 .preview-content {
-  padding: 20px;
+  padding: 0px;
   overflow-y: auto;
   flex-grow: 1;
 }
