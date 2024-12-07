@@ -5,7 +5,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import Library from '../../Components/DashContent/DashLibrary';
 import Profile from '../../Components/DashContent/DashProfile';
 import Contact from '../../Components/DashContent/DashContact';
-import Favorites from '../../Components/DashContent/DashFavorites';
+import Favorites from '../../Components/DashContent/DashFavorite';
 import Shuffle from '../../Components/DashContent/DashShuffle';
 import DashCard from '../../Components/DashContent/DashCard';
 import ProtectedRoute from '../../Components/ProtectedRoute';
