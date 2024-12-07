@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import { useUser } from '@clerk/clerk-react';
 import './ResultsHome.css';
 
 
 const ResultsHome = ({ onShowDeck, onShowQuiz }) => {
     const location = useLocation();
+
+    const { user } = useUser();             // Get user context from Clerk
+    const userId = user ? user.id : null;   // Get the logged-in user's ID
+
     const { filteredResults, filteredDecks, filteredQuizzes, initialView } = location.state || { 
         filteredResults: [],
         filteredDecks: [], 
@@ -96,21 +101,62 @@ const ResultsHome = ({ onShowDeck, onShowQuiz }) => {
         }
       };
 
-      const handleFavorite = async (item) => {
+      // Function used to send a post request of the deck._id to the backend server for adding/removing a favorite deck
+    const toggleFavoriteDeck = async (deckID) => {
+        try {
+            // Check if there is a user logged in, if not prompt them to log in
+            if (!userId) {
+                alert('Please log in to add this deck to your favorites.');
+                return;
+            }
+            
+            // This response will send a POST to the server url with just the deck._id as the body, the backend server will handle the add/remove favorites
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/decks/${userId}/favDeck`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    deckId: deckID,
+                }),
+            });
 
-      }
+            console.log("Added new deck");
+        } catch (error) {
+            console.error('Error toggling favorite status', error);
+        }
+    };
+
+
+    // Function used to send a post request of the quiz._id to the backend server for adding/removing a favorite quiz
+    const toggleFavoriteQuiz = async (quizID) => {
+        try {
+            // Check if there is a user logged in, if not prompt them to log in
+            if (!userId) {
+                alert('Please log in to add this deck to your favorites.');
+                return;
+            }
+            
+            // This response will send a POST to the server url with just the deck._id as the body, the backend server will handle the add/remove favorites
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/quizzes/${userId}/favQuiz`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    quizId: quizID,
+                }),
+            });
+
+        } catch (error) {
+            console.error('Error toggling favorite status', error);
+        }
+    };
 
 
 
     return (
         <div className='search-results-page'>
-            {/* Filter Bar */}
-            {/* <div className='filter-bar'>
-                <button className='filter-button active'>All Results</button>
-                <button className='filter-button' onClick={onShowDeck}>Decks</button>
-                <button className='filter-button' onClick={onShowQuiz}>Quizzes</button>
-            </div> */}
-            
             <div className='results-home-container'>
                 <div className='filter-bar'>
                     <button className='filter-button active'>All Results</button>
@@ -137,7 +183,7 @@ const ResultsHome = ({ onShowDeck, onShowQuiz }) => {
 
                                     <div className='buttons'>
                                         <button className = 'preview' onClick={() => handleDeckPreview(deck)}>Preview</button>
-                                        {/* <button className = 'add_favorite' onClick={handleFavorite(deck)}>Favorite</button> */}
+                                        <button className = 'add_favorite' onClick={() => toggleFavoriteDeck(deck._id)}>Favorite</button>
                                     </div>
                                     
                                 </div>
@@ -166,7 +212,7 @@ const ResultsHome = ({ onShowDeck, onShowQuiz }) => {
                                 </div>
                                 <div className='buttons'>
                                     <button className = 'preview' onClick={() => handleQuizPreview(quiz)}>Preview</button>
-                                    {/* <button className = 'add_favorite' onClick={handleFavorite(quiz)}>Favorite</button> */}
+                                    <button className = 'add_favorite' onClick={() => toggleFavoriteQuiz(quiz._id)}>Favorite</button>
                                 </div>
                             </div>
                             ))

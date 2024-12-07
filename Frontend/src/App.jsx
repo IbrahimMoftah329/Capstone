@@ -30,7 +30,7 @@ const App = () => {
             }
 
             const data = await response.json();
-            console.log("User data fetched successfully:", data); // Log the parsed data
+            // console.log("User data fetched successfully:", data); // Log the parsed data
         } catch (err) {
             console.error("Error fetching user data:", err); // Log errors
             setError(err.message);
