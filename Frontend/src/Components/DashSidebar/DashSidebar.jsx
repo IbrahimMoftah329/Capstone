@@ -20,16 +20,16 @@ import { Link } from 'react-router-dom';
             <a href='/dashboard/library'> <ImSpades /> Library </a> 
           </li>
           <li>
-            <a href='/dashboard/profile'> <BsSuitDiamondFill /> Profile  </a>
-          </li>
-          <li>
-            <a href='/dashboard/contact'> <GiClubs /> Contact </a>
-          </li>
-          <li>
             <a href = '/dashboard/favorite'> <IoIosHeart/> Favorites </a>
           </li>
           <li>
             <a href='/dashboard/shuffle'> <GiCardJoker />Shuffle </a>
+          </li>
+          <li>
+            <a href='/dashboard/profile'> <BsSuitDiamondFill /> Profile  </a>
+          </li>
+          <li>
+            <a href='/dashboard/contact'> <GiClubs /> Contact </a>
           </li>
       </ul>
       </div>
