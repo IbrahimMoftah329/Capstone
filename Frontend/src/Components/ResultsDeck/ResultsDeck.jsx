@@ -102,16 +102,14 @@ const ResultsDeck = ({ onShowHome, onShowDeck, onShowQuiz }) => {
                     <span>•</span>
                     <span>Professor: {deck.professor}</span>
                   </div>
-                  <button 
-    className="add_favorite_deck" 
-    onClick={(e) => {
-        e.stopPropagation();
-        toggleFavoriteDeck(deck._id);
-    }}
->
-    <IoIosHeart className={`heart-icon-deck ${favoritedDecks[deck._id] ? 'active' : ''}`} />
-</button>            
- </div>
+                  <button className="add_favorite_deck" onClick={(e) => {
+                  e.stopPropagation();
+                  toggleFavoriteDeck(deck._id);
+                }
+                }>
+              <IoIosHeart className={`heart-icon-deck ${favoritedDecks[deck._id] ? 'active' : ''}`} />
+              </button>            
+              </div>
               ))}
             </div>
           </div>

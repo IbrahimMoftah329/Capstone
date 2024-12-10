@@ -194,17 +194,13 @@ const ResultsHome = ({ onShowDeck, onShowQuiz }) => {
 
                                     <div className='buttons'>
                                         <button className = 'preview' onClick={() => handleDeckPreview(deck)}>Preview</button>
-                                        <button 
-    className="add_favorite_deck" 
-    onClick={(e) => {
-        e.stopPropagation();
-        toggleFavoriteDeck(deck._id);
-    }}
->
-    <IoIosHeart className={`heart-icon-deck ${favoritedDecks[deck._id] ? 'active' : ''}`} />
-</button>       
+                                        <button className="add_favorite_deck" onClick={(e) => {
+                                            e.stopPropagation();toggleFavoriteDeck(deck._id);
+                                        }
+                                        }>
+                                    <IoIosHeart className={`heart-icon-deck ${favoritedDecks[deck._id] ? 'active' : ''}`} />
+                                    </button>       
                                     </div>
-                                    
                                 </div>
                                 ))
                                 ) : (
@@ -213,7 +209,6 @@ const ResultsHome = ({ onShowDeck, onShowQuiz }) => {
                             </div>
                     </div>
                     <hr></hr>
-                    
                     {/* Second Row */}
                     <div className='content-section'>
                         <div className = 'row-description'>
@@ -231,15 +226,12 @@ const ResultsHome = ({ onShowDeck, onShowQuiz }) => {
                                 </div>
                                 <div className='buttons'>
                                     <button className = 'preview' onClick={() => handleQuizPreview(quiz)}>Preview</button>
-                                    <button 
-    className="add_favorite_quiz" 
-    onClick={(e) => {
-        e.stopPropagation();
-        toggleFavoriteQuiz(quiz._id);
-    }}
->
-    <IoIosHeart className={`heart-icon-quiz ${favoritedQuizzes[quiz._id] ? 'active' : ''}`} />
-</button>                                    </div>
+                                    <button className="add_favorite_quiz" onClick={(e) => {
+                                    e.stopPropagation();
+                                    toggleFavoriteQuiz(quiz._id);
+                                }
+                                }>
+                                <IoIosHeart className={`heart-icon-quiz ${favoritedQuizzes[quiz._id] ? 'active' : ''}`} /></button>                                    </div>
                             </div>
                             ))
                             ) : (
