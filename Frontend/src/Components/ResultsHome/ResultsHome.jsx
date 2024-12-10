@@ -166,6 +166,8 @@ const ResultsHome = ({ onShowDeck, onShowQuiz }) => {
 
                 {/* Content */}
                 <div className='content-container'>
+                    
+                    
                     {/* First Row */}
                     <div className='content-section'>
                         <div className = 'row-description'>

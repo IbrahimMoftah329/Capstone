@@ -114,7 +114,8 @@
 
 .deck-meta {
   display: flex;
-  gap: 8px;
+  align-items: center;
+  gap: 5px;
   font-size: 14px;
   color: #6b7280;
 }
@@ -224,4 +225,29 @@
   .preview-column {
       height: 500px;
   }
+}
+
+.add_to_favorite {
+  padding: 10px;
+  margin-left: auto;
+  border: 1px solid #495057;
+  border-radius: 8px;
+  background-color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  color: #124883;
+  width: 75px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.add_to_favorite:hover {
+  background-color: #124883;
+  color: #ffffff;
+  border-color: #124883;
+  transform: translateY(-2px);
+  box-shadow: 0 2px 4px rgba(18, 72, 131, 0.2);
 }
