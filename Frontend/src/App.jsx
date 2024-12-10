@@ -68,6 +68,7 @@ const App = () => {
           {/* Dashboard Page */}
           <Route path="/dashboard/*" element={<Dashboard />} />
           <Route path="*" element={<Navigate to="/" />} /> {/* Redirect unknown routes */}
+          
           {/* Quiz and Results Pages */}
           <Route path="/quiz/:quizId" element={<Quiz />} />
           <Route path="/results/:attemptId" element={<Results />} />

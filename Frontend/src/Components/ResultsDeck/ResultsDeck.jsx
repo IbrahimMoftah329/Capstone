@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import { useUser } from '@clerk/clerk-react';
 import './ResultsDeck.css';
+
 
 const ResultsDeck = ({ onShowHome, onShowDeck, onShowQuiz }) => {
   const location = useLocation();
   const { filteredResults } = location.state || { filteredResults: [] };
   const [selectedDeck, setSelectedDeck] = useState(null);
   const [flashcards, setFlashcards] = useState([]);
+
+  const { user } = useUser();             // Get user context from Clerk
+  const userId = user ? user.id : null;   // Get the logged-in user's ID
 
   useEffect(() => {
     if (filteredResults.length > 0) {
@@ -21,10 +26,11 @@ const ResultsDeck = ({ onShowHome, onShowDeck, onShowQuiz }) => {
     getFlashcards(deck);
   };
 
+
   const getFlashcards = async (deck) => {
     if (deck && deck._id) {
-      try {
-        const response = await fetch(`http://localhost:4000/api/flashcards/deck/${deck._id}/flashcards`);
+      try{
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/flashcards/deck/${deck._id}/flashcards`);
         const data = await response.json();
         if (response.ok) {
           setFlashcards(data);
@@ -32,6 +38,30 @@ const ResultsDeck = ({ onShowHome, onShowDeck, onShowQuiz }) => {
       } catch (error) {
         console.error("Error fetching flashcards", error);
       }
+    }
+  };
+
+  // Function used to send a post request of the deck._id to the backend server for adding/removing a favorite deck
+  const toggleFavoriteDeck = async (deckID) => {
+    try {
+      // Check if there is a user logged in, if not prompt them to log in
+      if (!userId) {
+        alert('Please log in to add this deck to your favorites.');
+        return;
+      }
+        
+      // This response will send a POST to the server url with just the deck._id as the body, the backend server will handle the add/remove favorites
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/decks/${userId}/favDeck`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+        deckId: deckID,
+        }),
+      });
+    } catch (error) {
+      console.error('Error toggling favorite status', error);
     }
   };
 
@@ -64,6 +94,7 @@ const ResultsDeck = ({ onShowHome, onShowDeck, onShowQuiz }) => {
                     <span>•</span>
                     <span>Professor: {deck.professor}</span>
                   </div>
+                  <button className = 'add_favorite' onClick={(e) => {e.stopPropagation(), toggleFavoriteDeck(deck._id)}}>Favorite</button>
                 </div>
               ))}
             </div>

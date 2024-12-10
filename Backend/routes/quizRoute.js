@@ -7,6 +7,8 @@ const {
     getQuiz,
     addQuizToUser,
     deleteQuiz,
+    toggleFavQuiz,
+    getFavQuizzes
     
 } = require('../Controllers/quizControllers')
 
@@ -24,5 +26,11 @@ router.post('/user/:userId/quiz', addQuizToUser);
 
 // Route to DELETE a quiz
 router.delete('/:quizId', deleteQuiz);
+
+// Route to toggle a quiz for favorited or not
+router.post('/:userId/favQuiz', toggleFavQuiz);
+
+// Route to get all favorited quizzes of a single user
+router.get('/:userId/getFavQuizzes', getFavQuizzes);
 
 module.exports = router;

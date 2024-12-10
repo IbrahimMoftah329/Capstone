@@ -61,7 +61,12 @@ nav ul li {
     transition: 0.5s;
 }
 
-/* Search Bar */
+.links {
+    display: flex;
+    align-items: center;
+}
+
+/* Add styles for the search bar */
 .search-bar {
     display: flex;
     align-items: center;
@@ -179,43 +184,106 @@ nav ul li {
     background-color: #f0f0f0;
 }
 
-/* Suggestions Dropdown */
-.suggestions-dropdown {
+/* Search input styles */
+.search-input {
+    padding: 8px 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 20px 0 0 20px;
+    font-size: 16px;
+    outline: none;
+    flex: 1;
+    background-color: #ffffff;
+    transition: all 0.2s ease; 
+    height: 38px;
+}
+
+/* Search button styles */
+.search-button {
+    padding: 8px 16px;
+    background-color: #e0e0e0;
+    color: #000000;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border: 1px solid #e0e0e0;
+    border-radius: 0 20px 20px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 38px;
+    width: 50px;
+    position: relative;
+}
+
+.search-button::before {
+    content: '';
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border: 2px solid #134883;
+    border-radius: 50%;
+    transform: translate(-2px, -2px);
+}
+
+.search-button::after {
+    content: '';
+    position: absolute;
+    width: 2px;
+    height: 8px;
+    background: #134883;
+    transform: translate(6px, 6px) rotate(-45deg);
+}
+
+.search-button:hover {
+    background-color: #c1c1c1;    /* Darker blue on hover */
+}
+
+.searchbar {
+    display:flex;
+    align-items: center;
+}
+
+
+.search-container {
+    position: relative;
+  }
+  
+  .suggestions-dropdown {
     position: absolute;
     top: 100%;
     left: 0;
-    width: 100%;
+    width: 100%; /* Match the width of search input */
     max-height: 300px;
     overflow-y: auto;
     background-color: white;
     border: 1px solid #e0e0e0;
     border-top: none;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     z-index: 10;
-}
-
-.suggestion-item {
+  }
+  
+  .suggestion-item {
     display: flex;
     flex-direction: column;
     padding: 10px;
     cursor: pointer;
     transition: background-color 0.2s;
-}
-
-.suggestion-item:hover {
+  }
+  
+  .suggestion-item:hover {
     background-color: #f0f0f0;
-}
-
-.suggestion-type {
+  }
+  
+  .suggestion-type {
     font-size: 0.8em;
     color: #666;
-}
-
-.suggestion-name {
+  }
+  
+  .suggestion-name {
     font-weight: bold;
-}
-
-.suggestion-details {
+  }
+  
+  .suggestion-details {
     font-size: 0.9em;
     color: #888;
-}
+  }
