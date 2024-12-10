@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { IoIosHeart } from "react-icons/io";
+import { IoIosHeart, IoIosHeartEmpty } from "react-icons/io";
 import { useUser } from '@clerk/clerk-react';
 
 const DashFavorite = () => {

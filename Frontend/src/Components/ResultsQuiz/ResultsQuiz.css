@@ -84,17 +84,13 @@
 }
 
 .quiz-card {
-  padding: 20px;
+  padding: 16px;
   border: 1px solid #e5e7eb;
   border-radius: 8px;
   margin-bottom: 12px;
   cursor: pointer;
   transition: all 0.2s ease;
   background: #ffffff;
-  height: 120px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
 }
 
 .quiz-card:hover {
@@ -114,7 +110,6 @@
   font-weight: 600;
   color: #000000;
   margin: 0;
-  overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 3;
@@ -239,4 +234,35 @@
   .preview-column {
       height: 500px;
   }
+}
+
+.add_favorite_quiz {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  padding-top: 8px;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+
+.heart-icon-quiz {
+  color: #d0d0d0;
+  font-size: 24px;
+  transition: all 0.3s ease;
+}
+
+.heart-icon-quiz.active {
+  color: #ff4242;
+}
+
+.add_favorite_quiz:hover .heart-icon-quiz {
+  transform: scale(1.1);
+}
+
+/* Update quiz-card to handle the heart position */
+.quiz-card {
+  position: relative;
+  /* ... rest of your existing styles ... */
 }

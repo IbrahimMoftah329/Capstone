@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import { IoIosHeart, IoIosHeartEmpty } from "react-icons/io";
 import { useUser } from '@clerk/clerk-react';
 import './ResultsHome.css';
-
 
 const ResultsHome = ({ onShowDeck, onShowQuiz }) => {
     const location = useLocation();
@@ -19,10 +19,10 @@ const ResultsHome = ({ onShowDeck, onShowQuiz }) => {
 
     const [selectedDeck, setSelectedDeck] = useState(null);
     const [flashcards, setFlashcards] = useState([])
-
+    const [favoritedDecks, setFavoritedDecks] = useState({}); // Track favorite status for each deck
     const [selectedQuiz, setSelectedQuiz] = useState(null);
     const [questions, setQuestions] = useState([]);
-
+    const [favoritedQuizzes, setFavoritedQuizzes] = useState({});
     const [isDeckOpen, setDeckOpen] = useState(false);
     const [isQuizOpen, setQuizOpen] = useState(false);
 
@@ -101,16 +101,20 @@ const ResultsHome = ({ onShowDeck, onShowQuiz }) => {
         }
       };
 
-      // Function used to send a post request of the deck._id to the backend server for adding/removing a favorite deck
-    const toggleFavoriteDeck = async (deckID) => {
+ 
+      const toggleFavoriteDeck = async (deckID) => {
         try {
-            // Check if there is a user logged in, if not prompt them to log in
             if (!userId) {
                 alert('Please log in to add this deck to your favorites.');
                 return;
             }
             
-            // This response will send a POST to the server url with just the deck._id as the body, the backend server will handle the add/remove favorites
+            // Toggle the favorite status locally
+            setFavoritedDecks(prev => ({
+                ...prev,
+                [deckID]: !prev[deckID]
+            }));
+    
             const response = await fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/decks/${userId}/favDeck`, {
                 method: 'POST',
                 headers: {
@@ -120,24 +124,29 @@ const ResultsHome = ({ onShowDeck, onShowQuiz }) => {
                     deckId: deckID,
                 }),
             });
-
-            console.log("Added new deck");
         } catch (error) {
             console.error('Error toggling favorite status', error);
+            // Revert the state if there's an error
+            setFavoritedDecks(prev => ({
+                ...prev,
+                [deckID]: !prev[deckID]
+            }));
         }
     };
 
-
-    // Function used to send a post request of the quiz._id to the backend server for adding/removing a favorite quiz
     const toggleFavoriteQuiz = async (quizID) => {
         try {
-            // Check if there is a user logged in, if not prompt them to log in
             if (!userId) {
-                alert('Please log in to add this deck to your favorites.');
+                alert('Please log in to add this quiz to your favorites.');
                 return;
             }
             
-            // This response will send a POST to the server url with just the deck._id as the body, the backend server will handle the add/remove favorites
+            // Toggle the favorite status locally
+            setFavoritedQuizzes(prev => ({
+                ...prev,
+                [quizID]: !prev[quizID]
+            }));
+    
             const response = await fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/quizzes/${userId}/favQuiz`, {
                 method: 'POST',
                 headers: {
@@ -147,13 +156,15 @@ const ResultsHome = ({ onShowDeck, onShowQuiz }) => {
                     quizId: quizID,
                 }),
             });
-
         } catch (error) {
             console.error('Error toggling favorite status', error);
+            // Revert the state if there's an error
+            setFavoritedQuizzes(prev => ({
+                ...prev,
+                [quizID]: !prev[quizID]
+            }));
         }
     };
-
-
 
     return (
         <div className='search-results-page'>
@@ -183,7 +194,15 @@ const ResultsHome = ({ onShowDeck, onShowQuiz }) => {
 
                                     <div className='buttons'>
                                         <button className = 'preview' onClick={() => handleDeckPreview(deck)}>Preview</button>
-                                        <button className = 'add_favorite' onClick={() => toggleFavoriteDeck(deck._id)}>Favorite</button>
+                                        <button 
+    className="add_favorite_deck" 
+    onClick={(e) => {
+        e.stopPropagation();
+        toggleFavoriteDeck(deck._id);
+    }}
+>
+    <IoIosHeart className={`heart-icon-deck ${favoritedDecks[deck._id] ? 'active' : ''}`} />
+</button>       
                                     </div>
                                     
                                 </div>
@@ -212,8 +231,15 @@ const ResultsHome = ({ onShowDeck, onShowQuiz }) => {
                                 </div>
                                 <div className='buttons'>
                                     <button className = 'preview' onClick={() => handleQuizPreview(quiz)}>Preview</button>
-                                    <button className = 'add_favorite' onClick={() => toggleFavoriteQuiz(quiz._id)}>Favorite</button>
-                                </div>
+                                    <button 
+    className="add_favorite_quiz" 
+    onClick={(e) => {
+        e.stopPropagation();
+        toggleFavoriteQuiz(quiz._id);
+    }}
+>
+    <IoIosHeart className={`heart-icon-quiz ${favoritedQuizzes[quiz._id] ? 'active' : ''}`} />
+</button>                                    </div>
                             </div>
                             ))
                             ) : (
