@@ -56,7 +56,7 @@
     color: white;
     border: none;
     padding: 5px 10px;
-    border-radius: 5px;
+    border-radius: 20px;
     cursor: pointer;
     transition: background-color 0.3s;
 }
@@ -106,8 +106,8 @@
     border-radius: 10px;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
     position: relative;
-    height: 201px; /* Reduced from 250px */
-    width: 164px;
+    height: 185px; 
+    width: 160px;
     display: flex;
     flex-direction: column;
     cursor: pointer;
@@ -120,22 +120,24 @@
 
 /* Card Corner Styles */
 
-
 .card-corners .suit {
-    font-size: 16px; /* Reduced from 20px */
+    font-size: 12px; /* Reduced from 20px */
     line-height: 1;
 }
 
 .card-corners{
-    font-size: 14px; /* Reduced from 18px */
+    font-size: 10px; /* Reduced from 18px */
     font-weight: bold;
     margin-bottom: 2px;
+    position: absolute;
+    top: 5px;    /* Reduced from default */
+    left: 5px; 
 }
 
 .card-corners-bottom-right {
     position: absolute;
-    bottom: 10px;
-    right: 10px;
+    bottom: 5px;
+    right: 5px;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
@@ -171,6 +173,7 @@
     border: 2px solid #124883; /* Same as your main color */
     transform: scale(1.1);
 }
+
 
 .modal-buttons {
     display: flex;
@@ -211,6 +214,8 @@
     display: flex;
     flex-direction: column;
     gap: 15px;
+    position: relative; /* Add this */
+    padding-bottom: 70px; /* Add space for button */
 }
 
 .modal-attempts-content h2 {
@@ -220,15 +225,16 @@
     margin-bottom: 15px;
 }
 
+
+/* Container for the scrollable content */
 .modal-attempts-content ul {
     list-style: none;
     padding: 0;
     margin: 0;
-    max-height: 300px; /* Scrollable list */
-    overflow-y: auto;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    background-color: #f9f9f9;
+    overflow-y: auto; /* Enable vertical scrolling */
+    flex-grow: 1; /* Take up available space */
+    padding: 10px;
+    margin-bottom: 70px; /* Make space for fixed button */
 }
 
 .modal-attempts-content ul li {
@@ -252,20 +258,110 @@
     gap: 10px;
 }
 
+.modal-attempts-buttons {
+    position: absolute; /* Position absolutely */
+    bottom: 0; /* Align to bottom */
+    left: 0; /* Stretch full width */
+    right: 0;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    background-color: #f9f9f9; /* Optional: add background */
+    border-top: 1px solid #eee; /* Optional: add separator */
+    border-bottom-left-radius: 10px; /* Match parent's border radius */
+    border-bottom-right-radius: 10px;
+}
 .modal-attempts-buttons button {
-    padding: 10px 20px;
-    font-size: 1rem;
-    border-radius: 5px;
+    padding: 12px 30px;
     background-color: #124883;
     color: white;
     border: none;
+    border-radius: 8px;
     cursor: pointer;
-    transition: background 0.3s ease;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    min-width: 120px; /* Ensure minimum width */
 }
+
 
 .modal-attempts-buttons button:hover {
     background-color: #092a51;
 }
+
+
+/* Completion modal */
+.completion-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #f7f7f7;
+    border: 2px solid #ccc;
+    padding: 30px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.completion-content button {
+    padding: 12px 30px;
+    background-color: #124883;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    margin-top: 20px; /* Add space between text and button */
+}
+.completion-content {
+    text-align: center;
+    padding: 20px;
+    position: relative;
+}
+
+.completion-content h2 {
+    font-size: 2.5rem; /* Larger font size for emphasis */
+    color: #28a745;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.completion-content h2::after {
+    content: " 🎉"; /* Add a happy emoji */
+    font-size: 2rem;
+    margin-left: 10px;
+}
+
+.completion-content p {
+    font-size: 1.5rem; /* Larger font size for visibility */
+    color: #333;
+    margin-bottom: 25px;
+}
+
+.completion-content button:hover {
+    background-color: #092a51;
+}
+
+/* Placeholder text for matched cards */
+.flashcard-card.matched::before {
+    content: "Matched";
+    font-size: 14px;
+    color: #28a745;
+}
+
+/* Ensure empty grid slots are hidden */
+.flashcard-card:not(:empty) {
+    display: block;
+}
+
+
 
 /* Fade-in animation for modal */
 @keyframes fadeIn {
@@ -277,4 +373,45 @@
         opacity: 1;
         transform: scale(1);
     }
+}
+
+
+/* Style for matched cards */
+.shuffle-flashcard-card.matched {
+    background-color: #28a745; /* Green background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    transition: all 0.3s ease;
+    position: relative;
+    cursor: default; /* Remove pointer cursor for matched cards */
+}
+
+.shuffle-flashcard-card.matched::after {
+    content: "Matched!";
+    color: white;
+    text-align: center;
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Optional: Add a nice transition effect */
+.shuffle-flashcard-card {
+    transition: all 0.3s ease;
+}
+
+/* Optional: Add a subtle animation for matched cards */
+@keyframes matchedPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.shuffle-flashcard-card.matched {
+    animation: matchedPulse 0.5s ease-in-out;
 }

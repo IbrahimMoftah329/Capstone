@@ -107,7 +107,10 @@ const getFlashcards = (deckId, deckName) => {
             setDisplayedCards(shuffled.slice(0, 16));
             setRemainingCards(shuffled.slice(16));
             setSelectedDeckName(deckName);
+            setSelectedDeckId(deckId); // Make sure to set the deck ID
             setIsFlashcardModalOpen(true);
+            setTimeElapsed(0); // Reset timer
+            setIsTimerRunning(true); // Start timer
         })
         .catch((error) => console.error("Error fetching flashcards:", error));
 };
@@ -155,15 +158,16 @@ const handleMatch = (firstIndex, secondIndex) => {
     setDisplayedCards(newDisplayedCards);
     setSelectedCards([]);
 
+    // Check if all cards are matched
     const allMatched = newDisplayedCards.every((card) => card.matched || !card);
     if (allMatched) {
-        setIsTimerRunning(false);
+        setIsTimerRunning(false); // Stop timer when game is completed
         setIsGameCompleted(true);
-        saveAttempt(); // Save the attempt
+        saveAttempt();
     }
 };
-
 const closeFlashcardModal = () => {
+    setIsTimerRunning(false); // Stop the timer when closing modal
     setIsFlashcardModalOpen(false);
     setShuffledCards([]);
     setDisplayedCards([]);
@@ -192,6 +196,7 @@ useEffect(() => {
                     <h1 className="shuffle-title">Shuffle <GiCardJoker /></h1>
                     <div className="shuffle-top">
                         <p className="shuffle-description">View your shuffled decks here.</p>
+                        <br></br>
                         <div className="shuffle-list">
                             {isLoading ? (
                                 <p>Loading decks...</p>
@@ -234,36 +239,36 @@ useEffect(() => {
                                         <button onClick={closeFlashcardModal}>Close</button>
                                     </div>
                                 ) : (
-                                    <div className="shuffle-flashcard-grid">
-                                        {displayedCards.map((card, index) => {
-                                            const suit = cardSuits[index] || '♠';
-                                            const isRedSuit = suit === '♥' || suit === '♦';
-                                            return (
-                                                <div
-                                                    key={index}
-                                                    className={`shuffle-flashcard-card ${
-                                                        selectedCards.includes(index) ? 'selected' : ''
-                                                    } ${card.matched ? 'matched' : ''} ${isRedSuit ? 'red-suit' : ''}`}
-                                                    onClick={() => handleCardClick(index)}
-                                                >
-                                                    {!card.matched && (
-                                                        <>
-                                                            <div className="card-corners">
-                                                                <span className="suit">{suit}</span>
-                                                            </div>
-                                                            <div className="shuffle-flashcard-card-content">
-                                                                <h3>{card.type === 'question' ? 'Q:' : 'A:'}</h3>
-                                                                <p>{card.content}</p>
-                                                            </div>
-                                                            <div className="card-corners-bottom-right">
-                                                                <span className="suit">{suit}</span>
-                                                            </div>
-                                                        </>
-                                                    )}
-                                                </div>
-                                            );
-                                        })}
-                                    </div>
+<div className="shuffle-flashcard-grid">
+    {displayedCards.map((card, index) => {
+        const suit = cardSuits[index] || '♠';
+        const isRedSuit = suit === '♥' || suit === '♦';
+        return (
+            <div
+                key={index}
+                className={`shuffle-flashcard-card ${
+                    selectedCards.includes(index) ? 'selected' : ''
+                } ${card.matched ? 'matched' : ''} ${isRedSuit ? 'red-suit' : ''}`}
+                onClick={() => handleCardClick(index)}
+            >
+                {!card.matched ? (
+                    <>
+                        <div className="card-corners">
+                            <span className="suit">{suit}</span>
+                        </div>
+                        <div className="shuffle-flashcard-card-content">
+                            <h3>{card.type === 'question'}</h3>
+                            <p>{card.content}</p>
+                        </div>
+                        <div className="card-corners-bottom-right">
+                            <span className="suit">{suit}</span>
+                        </div>
+                    </>
+                ) : null}
+            </div>
+        );
+    })}
+</div>
                                 )}
                                 {!isGameCompleted && (
                                     <div className="modal-buttons">
