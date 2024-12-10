@@ -184,7 +184,7 @@
     z-index: 1000; /* Ensure it appears above other elements */
 }
 
-.modal-content {
+.library-modal-content {
     width: 85%; /* Increase the width slightly */
     max-width: 1000px; /* Adjust maximum width */
     background-color: #ffffff;
@@ -197,7 +197,7 @@
 }
 
 /* Make the input fields wider */
-.modal-content textarea {
+.library-modal-content textarea {
     width: 100%; /* Take full width */
     padding: 10px; /* Add padding for a better user experience */
     border-radius: 5px;
@@ -206,17 +206,17 @@
     resize: vertical; /* Allow resizing only vertically */
 }
 
-.modal-content h2 {
+.library-modal-content h2 {
     margin-top: 0;
 }
 
-.modal-buttons {
+.library-modal-buttons {
     display: flex;
     justify-content: space-between;
     margin-top: 20px;
 }
 
-.modal-content button {
+.library-modal-content button {
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
@@ -225,21 +225,21 @@
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.modal-content button[type="button"] {
+.library-modal-content button[type="button"] {
     background-color: #ccc;
     color: #333;
 }
 
-.modal-content button[type="button"]:hover {
+.library-modal-content button[type="button"]:hover {
     background-color: #bbb;
 }
 
-.modal-content button[type="submit"] {
+.library-modal-content button[type="submit"] {
     background-color: #124883;
     color: #fff;
 }
 
-.modal-content button[type="submit"]:hover {
+.library-modal-content button[type="submit"]:hover {
     background-color: #45a049;
 }
 
