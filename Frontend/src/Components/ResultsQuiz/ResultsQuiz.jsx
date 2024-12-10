@@ -1,21 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useUser } from '@clerk/clerk-react';
 import './ResultsQuiz.css';
 
 const ResultsQuiz = ({ onShowHome, onShowDeck, onShowQuiz }) => {
     const location = useLocation();
-    const { filteredResults, filteredQuizzes, initialView } = location.state || { 
-        filteredResults: [], 
-        filteredQuizzes: [],
-        initialView: 'home'
-    };    const [selectedQuiz, setSelectedQuiz] = useState(null);
+    const { filteredQuizzes } = location.state || { filteredQuizzes: [] };
+    const [selectedQuiz, setSelectedQuiz] = useState(null);
     const [questions, setQuestions] = useState([]);
 
-
-    const { user } = useUser();             // Get user context from Clerk
-    const userId = user ? user.id : null;   // Get the logged-in user's ID
-  
     useEffect(() => {
         if (filteredQuizzes.length > 0) {
             const firstQuiz = filteredQuizzes[0];
@@ -30,7 +22,7 @@ const ResultsQuiz = ({ onShowHome, onShowDeck, onShowQuiz }) => {
     };
 
     const getQuestions = async (quiz) => {
-        if (quiz && quiz._idquiz?._id) {
+        if (quiz?._id) {
             try {
                 const response = await fetch(`http://localhost:4000/api/questions/quiz/${quiz._id}/questions`);
                 const data = await response.json();
@@ -43,33 +35,6 @@ const ResultsQuiz = ({ onShowHome, onShowDeck, onShowQuiz }) => {
         }
     };
 
-
-
-    // Function used to send a post request of the quiz._id to the backend server for adding/removing a favorite quiz
-    const toggleFavoriteQuiz = async (quizID) => {
-      try {
-          // Check if there is a user logged in, if not prompt them to log in
-          if (!userId) {
-              alert('Please log in to add this deck to your favorites.');
-              return;
-          }
-          
-          // This response will send a POST to the server url with just the deck._id as the body, the backend server will handle the add/remove favorites
-          const response = await fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/quizzes/${userId}/favQuiz`, {
-              method: 'POST',
-              headers: {
-                  'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({
-                  quizId: quizID,
-              }),
-          });
-
-      } catch (error) {
-          console.error('Error toggling favorite status', error);
-      }
-    };
-  
     return (
         <div className='search-quiz-page'>
             <div className='results-container-quiz'>
@@ -98,6 +63,7 @@ const ResultsQuiz = ({ onShowHome, onShowDeck, onShowQuiz }) => {
                                         <span>Professor: {quiz.professor}</span>
                                     </div>
                                     <button className = 'add_favorite' onClick={(e) => {e.stopPropagation(), toggleFavoriteQuiz(quiz._id)}}>Favorite</button>
+
                                 </div>
                             ))}
                         </div>
@@ -116,6 +82,7 @@ const ResultsQuiz = ({ onShowHome, onShowDeck, onShowQuiz }) => {
                                         <div className='preview-meta'>
                                             <span>Professor: {selectedQuiz.professor}</span>
                                         </div>
+                                        
                                     </div>
                                     <div className='questions-list'>
                                         {questions.map((question, index) => (
@@ -130,6 +97,7 @@ const ResultsQuiz = ({ onShowHome, onShowDeck, onShowQuiz }) => {
                                                             </div>
                                                         ))}
                                                     </div>
+                                                    
                                                 </div>
                                             </div>
                                         ))}

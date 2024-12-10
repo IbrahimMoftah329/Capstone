@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useUser } from '@clerk/clerk-react';
 import './ResultsDeck.css';
+import { FaHeart } from 'react-icons/fa';
+
 
 
 const ResultsDeck = ({ onShowHome, onShowDeck, onShowQuiz }) => {
@@ -93,9 +95,21 @@ const ResultsDeck = ({ onShowHome, onShowDeck, onShowQuiz }) => {
                     <span>{deck.__v} Cards</span>
                     <span>•</span>
                     <span>Professor: {deck.professor}</span>
+                    <button
+  className={`add-favorite ${deck.isFavorite ? 'active' : ''}`}
+  onClick={(e) => {
+    e.stopPropagation();
+    toggleFavoriteDeck(deck._id);
+    setSelectedDeck(prevDeck => ({
+      ...prevDeck,
+      isFavorite: !prevDeck.isFavorite
+    }));
+  }}
+>
+  <FaHeart />
+</button>
                   </div>
-                  <button className = 'add_favorite' onClick={(e) => {e.stopPropagation(), toggleFavoriteDeck(deck._id)}}>Favorite</button>
-                </div>
+                  </div>
               ))}
             </div>
           </div>

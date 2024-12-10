@@ -4,7 +4,7 @@ import DashSidebar from '../../Components/DashSidebar/DashSidebar';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Library from '../../Components/DashContent/DashLibrary';
 import Profile from '../../Components/DashContent/DashProfile';
-import FavCard from '../../Components/DashContent/FavDashCard';
+import FavCard from '../../Components/DashContent/DashFavorite';
 import Contact from '../../Components/DashContent/DashContact';
 import Shuffle from '../../Components/DashContent/DashShuffle';
 import DashCard from '../../Components/DashContent/DashCard';
@@ -20,7 +20,7 @@ const Dashboard = () => {
         <Route path="profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
         <Route path="contact" element={<ProtectedRoute><Contact /></ProtectedRoute>} />
         <Route path="shuffle" element={<ProtectedRoute><Shuffle /></ProtectedRoute>} />
-        <Route path="favorite" element={<ProtectedRoute><Favorite /></ProtectedRoute>} />
+        <Route path="favorite" element={<ProtectedRoute><FavCard /></ProtectedRoute>} />
         <Route path="favorite/:deckId" element={<ProtectedRoute><FavCard /></ProtectedRoute>} />
         {/* Redirect /dashboard to /dashboard/library */}
         <Route path="/" element={<Navigate to="library" />} />
