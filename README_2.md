@@ -67,9 +67,9 @@ To start the webpage, run:
 npm run dev
 ```
 
-### Git Workflow: Managing Code with Branches
+## Git Workflow: Managing Code with Branches
 
-## Updating your main branch without overwriting your local
+### Updating your main branch without overwriting your local
 
 Your local main branch is behind the remote main branch, what do you do?
 
@@ -96,7 +96,7 @@ git pull origin main
 
 At this point, your local main branch is equal to the remote main branch.
 
-## If you would also like your local test branch to be equal/updated with the remote main branch (could involve changes from other people), do these steps:
+### If you would also like your local test branch to be equal/updated with the remote main branch (could involve changes from other people), do these steps:
 
 1. Assumes that you were working on your own local test branch when making changes.
 
@@ -117,7 +117,7 @@ At this point, your main branch that was previously behind the remote changes (o
 git push
 ```
 
-## Pulling a remote branch that doesn't exist on your local machine yet
+### Pulling a remote branch that doesn't exist on your local machine yet
 
 There is a new branch created on GitHub that you would like to access locally and be able to change the code to, but it does not exist on your local machine yet. What do you do?
 
