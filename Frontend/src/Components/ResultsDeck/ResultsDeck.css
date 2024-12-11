@@ -227,27 +227,54 @@
   }
 }
 
-.add_to_favorite {
-  padding: 10px;
-  margin-left: auto;
-  border: 1px solid #495057;
-  border-radius: 8px;
-  background-color: #fff;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
-  transition: all 0.2s ease;
-  color: #124883;
-  width: 75px;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
+/* Base styles for the favorite button */
+.add_favorite_deck {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    margin-left: auto;
+    padding-top: 8px;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
 }
 
-.add_to_favorite:hover {
-  background-color: #124883;
-  color: #ffffff;
-  border-color: #124883;
-  transform: translateY(-2px);
-  box-shadow: 0 2px 4px rgba(18, 72, 131, 0.2);
+/* Heart icon styles */
+.heart-icon-deck {
+  color: #d0d0d0; 
+  font-size: 24px;
+  transition: all 0.3s ease;
+}
+
+/* Active/favorited state */
+.heart-icon-deck.active {
+  color: #ff4242; /* Red color when active */
+}
+
+/* Hover effect */
+.add_favorite_deck:hover .heart-icon-deck {
+  transform: scale(1.1);
+}
+
+
+/* Optional: Add a tooltip */
+.add_favorite_deck::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.add_favorite_deck:hover::after {
+  opacity: 1;
 }

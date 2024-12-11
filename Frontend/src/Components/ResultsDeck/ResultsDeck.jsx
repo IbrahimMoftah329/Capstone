@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useUser } from '@clerk/clerk-react';
+import { IoIosHeart, IoIosHeartEmpty } from "react-icons/io";
 import './ResultsDeck.css';
 
 const ResultsDeck = ({ onShowHome, onShowDeck, onShowQuiz }) => {
   const location = useLocation();
-  
+
+  const { user } = useUser();             // Get user context from Clerk
+  const userId = user ? user.id : null;   // Get the logged-in user's ID
+  const [favoritedDecks, setFavoritedDecks] = useState({}); // Track favorite status for each deck
   const { filteredResults } = location.state || { filteredResults: [] };
   const [selectedDeck, setSelectedDeck] = useState(null);
   const [flashcards, setFlashcards] = useState([]);
 
-  const { user } = useUser();             // Get user context from Clerk
-  const userId = user ? user.id : null;   // Get the logged-in user's ID
 
   useEffect(() => {
     if (filteredResults.length > 0) {
@@ -42,26 +44,35 @@ const ResultsDeck = ({ onShowHome, onShowDeck, onShowQuiz }) => {
 
   const toggleFavoriteDeck = async (deckID) => {
     try {
-      // Check if there is a user logged in, if not prompt them to log in
-      if (!userId) {
-        alert('Please log in to add this deck to your favorites.');
-        return;
-      }
+        if (!userId) {
+            alert('Please log in to add this deck to your favorites.');
+            return;
+        }
         
-      // This response will send a POST to the server url with just the deck._id as the body, the backend server will handle the add/remove favorites
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/decks/${userId}/favDeck`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-        deckId: deckID,
-        }),
-      });
+        // Toggle the favorite status locally
+        setFavoritedDecks(prev => ({
+            ...prev,
+            [deckID]: !prev[deckID]
+        }));
+
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/decks/${userId}/favDeck`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                deckId: deckID,
+            }),
+        });
     } catch (error) {
-      console.error('Error toggling favorite status', error);
+        console.error('Error toggling favorite status', error);
+        // Revert the state if there's an error
+        setFavoritedDecks(prev => ({
+            ...prev,
+            [deckID]: !prev[deckID]
+        }));
     }
-  };
+};
 
   return (
     <div className='search-deck-page'>
@@ -91,9 +102,15 @@ const ResultsDeck = ({ onShowHome, onShowDeck, onShowQuiz }) => {
                     <span>{deck.__v} Cards</span>
                     <span>•</span>
                     <span>Professor: {deck.professor}</span>
-                    <button className = 'add_to_favorite' onClick={(e) => {e.stopPropagation(), toggleFavoriteDeck(deck._id)}}>Favorite</button>
+                    {/* <button className = 'add_to_favorite' onClick={(e) => {e.stopPropagation(), toggleFavoriteDeck(deck._id)}}>Favorite</button> */}
+                    <button className="add_favorite_deck" onClick={(e) => {
+                      e.stopPropagation();
+                      toggleFavoriteDeck(deck._id);
+                      }}>
+                      <IoIosHeart className={`heart-icon-deck ${favoritedDecks[deck._id] ? 'active' : ''}`} />
+                    </button>
                   </div>
-                </div>
+              </div>
               ))}
             </div>
           </div>

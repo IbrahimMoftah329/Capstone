@@ -278,29 +278,46 @@ useEffect(() => {
                             </div>
                         </div>
                     )}
-    
-                    {isAttemptsModalOpen && (
-                        <div className="modal-attempts">
-                            <div className="modal-attempts-content">
-                                <h2>Attempts for {selectedDeckName}</h2>
-                                {deckAttempts.length === 0 ? (
-                                    <p>No attempts recorded for this deck yet.</p>
-                                ) : (
-                                    <ul>
-                                        {deckAttempts.map((attempt, index) => (
-                                            <li key={index}>
-                                                <p><strong>Time:</strong> {attempt.timeElapsed} seconds</p>
-                                                <p><strong>Date:</strong> {new Date(attempt.createdAt).toLocaleString()}</p>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                )}
-                                <div className="modal-attempts-buttons">
-                                    <button onClick={closeAttemptsModal}>Close</button>
-                                </div>
-                            </div>
-                        </div>
-                    )}
+ {isAttemptsModalOpen && (
+   <div className="modal-attempts">
+       <div className="modal-attempts-content">
+           <h2 className="leaderboard-title">Your Top Times</h2>
+           <div className="leaderboard-container">
+               {deckAttempts.length === 0 ? (
+                   <p className="no-attempts">No attempts recorded yet. Be the first!</p>
+               ) : (
+                   <div className="podium-leaderboard">
+                       {[...deckAttempts]
+                           .sort((a, b) => a.timeElapsed - b.timeElapsed)
+                           .slice(0, 3)
+                           .map((attempt, index) => {
+                               const displayOrder = index === 0 ? 1 : index === 1 ? 2 : 3;
+                               return (
+                                   <div 
+                                       key={index} 
+                                       className={`podium-entry position-${displayOrder}`}
+                                       style={{'--animation-order': displayOrder}}
+                                   >
+                                       <div className="podium-platform">
+                                           <div className="score-content">
+                                               <div className="medal">{index === 0 ? "🥇" : index === 1 ? "🥈" : "🥉"}</div>
+                                               <div className="time">{attempt.timeElapsed}s</div>
+                                               <div className="date">{new Date(attempt.createdAt).toLocaleDateString()}</div>
+                                           </div>
+                                           <div className="platform-block">
+                                               <span className="rank-number">{index + 1}</span>
+                                           </div>
+                                       </div>
+                                   </div>
+                               );
+                           })}
+                   </div>
+               )}
+           </div>
+           <button className="close-button" onClick={closeAttemptsModal}>Close</button>
+       </div>
+   </div>
+)}
                 </div>
             </div>
         );

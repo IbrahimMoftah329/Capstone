@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useUser } from '@clerk/clerk-react';
+import { IoIosHeart, IoIosHeartEmpty } from "react-icons/io";
 import './ResultsQuiz.css';
 
 const ResultsQuiz = ({ onShowHome, onShowDeck, onShowQuiz }) => {
@@ -8,10 +9,10 @@ const ResultsQuiz = ({ onShowHome, onShowDeck, onShowQuiz }) => {
 
     const { user } = useUser();             // Get user context from Clerk
     const userId = user ? user.id : null;   // Get the logged-in user's ID
-
     const { filteredQuizzes } = location.state || { filteredQuizzes: [] };
     const [selectedQuiz, setSelectedQuiz] = useState(null);
     const [questions, setQuestions] = useState([]);
+    const [favoritedQuizzes, setFavoritedQuizzes] = useState({});
 
     useEffect(() => {
         if (filteredQuizzes.length > 0) {
@@ -43,13 +44,17 @@ const ResultsQuiz = ({ onShowHome, onShowDeck, onShowQuiz }) => {
     // Function used to send a post request of the quiz._id to the backend server for adding/removing a favorite quiz
     const toggleFavoriteQuiz = async (quizID) => {
         try {
-            // Check if there is a user logged in, if not prompt them to log in
             if (!userId) {
-                alert('Please log in to add this deck to your favorites.');
+                alert('Please log in to add this quiz to your favorites.');
                 return;
             }
             
-            // This response will send a POST to the server url with just the deck._id as the body, the backend server will handle the add/remove favorites
+            // Toggle the favorite status locally
+            setFavoritedQuizzes(prev => ({
+                ...prev,
+                [quizID]: !prev[quizID]
+            }));
+    
             const response = await fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/quizzes/${userId}/favQuiz`, {
                 method: 'POST',
                 headers: {
@@ -59,12 +64,15 @@ const ResultsQuiz = ({ onShowHome, onShowDeck, onShowQuiz }) => {
                     quizId: quizID,
                 }),
             });
-  
         } catch (error) {
             console.error('Error toggling favorite status', error);
+            // Revert the state if there's an error
+            setFavoritedQuizzes(prev => ({
+                ...prev,
+                [quizID]: !prev[quizID]
+            }));
         }
-      };
-
+    };
     return (
         <div className='search-quiz-page'>
             <div className='results-container-quiz'>
@@ -91,7 +99,12 @@ const ResultsQuiz = ({ onShowHome, onShowDeck, onShowQuiz }) => {
                                     <h3>{quiz.name}</h3>
                                     <div className='quiz-meta'>
                                         <span>Professor: {quiz.professor}</span>
-                                        <button className = 'add_to_favorite' onClick={(e) => {e.stopPropagation(), toggleFavoriteQuiz(quiz._id)}}>Favorite</button>
+                                        <button className="add_favorite_quiz" onClick={(e) => {
+                                            e.stopPropagation();
+                                            toggleFavoriteQuiz(quiz._id);
+                                            }}>
+                                            <IoIosHeart className={`heart-icon-quiz ${favoritedQuizzes[quiz._id] ? 'active' : ''}`} />
+                                        </button>                    
                                     </div>
                                 </div>
                             ))}

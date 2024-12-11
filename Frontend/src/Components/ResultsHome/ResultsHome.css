@@ -399,3 +399,86 @@
     box-shadow: 0 8px 15px rgba(18, 72, 131, 0.1);
     border-color: #124883;
 }
+
+
+/* Base styles for the favorite button */
+.add_favorite_deck {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    padding-top: 8px;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+}
+
+/* Heart icon styles */
+.heart-icon-deck {
+  color: #d0d0d0; 
+  font-size: 24px;
+  transition: all 0.3s ease;
+}
+
+/* Active/favorited state */
+.heart-icon-deck.active {
+  color: #ff4242; /* Red color when active */
+}
+
+/* Hover effect */
+.add_favorite_deck:hover .heart-icon-deck {
+  transform: scale(1.1);
+}
+
+/* Optional: Add a tooltip */
+.add_favorite_deck::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.add_favorite_deck:hover::after {
+  opacity: 1;
+}
+
+.add_favorite_quiz {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    padding-top: 8px;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+  }
+  
+  .heart-icon-quiz {
+    color: #d0d0d0;
+    font-size: 24px;
+    transition: all 0.3s ease;
+  }
+  
+  .heart-icon-quiz.active {
+    color: #ff4242;
+  }
+  
+  .add_favorite_quiz:hover .heart-icon-quiz {
+    transform: scale(1.1);
+  }
+  
+  /* Update quiz-card to handle the heart position */
+  .quiz-card {
+    position: relative;
+    /* ... rest of your existing styles ... */
+  }
+  
