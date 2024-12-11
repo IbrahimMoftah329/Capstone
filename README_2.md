@@ -94,7 +94,7 @@ git pull origin main
 
 At this point, your local main branch is equal to the remote main branch.
 
-If you would also like your local test branch to be equal/updated with the remote main branch (could involve changes from other people), do these steps:
+### If you would also like your local test branch to be equal/updated with the remote main branch (could involve changes from other people), do these steps:
 
 1. Assumes that you were working on your own local test branch when making changes.
 
