@@ -64,5 +64,5 @@ CardMates is designed to be a versatile tool for students, educators, and profes
 
 ---
 
-For detailed setup and usage instructions, please refer to the [Setup and Instructions README](./Setup_and_Instructions.md).
+### For detailed setup and usage instructions, please refer to the [Setup and Instructions README](./README_2.md).
 
