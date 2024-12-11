@@ -21,10 +21,13 @@ CardMates is an innovative web application designed to optimize the learning exp
 
 4. **Device Responsiveness**
    - Fully optimized for desktops, tablets, and mobile devices.
+  
+5. **Shuffle Matching Game**
+   - Fully interactive game to randomly shuffle your flashcards and match them with a timer."
 
 ### Tech Stack
 
-- **Frontend**: React.js
+- **Frontend**: React.js with Vite
 - **Backend**: Node.js with Express.js
 - **AI Integration**: OpenAI API for keyword extraction, quiz generation, and resource lookup
 - **Database**: MongoDB
@@ -37,6 +40,10 @@ CardMates is an innovative web application designed to optimize the learning exp
 - Flashcard creation and management.
 - AI assistance for keyword extraction and flashcard enhancement.
 - Customizable difficulty settings for quizzes.
+- Quiz creation based on decks.
+- Free search to explore other flashcards users have posted.
+- Shuffling your own deck of flashcards to interact in a matching game.
+
 
 #### Reach Goals
 - Spaced repetition schedules for better retention.
