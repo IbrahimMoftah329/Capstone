@@ -89,8 +89,14 @@ const deleteDeck = async (req, res) => {
       { clerkId: deck.clerkId }, // Find the user by clerkId
       { $pull: { decks: deck._id } } // Remove the deck ID from the user's decks array
     );
+
+    // Step 5: Remove the deckId from all users' favoriteDecks
+    await User.updateMany(
+      { favoriteDecks: deckId }, // Find all users who have the deckId in their favoriteDecks
+      { $pull: { favoriteDecks: deckId } } // Remove the deckId from their favoriteDecks array
+    );
     
-    res.status(200).json({ message: 'Deck and associated flashcards deleted successfully', deck: deletedDeck });
+    res.status(200).json({ message: 'Deck and associated flashcards deleted successfully, deck also removed from favorites of all users.', deck: deletedDeck });
   } catch (err) {
     console.error("Error in deleteDeck:", err);
     res.status(500).send(err.message);
@@ -107,7 +113,7 @@ const updateDeck = async (req, res) => {
     if (!updatedDeck) {
       return res.status(404).json({ error: 'Deck not found' });
     }
-    console.log('Deck updated:', updatedDeck);
+    // console.log('Deck updated:', updatedDeck);
 
     // Step 2: Check which fields were updated
     const updatedFields = {};
@@ -115,7 +121,7 @@ const updateDeck = async (req, res) => {
     if (req.body.semester) updatedFields.semester = req.body.semester;
     if (req.body.university) updatedFields.university = req.body.university;
     if (req.body.name) updatedFields.deckName = req.body.name;
-    console.log('Updated fields for quizzes:', updatedFields);
+    // console.log('Updated fields for quizzes:', updatedFields);
 
     // Step 3: If any relevant fields were updated, propagate changes to quizzes
     if (Object.keys(updatedFields).length > 0) {
@@ -123,7 +129,7 @@ const updateDeck = async (req, res) => {
         { deckId: deckId }, 
         { $set: updatedFields }
       );
-      console.log('Quizzes update result:', quizzesUpdateResult);
+      // console.log('Quizzes update result:', quizzesUpdateResult);
     } else {
       console.log('No relevant fields updated for quizzes.');
     }

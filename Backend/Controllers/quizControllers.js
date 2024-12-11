@@ -27,7 +27,8 @@ const getQuizzes = async (req, res) => {
             select: 'name description semester professor deckId deckName questions createdAt',
             populate: {
                 path: 'deckId',
-                select: 'name' // Only get the deck name
+                select: 'name', // Only get the deck name
+                options: { strictPopulate: false } // Avoid errors if deckId is missing
             }
         });
     
@@ -44,8 +45,10 @@ const getQuizzes = async (req, res) => {
             semester: quiz.semester,
             professor: quiz.professor,
             university: quiz.university,
-            deckId: quiz.deckId._id,                 // Include the deck ID if it exists
-            deckName: quiz.deckId.name,              // Include deck name from populated data
+            // deckId: quiz.deckId._id,                 // Include the deck ID if it exists
+            // deckName: quiz.deckId.name,              // Include deck name from populated data
+            deckId: quiz.deckId ? quiz.deckId._id : 'N/A',  // If there is no deckId, it will default to 'N/A'
+            deckName: quiz.deckId && quiz.deckId.name ? quiz.deckId.name : 'N/A',   // If there is no deckId or deckName, it will default to 'N/A'
             createdAt: quiz.createdAt,
             numQuestions: quiz.questions.length, // Include the number of questions
         }));
@@ -159,6 +162,12 @@ const deleteQuiz = async (req, res) => {
         await User.findOneAndUpdate(
             { clerkId: quiz.createdBy }, // Find the user by clerkId (assuming createdBy holds clerkId)
             { $pull: { quizzes: quiz._id } } // Remove the quiz ID from the user's quizzes array
+        );
+
+        // Step 5: Remove the deckId from all users' favoriteDecks
+        await User.updateMany(
+            { favoriteQuizzes: quizId }, // Find all users who have the deckId in their favoriteDecks
+            { $pull: { favoriteQuizzes: quizId } } // Remove the deckId from their favoriteDecks array
         );
     
         res.status(200).json({

@@ -27,10 +27,17 @@ router.get('/:deckId', getDeck);
 router.post('/user/:userId/deck', addDeckToUser);
 
 // Route to DELETE a deck
-router.delete('/:deckId', deleteDeck);
+router.delete('/:deckId/delete', deleteDeck);
 
 // Route to UPDATE a deck
-router.patch('/:deckId', updateDeck);
+router.patch('/:deckId/update', updateDeck);
+
+// Route to toggle a deck for favorited or not
+router.post('/:userId/favDeck', toggleFavDeck);
+
+// Route to get all favorited decks of a single user
+router.get('/:userId/getfavDecks', getFavDecks);
+
 
 // Route to toggle a deck for favorited or not
 router.post('/:userId/favDeck', toggleFavDeck);

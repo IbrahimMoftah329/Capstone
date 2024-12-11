@@ -14,6 +14,7 @@ const DashLibrary = () => {
     const [isEditing, setIsEditing] = useState(false);
     const [editDeckId, setEditDeckId] = useState(null);
 
+    const [isDeck, setIsDeck] = useState(true); // Flag to track whether it's a deck or quiz being deleted
     const [showDeletePopup, setShowDeletePopup] = useState(false);
     const [itemToDelete, setItemToDelete] = useState(null);
     const [deleteType, setDeleteType] = useState(''); // Track delete type ('deck', 'quiz', or 'attempt')
@@ -26,7 +27,6 @@ const DashLibrary = () => {
     const selectedDeckName = selectedDeckId
     ? decks.find(deck => deck._id === selectedDeckId)?.name
     : ""; // Derive selected deck name from selectedDeckId
-
     const [quizzes, setQuizzes] = useState([]);
     const [attempts, setAttempts] = useState([]);
     
@@ -79,8 +79,8 @@ const DashLibrary = () => {
     };
 
     const deleteDeck = (id) => {
-        console.log("Deleting deck with ID:", id);
-        return fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/decks/${id}`, {
+        // console.log("Deleting deck with ID:", id);
+        return fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/decks/${id}/delete`, {
             method: "DELETE",
         })
             .then(() => {
@@ -302,10 +302,6 @@ const DashLibrary = () => {
         navigate(`/quiz/${quiz._id}`, { state: { quiz } });
     };
 
-
-
-
-
     const deleteAttempt = (id) => {
         console.log("Deleting attempt with ID:", id);
         return fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/attempts/${id}`, {
@@ -384,6 +380,7 @@ const DashLibrary = () => {
             });
     }, []);
 
+
     // Display loading message while decks and quizzes are loading
     if (isLoading) return <div>Loading...</div>;
 
@@ -448,7 +445,7 @@ const DashLibrary = () => {
                 <p className="library-content-description">Manage your attempts here.</p>
                 <div className="quiz-list">
                     {attempts && attempts.map((attempt) => {
-                        console.log("Attempt ID:", attempt.attemptId); // Debug log to check _id
+                        // console.log("Attempt ID:", attempt.attemptId); // Debug log to check _id
                         return (
                             <div key={attempt.attemptId} className="quiz-item" onClick={() => navigateToQuizAttempt(attempt)}>
                                 <div>
@@ -477,7 +474,7 @@ const DashLibrary = () => {
             {/* Modal for Adding New Deck */}
             {isDeckModalOpen && (
                 <div className="modal">
-                    <div className="modal-content">
+                    <div className="library-modal-content">
                         <h2>{isEditing ? "Edit Deck" : "Add New Deck"}</h2>
                         <form onSubmit={(e) => { e.preventDefault(); handleDeckSubmit(); }}>
                             <h3>Deck Name</h3>
@@ -502,8 +499,8 @@ const DashLibrary = () => {
                                 <option value="Summer 2022">Summer 2022</option>
                                 <option value="Spring 2022">Spring 2022</option>
                             </select>
-                            <div className="modal-buttons">
-                                <button type="button" onClick={closeDeckModal}>Cancel</button>
+                            <div className="library-modal-buttons">
+                                <button ype="button" onClick={closeDeckModal}>Cancel</button>
                                 <button type="submit">{isEditing ? "Save Changes" : "Add Deck"}</button>
                             </div>
                         </form>
@@ -514,7 +511,7 @@ const DashLibrary = () => {
             {/* Modal for Quizzes */}
             {isQuizModalOpen && (
                     <div className="modal">
-                    <div className="modal-content">
+                    <div className="library-modal-content">
                         <h2>Create New Quiz</h2>
                         <form onSubmit={(e) => { e.preventDefault(); handleQuizSubmit(); }}>
                             <h3>Quiz Name</h3>
@@ -531,7 +528,7 @@ const DashLibrary = () => {
                                 ))}
                             </select>
 
-                            <div className="modal-buttons">
+                            <div className="library-modal-buttons">
                                 <button type="button" onClick={closeQuizModal}>Cancel</button>
                                 <button type="submit">Create</button>
                             </div>
@@ -548,7 +545,7 @@ const DashLibrary = () => {
                         <p>{deleteType === 'deck' ? "Are you sure you want to delete this deck? This action cannot be undone." 
                             : deleteType === 'quiz' ? "Are you sure you want to delete this quiz? This action cannot be undone."
                             : "Are you sure you want to delete this attempt? This action cannot be undone."}
-                        </p>                        
+                        </p>                                               
                         <div className="popup-buttons">
                         <button className="popup-button confirm" onClick={confirmDelete}>Yes, Delete</button>
                         <button className="popup-button cancel" onClick={() => setShowDeletePopup(false)}>Cancel</button>

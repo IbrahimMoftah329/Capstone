@@ -5,7 +5,6 @@ import { useUser } from '@clerk/clerk-react';
 
 const DashProfile = () => {
     const { user } = useUser();
-    
     const [username, setUsername] = useState(user?.username || '');
     const [university, setUniversity] = useState(user?.university || '');
     const [major, setMajor] = useState(user?.major || '');
@@ -56,7 +55,6 @@ const DashProfile = () => {
             })
             .catch(error => console.error("Error fetching user info:", error));
     };
-
 
     useEffect(() => {
         getUserInfo();

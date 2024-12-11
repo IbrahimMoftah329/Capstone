@@ -3,9 +3,9 @@ import { useLocation } from 'react-router-dom';
 import { useUser } from '@clerk/clerk-react';
 import './ResultsDeck.css';
 
-
 const ResultsDeck = ({ onShowHome, onShowDeck, onShowQuiz }) => {
   const location = useLocation();
+  
   const { filteredResults } = location.state || { filteredResults: [] };
   const [selectedDeck, setSelectedDeck] = useState(null);
   const [flashcards, setFlashcards] = useState([]);
@@ -14,7 +14,6 @@ const ResultsDeck = ({ onShowHome, onShowDeck, onShowQuiz }) => {
   const userId = user ? user.id : null;   // Get the logged-in user's ID
 
   useEffect(() => {
-    // Set the first deck as the default selected deck if available
     if (filteredResults.length > 0) {
       const firstDeck = filteredResults[0];
       setSelectedDeck(firstDeck);
@@ -25,27 +24,22 @@ const ResultsDeck = ({ onShowHome, onShowDeck, onShowQuiz }) => {
   const handleDeckSelect = (deck) => {
     setSelectedDeck(deck);
     getFlashcards(deck);
-
   };
-
 
   const getFlashcards = async (deck) => {
     if (deck && deck._id) {
-      try{
-        const response = await fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/flashcards/deck/${deck._id}/flashcards`);
+      try {
+        const response = await fetch(`http://localhost:4000/api/flashcards/deck/${deck._id}/flashcards`);
         const data = await response.json();
         if (response.ok) {
           setFlashcards(data);
-          console.log(data);
         }
-  
       } catch (error) {
         console.error("Error fetching flashcards", error);
       }
     }
   };
 
-  // Function used to send a post request of the deck._id to the backend server for adding/removing a favorite deck
   const toggleFavoriteDeck = async (deckID) => {
     try {
       // Check if there is a user logged in, if not prompt them to log in
@@ -70,63 +64,77 @@ const ResultsDeck = ({ onShowHome, onShowDeck, onShowQuiz }) => {
   };
 
   return (
-    <div className='search-results-page'>
-      {/* <div className='results-title'>Search Results</div> */}
+    <div className='search-deck-page'>
+      <div className='results-container-deck'>
+        <div className='filter-bar-deck'>
+          <button className='filter-button-deck' onClick={onShowHome}>All Results</button>
+          <button className='filter-button-deck active' onClick={onShowDeck}>Decks</button>
+          <button className='filter-button-deck' onClick={onShowQuiz}>Quizzes</button>
+        </div>
 
-          {/* This is the filter bar to switch between results home, deck, and quizzes */}
-          <div className='filter-bar'>
-            <button className='filter-button' onClick={onShowHome}>All Results</button>
-            <button className='filter-button active' onClick={onShowDeck}>Decks</button>
-            <button className='filter-button' onClick={onShowQuiz}>Quizzes</button>
-          </div>
-
-          <div className = 'results-container'>
-            {/* This is the deck results list */}
-            <div className='results-list'>
-              <div className='results-list-inner'>
-                <div className ='deck-quiz'>Decks</div>
-                  {filteredResults.length > 0 ? (
-                    filteredResults.map(deck => (
-                      <div className='result-deck-item' onClick={() => handleDeckSelect(deck)}>
-                        <div className='deck-name'>{deck.name}</div>
-                        <div className='deck-info'>
-                          {deck.__v} Cards | Professor: {deck.professor}
-                        </div>
-                        <button className = 'add_favorite' onClick={(e) => {e.stopPropagation(), toggleFavoriteDeck(deck._id)}}>Favorite</button>
-                      </div>
-                    ))
-                  ) : (
-                    <p className='no-results'>No results found.</p>
-                  )}
-              </div>
+        <div className='content-grid'>
+          {/* Decks Column */}
+          <div className='decks-column'>
+            <div className='section-header'>
+              <h2>Available Decks</h2>
+              <span>{filteredResults.length} decks found</span>
             </div>
-                
-            {/* This is a preview of the deck details */}
-            <div className='deck-details'>
-              <div className='deck-details-inner'>
-                <div className = 'deck-quiz'>Preview</div>
-                  {filteredResults.length > 0 && selectedDeck ? (
-                  <>
-                    <h2 className='deck-name'>{selectedDeck.name}</h2>          
-                    {flashcards.length > 0 ? (
-                      <div>
-                        {flashcards.map((flashcard) => (
-                          <div className = 'result-flashcard-content'>
-                            <p className='flashcard-question'>{flashcard.question}</p>
-                            <p className='flashcard-answer'>{flashcard.answer}</p>
-                          </div>
-                        ))}
-                      </div>
-                    ) : (
-                      <p>No flashcards available.</p>
-                    )}
-                  </>
-                  ) : (
-                  <p className='no-results'>No results found.</p>
-                  )}
+            <div className='decks-list'>
+              {filteredResults.map(deck => (
+                <div
+                  key={deck._id}
+                  className={`deck-card ${selectedDeck?._id === deck._id ? 'active' : ''}`}
+                  onClick={() => handleDeckSelect(deck)}
+                >
+                  <h3>{deck.name}</h3>
+                  <div className='deck-meta'>
+                    <span>{deck.__v} Cards</span>
+                    <span>•</span>
+                    <span>Professor: {deck.professor}</span>
+                    <button className = 'add_to_favorite' onClick={(e) => {e.stopPropagation(), toggleFavoriteDeck(deck._id)}}>Favorite</button>
+                  </div>
                 </div>
+              ))}
             </div>
           </div>
+
+          {/* Preview Column */}
+          <div className='preview-column'>
+            <div className='section-header'>
+              <h2>Preview</h2>
+            </div>
+            <div className='preview-content'>
+              {selectedDeck ? (
+                <>
+                  <div className='preview-header'>
+                    <h3>{selectedDeck.name}</h3>
+                    <div className='preview-meta'>
+                      <span>{flashcards.length} Cards</span>
+                      <span>•</span>
+                      <span>Professor: {selectedDeck.professor}</span>
+                    </div>
+                  </div>
+                  <div className='flashcards-list'>
+                    {flashcards.map((card, index) => (
+                      <div key={index} className='flashcard'>
+                        <div className='flashcard-header'>Card {index + 1}</div>
+                        <div className='flashcard-content'>
+                          <div className='question'>{card.question}</div>
+                          <div className='answer'>{card.answer}</div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </>
+              ) : (
+                <div className='empty-state'>
+                  <p>Select a deck to view its contents</p>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

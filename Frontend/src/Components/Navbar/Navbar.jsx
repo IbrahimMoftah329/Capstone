@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Navbar.css';
-import logo from '../../assets/logo2.png';
+import logo from '../../assets/navlogo.svg';
 import { Link, useNavigate } from 'react-router-dom'; // Import Link from react-router-dom
 import { SignedIn, SignedOut, SignInButton, UserButton, useUser } from '@clerk/clerk-react';
 
@@ -14,6 +14,7 @@ const Navbar = () => {
 
   const { user } = useUser();             // Get user context from Clerk
   const userId = user ? user.id : null;   // Get the logged-in user's ID
+
 
 
 
@@ -81,8 +82,7 @@ const Navbar = () => {
           (quiz.name.toLowerCase().includes(normalizedQuery) ||
             quiz.description.toLowerCase().includes(normalizedQuery) ||
             quiz.professor.toLowerCase().includes(normalizedQuery) ||
-            quiz.semester.toLowerCase().includes(normalizedQuery) ||
-            quiz.deckName.toLowerCase().includes(normalizedQuery)) &&
+            quiz.semester.toLowerCase().includes(normalizedQuery)) &&
             quiz.createdBy !== userId     // Exclude quizzes that belong to the logged-in user
       );
 
@@ -95,10 +95,14 @@ const Navbar = () => {
 
   return (
     <nav className={`container ${bar ? 'dark-nav' : ''}`}>
-
-      <Link to="/">
-        <h1 className="cm">Cardmates</h1>
-      </Link>
+      <div className="cm">
+        <Link to="/" className="logo-container">
+          <h1 className="heading">
+            <img src={logo} alt="Cardmates Logo" width="45" height="45" className="nav-logo" />
+            Cardmates
+          </h1>
+        </Link>
+      </div>
 
       <form onSubmit={handleSearchSubmit} className="search-bar">
         <div className='searchbar'>
@@ -128,7 +132,7 @@ const Navbar = () => {
           <li>
             <Link to="/dashboard">Dashboard</Link>
           </li>
-          <li classname = "user-button">
+          <li className = "user-button">
             <UserButton />
           </li>
         </SignedIn>

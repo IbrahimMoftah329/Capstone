@@ -250,8 +250,251 @@
 
 .flashcard-modal-content button[type="submit"]:hover {
     background-color: #45a049;
+
 }
 
+.flashcard-modal-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+
+/* Study mode container */
+.study-mode-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+/* Container for 3D perspective */
+.flashcard-scene {
+    perspective: 1000px;
+    width: 300px;
+    height: 420px;
+    margin: 20px auto;
+}
+/* Button container - Modified for new arrow positioning */
+.card-buttons-studymode {
+    width: 100%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+/* Navigation buttons - Updated positioning */
+.prev-button-studymode,
+.next-buttons-studymode {
+    position: absolute;
+    top: -350px; /* Adjust this value based on your card height */
+    transform: translateY(50%);
+    padding: 0.75rem;
+    border: none;
+    border-radius: 50%;
+    background: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    z-index: 10;
+    box-shadow: none;
+    
+}
+
+.prev-button-studymode {
+    left: -5px; /* Adjust this value to position the button */
+}
+
+.next-buttons-studymode {
+    right: -5px; /* Adjust this value to position the button */
+}
+
+/* Hover state for navigation buttons */
+.prev-button-studymode:hover:not(:disabled),
+.next-buttons-studymode:hover:not(:disabled) {
+    transform: translateY(50%) scale(1.1);
+}
+
+/* Disabled state for navigation buttons */
+.prev-button-studymode:disabled,
+.next-buttons-studymode:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Style for the arrow images */
+.prev-button-studymode img,
+.next-buttons-studymode img {
+    width: 4rem;
+    height: 4rem;
+}
+
+/* Focus styles for accessibility */
+.prev-button-studymode:focus,
+.next-buttons-studymode:focus,
+.exit-button-studymode:focus {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+}
+
+/* Active states */
+.prev-button-studymode:active:not(:disabled),
+.next-buttons-studymode:active:not(:disabled) {
+    transform: translateY(50%) scale(0.95);
+}
+
+.exit-button-studymode:active {
+    background-color: #b91c1c;
+}
+
+.flashcard-study {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.8s;
+    cursor: pointer;
+}
+
+/* Flipped state */
+.flashcard-study.is-flipped {
+    transform: rotateY(180deg);
+}
+
+
+/* Common styles for both faces */
+.flashcard-face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background: white;
+    border: 1px solid #e0e0e0;
+}
+/* Content styling */
+.flashcard-contents {
+    position: relative;
+    padding: 20px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 1.2rem;
+    color: #333;
+}
+
+/* Front face specific styles */
+.flashcard-face-front {
+    background: linear-gradient(45deg, #ffffff 0%, #f8f8f8 100%);
+}
+
+/* Back face specific styles */
+.flashcard-face-back {
+    background: linear-gradient(45deg, #f8f8f8 0%, #ffffff 100%);
+    transform: rotateY(180deg);
+}
+
+/* Hover effect */
+.flashcard-study:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Optional pattern for card backs */
+.flashcard-face-back::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: linear-gradient(45deg, 
+        rgba(0, 0, 0, 0.02) 25%, 
+        transparent 25%, 
+        transparent 75%, 
+        rgba(0, 0, 0, 0.02) 75%
+    );
+    background-size: 4px 4px;
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+/* Add some indication that the card is clickable */
+.flashcard-study::after {
+    content: "Click to flip";
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 12px;
+    color: #666;
+    opacity: 0.7;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .flashcard-scene {
+        width: 90%;
+        height: 300px;
+    }
+    
+    .flashcard-content {
+        font-size: 18px;
+    }
+}
+.restart-button-studymode, .exit-button-studymode {
+    display: inline-block;
+    margin: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background-color: #124883;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+    width: 120px;      /* Fixed width for both buttons */
+    text-align: center; /* Center text within button */
+}
+
+/* Hover effect */
+.restart-button-studymode:hover, .exit-button-studymode:hover {
+    background-color: #1a5ca0;
+}
+
+/* Study button (initial state) */
+.study-button {
+    display: block;
+    margin: 0 auto;
+    padding: 0.75rem 1.5rem;
+    background-color: #124883;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+}
+
+/* Study mode layout */
+.study-mode {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    min-height: 70vh;
+}
+/* Card counter */
+.card-info {
+    text-align: center;
+    font-size: 1rem;
+    color: #4b5563;
+    margin-top: 2rem;
+}
 
 /* Modal Styles */
 /* Modal Overlay with Darker Background */
@@ -280,188 +523,5 @@
     overflow-y: auto;
 }
 
-/* Study mode container */
-.study-mode-container {
-    width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 1rem;
-}
 
-/* Study button (initial state) */
-.study-button {
-    display: block;
-    margin: 0 auto;
-    padding: 0.75rem 1.5rem;
-    background-color: #124883;
-    color: white;
-    border: none;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    font-weight: 500;
-    transition: background-color 0.2s ease;
-}
 
-/* Study mode layout with slight padding adjustment */
-.study-mode {
-    position: relative;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    padding: 1rem;
-}
-
-/* Card counter */
-.card-info {
-    text-align: center;
-    font-size: 1rem;
-    color: #4b5563;
-    margin-top: 2rem;
-}
-
-/* Flashcard container */
-.flashcard {
-    width: 100%;
-    max-width: 500px; /* Increase max-width to make the card larger */
-    aspect-ratio: 3/4;
-    position: relative;
-    perspective: 1000px;
-    margin: 1.5rem 0;
-}
-
-/* Flashcard content */
-.flashcard-contents {
-    width: 100%;
-    height: 100%;
-    padding: 3rem; /* Increase padding for more space inside the card */
-    background-color: white;
-    border: 1px solid #e5e7eb;
-    border-radius: 1rem;
-    box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.15);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    transition: transform 0.6s;
-    transform-style: preserve-3d;
-    font-size: 1.5rem; /* Increase font size for larger text */
-}
-
-/* Button container */
-.card-buttons-studymode {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    margin-top: 1rem;
-}
-
-/* Navigation buttons - Updated positioning */
-.prev-button-studymode,
-.next-buttons-studymode {
-    position: absolute;
-    top: 50%; /* Center vertically with the flashcard */
-    transform: translateY(-50%); /* Adjust to align properly */
-    padding: 0.75rem;
-    border: none;
-    border-radius: 50%;
-    background: none;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    z-index: 10;
-    box-shadow: none;
-}
-
-.prev-button-studymode {
-    left: -60px; /* Adjust this value to position the button */
-}
-
-.next-buttons-studymode {
-    right: -60px; /* Adjust this value to position the button */
-}
-
-/* Disabled state for navigation buttons */
-.prev-button-studymode:disabled,
-.next-buttons-studymode:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
-/* Style for the arrow images */
-.prev-button-studymode img,
-.next-buttons-studymode img {
-    width: 10rem;
-    height: 10rem;
-}
-
-/* Focus styles for accessibility */
-.prev-button-studymode:focus,
-.next-buttons-studymode:focus,
-.exit-button-studymode:focus {
-    outline: 2px solid #3b82f6;
-    outline-offset: 2px;
-}
-
-.exit-button-studymode:active {
-    background-color: #b91c1c;
-}
-
-/* Media queries for responsiveness */
-@media (max-width: 640px) {
-    .flashcard {
-        max-width: 320px;
-        aspect-ratio: 2/3;
-    }
-
-    .prev-button-studymode,
-    .next-buttons-studymode {
-        padding: 0.5rem;
-    }
-    
-    /* Adjust arrow positions for mobile */
-    .prev-button-studymode {
-        left: -40px;
-    }
-
-    .next-buttons-studymode {
-        right: -40px;
-    }
-    
-    .prev-button-studymode img,
-    .next-buttons-studymode img {
-        width: 5rem;
-        height: 5rem;
-    }
-
-    .flashcard-contents {
-        padding: 1.5rem;
-        font-size: 1rem;
-    }
-}
-
-/* Additional media query for very small screens */
-@media (max-width: 480px) {
-    .prev-button-studymode {
-        left: -30px;
-    }
-
-    .next-buttons-studymode {
-        right: -30px;
-    }
-}
-
-.restart-button-studymode, .shuffle-button-studymode, .exit-button-studymode {
-    display: block;
-    margin: 0 auto;
-    padding: 0.75rem 1.5rem;
-    background-color: #124883;
-    color: white;
-    border: none;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    font-weight: 500;
-    transition: background-color 0.2s ease;
-}

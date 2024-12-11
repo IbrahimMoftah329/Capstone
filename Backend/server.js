@@ -42,6 +42,7 @@ app.use('/api/attempts', quizAttemptRoutes);
 app.use('/api/leaderboard', leaderboardRoutes)
 app.use('/api/shuffle', shuffleAttemptRoutes)
 
+
 // Ensure essential environment variables are set
 if (!process.env.MONGO_URI || !process.env.PORT) {
     console.error('Error: Environment variables MONGO_URI or PORT are not set.');

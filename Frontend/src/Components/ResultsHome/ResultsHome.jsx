@@ -6,9 +6,9 @@ import './ResultsHome.css';
 
 const ResultsHome = ({ onShowDeck, onShowQuiz }) => {
     const location = useLocation();
+
     const { user } = useUser();             // Get user context from Clerk
     const userId = user ? user.id : null;   // Get the logged-in user's ID
-
 
     const { filteredResults, filteredDecks, filteredQuizzes, initialView } = location.state || { 
         filteredResults: [],
@@ -95,16 +95,17 @@ const ResultsHome = ({ onShowDeck, onShowQuiz }) => {
     const getQuestions = async (quiz) => {
         if (quiz && quiz._id) {
         try{
-        const response = await fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/questions/quiz/${quiz._id}/questions`, {method: "GET",});
-        const data = await response.json();
-        if (response.ok) {
+          const response = await fetch(`http://localhost:4000/api/questions/quiz/${quiz._id}/questions`);
+          const data = await response.json();
+          if (response.ok) {
             setQuestions(data);
             console.log(data);
-        }
+          }
+    
         } catch (error) {
-            console.error("Error fetching quiz questions", error);
+          console.error("Error fetching flashcards", error);
         }
-        }
+      }
     };
 
     // Function used to send a post request of the deck._id to the backend server for adding/removing a favorite deck
@@ -126,6 +127,8 @@ const ResultsHome = ({ onShowDeck, onShowQuiz }) => {
                     deckId: deckID,
                 }),
             });
+
+            console.log("Added new deck");
         } catch (error) {
             console.error('Error toggling favorite status', error);
         }
@@ -156,10 +159,11 @@ const ResultsHome = ({ onShowDeck, onShowQuiz }) => {
             console.error('Error toggling favorite status', error);
         }
     };
-    
+
+
 
     return (
-        <div className='search-results-page'>            
+        <div className='search-results-page'>
             <div className='results-home-container'>
                 <div className='filter-bar'>
                     <button className='filter-button active'>All Results</button>
@@ -169,8 +173,10 @@ const ResultsHome = ({ onShowDeck, onShowQuiz }) => {
 
                 {/* Content */}
                 <div className='content-container'>
+                    
+                    
                     {/* First Row */}
-                    <div className='content-row' style = {{backgroundColor: '#ffffff'}}>
+                    <div className='content-section'>
                         <div className = 'row-description'>
                             <div className = 'deck-quiz'>Decks</div>
                             <button className = 'view-results' onClick={onShowDeck}>View all</button>
@@ -196,9 +202,10 @@ const ResultsHome = ({ onShowDeck, onShowQuiz }) => {
                                 )}
                             </div>
                     </div>
+                    <hr></hr>
                     
                     {/* Second Row */}
-                    <div className='content-row' style = {{backgroundColor: '#e0e0e0'}}>
+                    <div className='content-section'>
                         <div className = 'row-description'>
                             <div className = 'deck-quiz'>Quizzes</div>
                             <button className = 'view-results' onClick={onShowQuiz}>View all</button>
@@ -229,12 +236,11 @@ const ResultsHome = ({ onShowDeck, onShowQuiz }) => {
 
             {/* Modal to show the Deck details */}
             {isDeckOpen && (
-                <div className = 'modal'>
-                    <div className = 'modal-content'>
+                <div className = 'modals'>
+                    <div className = 'modal-contents'>
                         <div className='modal-header'>
-                            <button className = 'modal-button' onClick = {closeDeckModal}>X</button>
+                            <button className = 'modal-buttons' onClick = {closeDeckModal}>X</button>
                         </div>
-
 
                         {filteredResults.length > 0 ? (
                         <>
@@ -261,11 +267,11 @@ const ResultsHome = ({ onShowDeck, onShowQuiz }) => {
 
             {/* Modal to show the Quiz details */}
             {isQuizOpen && (
-                <div className = 'modal'>
-                <div className = 'modal-content'>
+                <div className = 'modals'>
+                <div className = 'modal-contents'>
                     
                     <div className='modal-header'>
-                        <button className = 'modal-button' onClick = {closeQuizModal}>X</button>
+                        <button className = 'modal-buttons' onClick = {closeQuizModal}>X</button>
                     </div>
                     
                     <div className='quiz-details-home'>

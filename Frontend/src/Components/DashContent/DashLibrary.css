@@ -183,7 +183,7 @@
     z-index: 1000; /* Ensure it appears above other elements */
 }
 
-.modal-content {
+.library-modal-content {
     width: 85%; /* Increase the width slightly */
     max-width: 1000px; /* Adjust maximum width */
     background-color: #ffffff;
@@ -196,7 +196,7 @@
 }
 
 /* Make the input fields wider */
-.modal-content textarea {
+.library-modal-content textarea {
     width: 100%; /* Take full width */
     padding: 10px; /* Add padding for a better user experience */
     border-radius: 5px;
@@ -205,17 +205,17 @@
     resize: vertical; /* Allow resizing only vertically */
 }
 
-.modal-content h2 {
+.library-modal-content h2 {
     margin-top: 0;
 }
 
-.modal-buttons {
+.library-modal-buttons {
     display: flex;
     justify-content: space-between;
     margin-top: 20px;
 }
 
-.modal-content button {
+.library-modal-content button {
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
@@ -224,21 +224,21 @@
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.modal-content button[type="button"] {
+.library-modal-content button[type="button"] {
     background-color: #ccc;
     color: #333;
 }
 
-.modal-content button[type="button"]:hover {
+.library-modal-content button[type="button"]:hover {
     background-color: #bbb;
 }
 
-.modal-content button[type="submit"] {
+.library-modal-content button[type="submit"] {
     background-color: #124883;
     color: #fff;
 }
 
-.modal-content button[type="submit"]:hover {
+.library-modal-content button[type="submit"]:hover {
     background-color: #45a049;
 }
 
@@ -390,4 +390,28 @@
 
 .quiz-button:hover {
     background-color: #45a049; /* Darker green on hover for non-delete buttons */
+}
+.Library-button.favorite {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px 12px; /* Increased padding around the button */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 8px; /* Add spacing between buttons */
+}
+
+.heart-icon {
+    font-size: 1.5rem;
+    color: #666;
+    transition: color 0.3s ease;
+}
+
+.favorited .heart-icon {
+    color: #e31b23;
+}
+
+.Library-button.favorite:hover .heart-icon {
+    color: #e31b23;
 }

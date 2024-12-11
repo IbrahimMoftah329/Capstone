@@ -49,13 +49,3 @@
     resize: none;
 }
 
-.col button{
-    display:block;
-    padding: 7px;
-    padding-top: 10px;
-    padding-left: 20px;
-    padding-right: 20px;
-    margin:5px ;
-    font-size: 14px;
-    background: #D3D3D3;
-}
