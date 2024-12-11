@@ -1,7 +1,7 @@
 ## How to run/setup the project
 
-Follow these steps to set up and run the project: 
-(Contact Admin to ensure you aquire the ENV file)
+Follow these steps to set up and run the project and contact Admin to ensure you aquire the ENV file!
+
 
 ### 1. Clone the Repository
 
