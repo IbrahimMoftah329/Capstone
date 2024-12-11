@@ -113,7 +113,7 @@ const updateDeck = async (req, res) => {
     if (!updatedDeck) {
       return res.status(404).json({ error: 'Deck not found' });
     }
-    console.log('Deck updated:', updatedDeck);
+    // console.log('Deck updated:', updatedDeck);
 
     // Step 2: Check which fields were updated
     const updatedFields = {};
@@ -121,7 +121,7 @@ const updateDeck = async (req, res) => {
     if (req.body.semester) updatedFields.semester = req.body.semester;
     if (req.body.university) updatedFields.university = req.body.university;
     if (req.body.name) updatedFields.deckName = req.body.name;
-    console.log('Updated fields for quizzes:', updatedFields);
+    // console.log('Updated fields for quizzes:', updatedFields);
 
     // Step 3: If any relevant fields were updated, propagate changes to quizzes
     if (Object.keys(updatedFields).length > 0) {
@@ -129,7 +129,7 @@ const updateDeck = async (req, res) => {
         { deckId: deckId }, 
         { $set: updatedFields }
       );
-      console.log('Quizzes update result:', quizzesUpdateResult);
+      // console.log('Quizzes update result:', quizzesUpdateResult);
     } else {
       console.log('No relevant fields updated for quizzes.');
     }

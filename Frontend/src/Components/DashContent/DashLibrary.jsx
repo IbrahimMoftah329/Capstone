@@ -432,7 +432,7 @@ const DashLibrary = () => {
                 <p className="library-content-description">Manage your attempts here.</p>
                 <div className="quiz-list">
                     {attempts && attempts.map((attempt) => {
-                        console.log("Attempt ID:", attempt.attemptId); // Debug log to check _id
+                        // console.log("Attempt ID:", attempt.attemptId); // Debug log to check _id
                         return (
                             <div key={attempt.attemptId} className="quiz-item" onClick={() => navigateToQuizAttempt(attempt)}>
                                 <div>

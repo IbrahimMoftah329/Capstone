@@ -5,11 +5,11 @@ const User = require('../models/user');
 
 const getQuizAttempts = async (req, res) => {
     try {
-        console.log("Received request for user ID:", req.params.userId);
+        // console.log("Received request for user ID:", req.params.userId);
 
         // Find the user based on their Clerk ID to get their MongoDB user ID
         const user = await User.findOne({ clerkId: req.params.userId });
-        console.log("Found user:", user);
+        // console.log("Found user:", user);
 
         if (!user) {
             console.log("User not found");
@@ -29,7 +29,7 @@ const getQuizAttempts = async (req, res) => {
                 options: { strictPopulate: false } // Force population even if references are missing
             });
 
-        console.log("Raw attempts data:", attempts);
+        // console.log("Raw attempts data:", attempts);
 
         // Format the attempts data to include necessary fields and the `answers` array
         const formattedAttempts = attempts.map(attempt => {
@@ -50,7 +50,7 @@ const getQuizAttempts = async (req, res) => {
             };
         });
 
-        console.log("Formatted attempts:", formattedAttempts);
+        // console.log("Formatted attempts:", formattedAttempts);
 
         // Return the formatted attempts
         res.json(formattedAttempts);
