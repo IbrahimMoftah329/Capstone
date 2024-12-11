@@ -11,38 +11,30 @@ Clone the repo using either the HTML or SSH link:
 git clone <repository-url>
 ```
 
-### 2. Check for Nodemon Installation
-
-Verify if **Nodemon** is installed globally:
-
-```bash
-npm list -g nodemon
-```
-
-- If Nodemon is installed, you'll see its version. If not, you'll see an empty result or an error.
-
-### 3. Install Dependencies
-
-If dependencies are not installed, you can install them globally by running:
+### 2. Install Nodemon
 
 ```bash
 npm install -g nodemon
 ```
 
-Install project-specific dependencies:
-
-```bash
-npm install --save-dev @clerk/clerk-react
-npm install react-router-dom
-```
-
-### 4. Navigate to the Backend Directory
+### 3. Navigate to the Backend Directory
 
 Change into the cloned repository's Backend directory:
 
 ```bash
 cd Backend
 ```
+### 3. Install Project-specific Dependencies for the Backend
+
+In the backend folder/directory delete the node_modules file and then re-install them by running.
+
+```bash
+npm install
+```
+
+### 4. Create a .env.local file
+
+Make sure you contact admin to get the environment varibles and put them in a file within the backend folder!
 
 ### 5. Start the Server
 
@@ -52,6 +44,8 @@ To start the server, run:
 npm run dev
 ```
 
+## After you succesfully run the backend server. Open a new terminal and follow these instructions!
+
 ### 6. Navigate to the Frontend Directory
 
 Change into the cloned repository's Frontend directory:
@@ -60,7 +54,20 @@ Change into the cloned repository's Frontend directory:
 cd Frontend
 ```
 
-### 7. Start the Webpage
+### 7. Install Project-specific Dependencies for the Frontend
+
+In the Frontend folder/directory delete the node_modules file and then re-install them by running.
+
+```bash
+npm install
+```
+
+### 8. Create a .env.local file in the Frontend directory
+
+Make sure you contact admin to get the environment varibles and put them in a file within the frontend folder!
+
+
+### 9. Start the Webpage
 
 To start the webpage, run:
 
