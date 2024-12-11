@@ -71,75 +71,88 @@ npm run dev
 
 Your local main branch is behind the remote main branch, what do you do?
 
-1. ```bash
+1. Can be done on any branch, fetches the latest updates from the remote repository.
+```bash
 git fetch origin
 ```
-    - Can be done on any branch, fetches the latest updates from the remote repository.
-2. ```bash
+2. Used to see all local branches. Your current branch will be highlighted in green and have an asterisk at the beginning.
+```bash
 git branch
 ```
-    - Used to see all local branches. Your current branch will be highlighted in green and have an asterisk at the beginning.
-3. ```bash
+
+3. Switches to the main branch.
+
+ ```bash
 git switch main
 ```
-    - Switches to the main branch.
-4. ```bash
+
+4. Updates the local main branch with the latest changes from the remote main branch.
+
+```bash
 git pull origin main
 ```
-    - Updates the local main branch with the latest changes from the remote main branch.
 
 At this point, your local main branch is equal to the remote main branch.
 
 If you would also like your local test branch to be equal/updated with the remote main branch (could involve changes from other people), do these steps:
 
-1. ```bash
+1. Assumes that you were working on your own local test branch when making changes.
+
+```bash
 git switch your-test-branch
 ```
-    - Assumes that you were working on your own local test branch when making changes.
-2. ```bash
+2. Merges the local main branch onto your local testing branch.
+
+```bash
 git merge main
 ```
-    - Merges the local main branch onto your local testing branch.
 
 At this point, your main branch that was previously behind the remote changes (on GitHub) is now updated. You should continue to work on the testing branch and push any changes when done.
+
+1. Pushes your changes to GitHub as normal, commits changes to the remote version of whichever branch you are on.
 
 ```bash
 git push
 ```
-    - Pushes your changes to GitHub as normal, commits changes to the remote version of whichever branch you are on.
 
 ### Pulling a remote branch that doesn't exist on your local machine yet
 
 There is a new branch created on GitHub that you would like to access locally and be able to change the code to, but it does not exist on your local machine yet. What do you do?
 
-1. ```bash
+1. Check which branch you are on.
+
+ ```bash
 git branch
 ```
-    - Check which branch you are on.
-2. ```bash
+2. Switch to the main branch if you were not on it before.
+
+```bash
 git switch main
 ```
-    - Switch to the main branch if you were not on it before.
-3. ```bash
+3. Pulls all the new changes from the remote main branch. You should see some lines that say something similar to:
+
+```bash
 git pull
 ```
-    - Pulls all the new changes from the remote main branch. You should see some lines that say something similar to:
-
-    ```plaintext
+```plaintext
     From github.com:IbrahimMoftah329/Capstone
     42a3e3f..2ca3db6  main           -> origin/main
     * [new branch]      Backend-models -> origin/Backend-models
     * [new branch]      example-branch -> origin/example-branch
     * [new branch]      example-branch-2 -> origin/example-branch-2
-    ```
-4. ```bash
+```
+    
+4. Simultaneously switches to and sets the branch origin to the remote branch.
+
+```bash
 git switch example-branch
 ```
-    - Simultaneously switches to and sets the branch origin to the remote branch.
-5. ```bash
+
+5. Check that you are now on the new branch.
+
+```bash
 git branch
 ```
-    - Check that you are now on the new branch.
 
 ## React + Vite
 
