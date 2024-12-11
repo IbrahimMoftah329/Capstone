@@ -1,7 +1,6 @@
-## How to run/setup the project
+# How to run/setup the project
 
 Follow these steps to set up and run the project and contact Admin to ensure you aquire the ENV file!
-
 
 ### 1. Clone the Repository
 
@@ -16,6 +15,7 @@ git clone <repository-url>
 ```bash
 npm install -g nodemon
 ```
+### First lets get the backend server running!
 
 ### 3. Navigate to the Backend Directory
 
@@ -44,7 +44,7 @@ To start the server, run:
 npm run dev
 ```
 
-## After you succesfully run the backend server. Open a new terminal and follow these instructions!
+## After you're succesfully running the backend server. Open a new terminal and follow these instructions to run the frontend server!
 
 ### 6. Navigate to the Frontend Directory
 
