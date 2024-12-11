@@ -74,7 +74,7 @@ To start the webpage, run:
 ```bash
 npm run dev
 ```
-## Now you should be succesfully running the Backend and Frontend servers! 
+## Now you should be succesfully running the Backend and Frontend servers. Enjoy our App!
 
 
 ## Git Workflow: Managing Code with Branches
