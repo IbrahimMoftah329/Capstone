@@ -541,16 +541,13 @@ const DashLibrary = () => {
                 <div className="popup-overlay">
                     <div className="popup-content">
                         <h2>Confirm Deletion</h2>
-                        <p>{deleteType === 'deck' ? "Are you sure you want to delete this deck? This action cannot be undone." 
-                            : deleteType === 'quiz' ? "Are you sure you want to delete this quiz? This action cannot be undone."
-                            : "Are you sure you want to delete this attempt? This action cannot be undone."}
-                        </p>                        
+                       
                         <p>{deleteType === 'deck' ? "Are you sure you want to delete this deck? This action cannot be undone." 
                             : deleteType === 'quiz' ? "Are you sure you want to delete this quiz? This action cannot be undone."
                             : "Are you sure you want to delete this attempt? This action cannot be undone."}
                         </p>                        
                         <div className="popup-buttons">
-                        <button className="popup-button confirm" onClick={confirmDelete}>Yes, Delete</button>
+                        <button className="popup-button confirm" onClick={confirmDelete}>Yes, delete</button>
                         <button className="popup-button cancel" onClick={() => setShowDeletePopup(false)}>Cancel</button>            
                         </div>
                     </div>
