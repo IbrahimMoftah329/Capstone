@@ -19,8 +19,26 @@ const ResultsDeck = ({ onShowHome, onShowDeck, onShowQuiz }) => {
       const firstDeck = filteredResults[0];
       setSelectedDeck(firstDeck);
       getFlashcards(firstDeck);
+      getFavoritedDecks(); // Fetch the user's favorited decks
     }
   }, [filteredResults]);
+
+  // Fetch the user's favorited decks
+  const getFavoritedDecks = async () => {
+    if (userId) {
+      try {
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/decks/${userId}/getFavDecks`);
+        const favDecks = await response.json();
+        const initialFavorites = filteredResults.reduce((acc, deck) => {
+          acc[deck._id] = favDecks.includes(deck._id);
+          return acc;
+        }, {});
+        setFavoritedDecks(initialFavorites);
+      } catch (error) {
+        console.error('Error fetching favorited decks', error);
+      }
+    }
+  };
 
   const handleDeckSelect = (deck) => {
     setSelectedDeck(deck);
@@ -43,35 +61,44 @@ const ResultsDeck = ({ onShowHome, onShowDeck, onShowQuiz }) => {
 
   const toggleFavoriteDeck = async (deckID) => {
     try {
-        if (!userId) {
-            alert('Please log in to add this deck to your favorites.');
-            return;
-        }
-        
-        // Toggle the favorite status locally
-        setFavoritedDecks(prev => ({
-            ...prev,
-            [deckID]: !prev[deckID]
-        }));
+      if (!userId) {
+        alert('Please log in to add this deck to your favorites.');
+        return;
+      }
 
-        const response = await fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/decks/${userId}/favDeck`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                deckId: deckID,
-            }),
-        });
-    } catch (error) {
-        console.error('Error toggling favorite status', error);
+      // Toggle the favorite status locally
+      setFavoritedDecks(prev => ({
+        ...prev,
+        [deckID]: !prev[deckID]
+      }));
+
+      // Update the favorited status on the server
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/decks/${userId}/favDeck`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          deckId: deckID,
+        }),
+      });
+
+      if (!response.ok) {
         // Revert the state if there's an error
         setFavoritedDecks(prev => ({
-            ...prev,
-            [deckID]: !prev[deckID]
+          ...prev,
+          [deckID]: !prev[deckID]
         }));
+      }
+    } catch (error) {
+      console.error('Error toggling favorite status', error);
+      // Revert the state if there's an error
+      setFavoritedDecks(prev => ({
+        ...prev,
+        [deckID]: !prev[deckID]
+      }));
     }
-};
+  };
 
   return (
     <div className='search-deck-page'>
@@ -109,7 +136,7 @@ const ResultsDeck = ({ onShowHome, onShowDeck, onShowQuiz }) => {
                 }>
               <IoIosHeart className={`heart-icon-deck ${favoritedDecks[deck._id] ? 'active' : ''}`} />
               </button>            
-              </div>
+            </div>
               ))}
             </div>
           </div>

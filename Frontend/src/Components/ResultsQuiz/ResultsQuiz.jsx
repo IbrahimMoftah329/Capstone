@@ -13,14 +13,31 @@ const ResultsQuiz = ({ onShowHome, onShowDeck, onShowQuiz }) => {
     const [selectedQuiz, setSelectedQuiz] = useState(null);
     const [questions, setQuestions] = useState([]);
     const [favoritedQuizzes, setFavoritedQuizzes] = useState({});
-
     useEffect(() => {
         if (filteredQuizzes.length > 0) {
             const firstQuiz = filteredQuizzes[0];
             setSelectedQuiz(firstQuiz);
             getQuestions(firstQuiz);
+            getFavoritedQuizzes(); // Fetch the user's favorited quizzes
         }
     }, [filteredQuizzes]);
+
+    // Fetch the user's favorited quizzes
+    const getFavoritedQuizzes = async () => {
+        if (userId) {
+            try {
+                const response = await fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/quizzes/${userId}/getFavQuizzes`);
+                const favQuizzes = await response.json();
+                const initialFavorites = filteredQuizzes.reduce((acc, quiz) => {
+                    acc[quiz._id] = favQuizzes.includes(quiz._id);
+                    return acc;
+                }, {});
+                setFavoritedQuizzes(initialFavorites);
+            } catch (error) {
+                console.error('Error fetching favorited quizzes', error);
+            }
+        }
+    };
 
     const handleQuizSelect = (quiz) => {
         setSelectedQuiz(quiz);
@@ -41,20 +58,20 @@ const ResultsQuiz = ({ onShowHome, onShowDeck, onShowQuiz }) => {
         }
     };
 
-    // Function used to send a post request of the quiz._id to the backend server for adding/removing a favorite quiz
     const toggleFavoriteQuiz = async (quizID) => {
         try {
             if (!userId) {
                 alert('Please log in to add this quiz to your favorites.');
                 return;
             }
-            
+
             // Toggle the favorite status locally
             setFavoritedQuizzes(prev => ({
                 ...prev,
                 [quizID]: !prev[quizID]
             }));
-    
+
+            // Update the favorited status on the server
             const response = await fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/quizzes/${userId}/favQuiz`, {
                 method: 'POST',
                 headers: {
@@ -64,6 +81,14 @@ const ResultsQuiz = ({ onShowHome, onShowDeck, onShowQuiz }) => {
                     quizId: quizID,
                 }),
             });
+
+            if (!response.ok) {
+                // Revert the state if there's an error
+                setFavoritedQuizzes(prev => ({
+                    ...prev,
+                    [quizID]: !prev[quizID]
+                }));
+            }
         } catch (error) {
             console.error('Error toggling favorite status', error);
             // Revert the state if there's an error
@@ -73,6 +98,7 @@ const ResultsQuiz = ({ onShowHome, onShowDeck, onShowQuiz }) => {
             }));
         }
     };
+
     return (
         <div className='search-quiz-page'>
             <div className='results-container-quiz'>
