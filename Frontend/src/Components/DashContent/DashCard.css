@@ -230,8 +230,10 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 14px;
     transition: background-color 0.3s ease, transform 0.2s ease;
+    min-width: 50px; /* Set minimum width for buttons */
+    flex: 1; /* Ensure the buttons are equal width */
 }
 
 .flashcard-modal-content-dashcard button[type="button-dash"] {
@@ -514,6 +516,15 @@
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     overflow-y: auto;
+}
+
+.modal-buttons-dashcard {
+    display: flex;
+    justify-content: center; /* Center align the buttons */
+    gap: 10px; /* Add small space between buttons */
+    margin-top: 20px;
+    width: 30%; 
+}
 }
 
 
