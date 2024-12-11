@@ -138,6 +138,7 @@ git switch main
 git pull
 ```
 ```plaintext
+    Example of what you should see:
     From github.com:IbrahimMoftah329/Capstone
     42a3e3f..2ca3db6  main           -> origin/main
     * [new branch]      Backend-models -> origin/Backend-models
