@@ -79,8 +79,8 @@ const DashLibrary = () => {
     };
 
     const deleteDeck = (id) => {
-        console.log("Deleting deck with ID:", id);
-        return fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/decks/${id}`, {
+        // console.log("Deleting deck with ID:", id);
+        return fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/decks/${id}/delete`, {
             method: "DELETE",
         })
             .then(() => {
@@ -314,19 +314,6 @@ const DashLibrary = () => {
             .catch(error => console.error("Error deleting attempt:", error));
     };
 
-    // const getAttempts = () => {
-    //     fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/attempts/user/${user.id}/attempts`, {
-    //         headers: { "Content-Type": "application/json" },
-    //         method: "GET",
-    //     })
-    //         .then(response => response.json())
-    //         .then(data => {
-    //             console.log("Fetched attempts data:", data); // Log fetched attempts to verify structure
-    //             setAttempts(data);
-    //         })
-    //         .catch(error => console.error("Error fetching attempts:", error));
-    // };
-
     const getAttempts = () => {
         // First fetch the list of favorited quiz IDs
         fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/quizzes/${user.id}/getFavQuizzes`)
@@ -545,14 +532,8 @@ const DashLibrary = () => {
                         <p>{deleteType === 'deck' ? "Are you sure you want to delete this deck? This action cannot be undone." 
                             : deleteType === 'quiz' ? "Are you sure you want to delete this quiz? This action cannot be undone."
                             : "Are you sure you want to delete this attempt? This action cannot be undone."}
-                        </p>                        
-                        <p>{deleteType === 'deck' ? "Are you sure you want to delete this deck? This action cannot be undone." 
-                            : deleteType === 'quiz' ? "Are you sure you want to delete this quiz? This action cannot be undone."
-                            : "Are you sure you want to delete this attempt? This action cannot be undone."}
-                        </p>                        
+                        </p>                                               
                         <div className="popup-buttons">
-                        <button className="popup-button confirm" onClick={confirmDelete}>Yes, Delete</button>
-                        <button className="popup-button cancel" onClick={() => setShowDeletePopup(false)}>Cancel</button>
                         <button className="popup-button confirm" onClick={confirmDelete}>Yes, Delete</button>
                         <button className="popup-button cancel" onClick={() => setShowDeletePopup(false)}>Cancel</button>
                         </div>

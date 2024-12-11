@@ -84,24 +84,24 @@ const ResultsHome = ({ onShowDeck, onShowQuiz }) => {
         }
       };    
     
-      // Retrieves each quiestion using the quiz id to be displayed during preview
-      const getQuestions = async (quiz) => {
-          if (quiz && quiz._id) {
-          try{
-            const response = await fetch(`http://localhost:4000/api/questions/quiz/${quiz._id}/questions`);
-            const data = await response.json();
-            if (response.ok) {
-              setQuestions(data);
-              console.log(data);
-            }
-      
-          } catch (error) {
-            console.error("Error fetching flashcards", error);
+    // Retrieves each quiestion using the quiz id to be displayed during preview
+    const getQuestions = async (quiz) => {
+        if (quiz && quiz._id) {
+        try{
+          const response = await fetch(`http://localhost:4000/api/questions/quiz/${quiz._id}/questions`);
+          const data = await response.json();
+          if (response.ok) {
+            setQuestions(data);
+            console.log(data);
           }
+    
+        } catch (error) {
+          console.error("Error fetching flashcards", error);
         }
-      };
+      }
+    };
 
-      // Function used to send a post request of the deck._id to the backend server for adding/removing a favorite deck
+    // Function used to send a post request of the deck._id to the backend server for adding/removing a favorite deck
     const toggleFavoriteDeck = async (deckID) => {
         try {
             // Check if there is a user logged in, if not prompt them to log in

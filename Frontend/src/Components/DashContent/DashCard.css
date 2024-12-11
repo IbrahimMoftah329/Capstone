@@ -253,6 +253,13 @@
 
 }
 
+.flashcard-modal-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+
 /* Study mode container */
 .study-mode-container {
     width: 100%;

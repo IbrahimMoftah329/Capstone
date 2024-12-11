@@ -89,8 +89,14 @@ const deleteDeck = async (req, res) => {
       { clerkId: deck.clerkId }, // Find the user by clerkId
       { $pull: { decks: deck._id } } // Remove the deck ID from the user's decks array
     );
+
+    // Step 5: Remove the deckId from all users' favoriteDecks
+    await User.updateMany(
+      { favoriteDecks: deckId }, // Find all users who have the deckId in their favoriteDecks
+      { $pull: { favoriteDecks: deckId } } // Remove the deckId from their favoriteDecks array
+    );
     
-    res.status(200).json({ message: 'Deck and associated flashcards deleted successfully', deck: deletedDeck });
+    res.status(200).json({ message: 'Deck and associated flashcards deleted successfully, deck also removed from favorites of all users.', deck: deletedDeck });
   } catch (err) {
     console.error("Error in deleteDeck:", err);
     res.status(500).send(err.message);
