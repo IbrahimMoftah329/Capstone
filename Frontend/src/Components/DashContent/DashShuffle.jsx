@@ -119,9 +119,11 @@ const getFlashcards = (deckId, deckName) => {
  useEffect(() => {
     let timer;
     if (isTimerRunning) {
+        const startTime = Date.now() - (timeElapsed * 10); // Convert to milliseconds
         timer = setInterval(() => {
-            setTimeElapsed((prevTime) => prevTime + 1);
-        }, 1000);
+            const elapsedTime = (Date.now() - startTime) / 1000; // Convert back to seconds
+            setTimeElapsed(Number(elapsedTime.toFixed(2))); // Round to 2 decimal places
+        }, 10); // Update every 10ms for smoother display
     }
     return () => clearInterval(timer);
 }, [isTimerRunning]);
@@ -231,11 +233,11 @@ useEffect(() => {
                         <div className="modal">
                             <div className="modal-content">
                                 <h2>Match the Cards from {selectedDeckName}</h2>
-                                <p>Time Elapsed: {timeElapsed} seconds</p>
+                                <p>Time Elapsed: {timeElapsed.toFixed(2)} seconds</p>
                                 {isGameCompleted ? (
                                     <div className="completion-content">
                                         <h2>Congratulations!</h2>
-                                        <p>You completed the deck in {timeElapsed} seconds!</p>
+                                        <p>You completed the deck in {timeElapsed.toFixed(2)} seconds!</p>
                                         <button onClick={closeFlashcardModal}>Close</button>
                                     </div>
                                 ) : (

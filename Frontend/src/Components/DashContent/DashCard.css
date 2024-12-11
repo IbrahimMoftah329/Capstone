@@ -190,7 +190,7 @@
 }
 
 /* Modal Styles */
-.flashcard-modal {
+.flashcard-modal-dashcard {
     position: fixed;
     top: 0;
     left: 0;
@@ -203,7 +203,7 @@
     z-index: 1000; /* Ensure it appears above other elements */
 }
 
-.flashcard-modal-content {
+.flashcard-modal-content-dashcard {
     width: 85%; /* Increase the width slightly */
     max-width: 1000px; /* Adjust maximum width */
     background-color: #ffffff;
@@ -216,7 +216,7 @@
 }
 
 /* Make the input fields wider */
-.flashcard-modal-content textarea {
+.flashcard-modal-content-dashcard textarea {
     width: 100%; /* Take full width */
     padding: 10px; /* Add padding for a better user experience */
     border-radius: 5px;
@@ -225,7 +225,7 @@
     resize: vertical; /* Allow resizing only vertically */
 }
 
-.flashcard-modal-content button {
+.flashcard-modal-content-dashcard button {
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
@@ -234,21 +234,21 @@
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.flashcard-modal-content button[type="button"] {
+.flashcard-modal-content-dashcard button[type="button-dash"] {
     background-color: #ccc;
     color: #333;
 }
 
-.flashcard-modal-content button[type="button"]:hover {
+.flashcard-modal-content-dashcard button[type="button-dash"]:hover {
     background-color: #bbb;
 }
 
-.flashcard-modal-content button[type="submit"] {
+.flashcard-modal-content-dashcard button[type="submit-dash"] {
     background-color: #124883;
     color: #fff;
 }
 
-.flashcard-modal-content button[type="submit"]:hover {
+.flashcard-modal-content-dashcard button[type="submit-dash"]:hover {
     background-color: #45a049;
 
 }
