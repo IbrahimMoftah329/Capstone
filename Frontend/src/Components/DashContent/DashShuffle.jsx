@@ -241,39 +241,43 @@ useEffect(() => {
                                         <button onClick={closeFlashcardModal}>Close</button>
                                     </div>
                                 ) : (
-<div className="shuffle-flashcard-grid">
-    {displayedCards.map((card, index) => {
-        const suit = cardSuits[index] || '♠';
-        const isRedSuit = suit === '♥' || suit === '♦';
-        return (
-            <div
-                key={index}
-                className={`shuffle-flashcard-card ${
-                    selectedCards.includes(index) ? 'selected' : ''
-                } ${card.matched ? 'matched' : ''} ${isRedSuit ? 'red-suit' : ''}`}
-                onClick={() => handleCardClick(index)}
-            >
-                {!card.matched ? (
-                    <>
-                        <div className="card-corners">
-                            <span className="suit">{suit}</span>
-                        </div>
-                        <div className="shuffle-flashcard-card-content">
-                            <h3>{card.type === 'question'}</h3>
-                            <p>{card.content}</p>
-                        </div>
-                        <div className="card-corners-bottom-right">
-                            <span className="suit">{suit}</span>
-                        </div>
-                    </>
-                ) : null}
-            </div>
-        );
-    })}
-</div>
+                                    <div className="shuffle-flashcard-grid">
+                                    {displayedCards.map((card, index) => {
+                                        const suit = cardSuits[index] || '♠';
+                                        const isRedSuit = card.type === 'answer' && (suit === '♥' || suit === '♦');
+                                        return (
+                                            <div
+                                                key={index}
+                                                className={`shuffle-flashcard-card ${
+                                                    selectedCards.includes(index) ? 'selected' : ''
+                                                } ${card.matched ? 'matched' : ''} ${isRedSuit ? 'red-suit' : ''}`}
+                                                onClick={() => handleCardClick(index)}
+                                            >
+                                                {!card.matched ? (
+                                                    <>
+                                                        <div className="card-corners">
+                                                            <span className="suit" style={{ color: card.type === 'question' ? 'black' : 'red' }}>
+                                                                {suit}
+                                                            </span>
+                                                        </div>
+                                                        <div className="shuffle-flashcard-card-content">
+                                                            <h3>{card.type === 'question' ? card.content : ''}</h3>
+                                                            <p>{card.type === 'answer' ? card.content : ''}</p>
+                                                        </div>
+                                                        <div className="card-corners-bottom-right">
+                                                            <span className="suit" style={{ color: card.type === 'question' ? 'black' : 'red' }}>
+                                                                {suit}
+                                                            </span>
+                                                        </div>
+                                                    </>
+                                                ) : null}
+                                            </div>
+                                        );
+                                    })}
+                                </div>
                                 )}
                                 {!isGameCompleted && (
-                                    <div className="modal-buttons">
+                                    <div className="modal-buttons-shuffle">
                                         <button type="button" onClick={closeFlashcardModal}>Close</button>
                                     </div>
                                 )}
