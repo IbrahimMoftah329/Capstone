@@ -313,24 +313,12 @@ const DashLibrary = () => {
             .catch(error => console.error("Error deleting attempt:", error));
     };
 
-    // const getAttempts = () => {
-    //     fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/attempts/user/${user.id}/attempts`, {
-    //         headers: { "Content-Type": "application/json" },
-    //         method: "GET",
-    //     })
-    //         .then(response => response.json())
-    //         .then(data => {
-    //             console.log("Fetched attempts data:", data);
-    //             setAttempts(data);
-    //         })
-    //         .catch(error => console.error("Error fetching attempts:", error));
-    // };
 
     const getAttempts = () => {
         // First fetch the list of favorited quiz IDs
-        fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/quizzes/${user.id}/getFavQuizzes`)
-            .then(favQuizzesResponse => favQuizzesResponse.json())
-            .then(favQuizIds => {
+        fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/quizzes/user/${user.id}/quizzes`)
+            .then(quizzesResponse => quizzesResponse.json())
+            .then(quizzes => {
                 // Fetch all attempts, favorited or not
                 fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/attempts/user/${user.id}/attempts`, {
                     method: "GET",
@@ -338,8 +326,8 @@ const DashLibrary = () => {
                 })
                     .then(response => response.json())
                     .then(allAttempts => {
-                        // Filter attempts to only include those whose quizId is NOT in the list of favorited quizzes
-                        const filteredAttempts = allAttempts.filter(attempt => !favQuizIds.includes(attempt.quizId));
+                        // Filter attempts to only include those whose quizId is in the list of user quizzes
+                        const filteredAttempts = allAttempts.filter(attempt => quizzes.some(quiz => quiz._id === attempt.quizId));
                         setAttempts(filteredAttempts);
                     })
                     .catch(error => console.error("Error fetching attempts:", error));
