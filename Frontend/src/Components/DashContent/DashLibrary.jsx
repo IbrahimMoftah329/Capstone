@@ -472,8 +472,8 @@ const DashLibrary = () => {
 
             {/* Modal for Adding New Deck */}
             {isDeckModalOpen && (
-                <div className="modal">
-                    <div className="library-modal-content">
+                <div className="modal-dashlib">
+                    <div className="modal-content-dashlib">
                         <h2>{isEditing ? "Edit Deck" : "Add New Deck"}</h2>
                         <form onSubmit={(e) => { e.preventDefault(); handleDeckSubmit(); }}>
                             <h3>Deck Name</h3>
@@ -498,9 +498,9 @@ const DashLibrary = () => {
                                 <option value="Summer 2022">Summer 2022</option>
                                 <option value="Spring 2022">Spring 2022</option>
                             </select>
-                            <div className="library-modal-buttons">
-                                <button ype="button" onClick={closeDeckModal}>Cancel</button>
-                                <button type="submit">{isEditing ? "Save Changes" : "Add Deck"}</button>
+                            <div className="modal-buttons-dashlib">
+                                <button type="button-dashlib" onClick={closeDeckModal}>Cancel</button>
+                                <button type="submit-dashlib">{isEditing ? "Save Changes" : "Add Deck"}</button>
                             </div>
                         </form>
                     </div>
@@ -509,8 +509,8 @@ const DashLibrary = () => {
 
             {/* Modal for Quizzes */}
             {isQuizModalOpen && (
-                    <div className="modal">
-                    <div className="library-modal-content">
+                    <div className="modal-dashlib">
+                    <div className="modal-content-dashlib">
                         <h2>Create New Quiz</h2>
                         <form onSubmit={(e) => { e.preventDefault(); handleQuizSubmit(); }}>
                             <h3>Quiz Name</h3>
@@ -527,9 +527,9 @@ const DashLibrary = () => {
                                 ))}
                             </select>
 
-                            <div className="library-modal-buttons">
-                                <button type="button" onClick={closeQuizModal}>Cancel</button>
-                                <button type="submit">Create</button>
+                            <div className="modal-buttons-dashlib">
+                                <button type="button-dashlib" onClick={closeQuizModal}>Cancel</button>
+                                <button type="submit-dashlib">Create</button>
                             </div>
                         </form>
                     </div>
@@ -541,13 +541,14 @@ const DashLibrary = () => {
                 <div className="popup-overlay">
                     <div className="popup-content">
                         <h2>Confirm Deletion</h2>
+                       
                         <p>{deleteType === 'deck' ? "Are you sure you want to delete this deck? This action cannot be undone." 
                             : deleteType === 'quiz' ? "Are you sure you want to delete this quiz? This action cannot be undone."
                             : "Are you sure you want to delete this attempt? This action cannot be undone."}
                         </p>                                               
                         <div className="popup-buttons">
-                        <button className="popup-button confirm" onClick={confirmDelete}>Yes, Delete</button>
-                        <button className="popup-button cancel" onClick={() => setShowDeletePopup(false)}>Cancel</button>
+                        <button className="popup-button confirm" onClick={confirmDelete}>Yes, delete</button>
+                        <button className="popup-button cancel" onClick={() => setShowDeletePopup(false)}>Cancel</button>            
                         </div>
                     </div>
                 </div>

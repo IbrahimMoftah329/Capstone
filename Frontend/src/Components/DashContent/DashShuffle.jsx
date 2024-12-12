@@ -119,9 +119,11 @@ const getFlashcards = (deckId, deckName) => {
  useEffect(() => {
     let timer;
     if (isTimerRunning) {
+        const startTime = Date.now() - (timeElapsed * 10); // Convert to milliseconds
         timer = setInterval(() => {
-            setTimeElapsed((prevTime) => prevTime + 1);
-        }, 1000);
+            const elapsedTime = (Date.now() - startTime) / 1000; // Convert back to seconds
+            setTimeElapsed(Number(elapsedTime.toFixed(2))); // Round to 2 decimal places
+        }, 10); // Update every 10ms for smoother display
     }
     return () => clearInterval(timer);
 }, [isTimerRunning]);
@@ -231,44 +233,44 @@ useEffect(() => {
                         <div className="modal">
                             <div className="modal-content">
                                 <h2>Match the Cards from {selectedDeckName}</h2>
-                                <p>Time Elapsed: {timeElapsed} seconds</p>
+                                <p>Time Elapsed: {timeElapsed.toFixed(2)} seconds</p>
                                 {isGameCompleted ? (
                                     <div className="completion-content">
                                         <h2>Congratulations!</h2>
-                                        <p>You completed the deck in {timeElapsed} seconds!</p>
+                                        <p>You completed the deck in {timeElapsed.toFixed(2)} seconds!</p>
                                         <button onClick={closeFlashcardModal}>Close</button>
                                     </div>
                                 ) : (
-<div className="shuffle-flashcard-grid">
-    {displayedCards.map((card, index) => {
-        const suit = cardSuits[index] || '♠';
-        const isRedSuit = suit === '♥' || suit === '♦';
-        return (
-            <div
-                key={index}
-                className={`shuffle-flashcard-card ${
-                    selectedCards.includes(index) ? 'selected' : ''
-                } ${card.matched ? 'matched' : ''} ${isRedSuit ? 'red-suit' : ''}`}
-                onClick={() => handleCardClick(index)}
-            >
-                {!card.matched ? (
-                    <>
-                        <div className="card-corners">
-                            <span className="suit">{suit}</span>
-                        </div>
-                        <div className="shuffle-flashcard-card-content">
-                            <h3>{card.type === 'question'}</h3>
-                            <p>{card.content}</p>
-                        </div>
-                        <div className="card-corners-bottom-right">
-                            <span className="suit">{suit}</span>
-                        </div>
-                    </>
-                ) : null}
-            </div>
-        );
-    })}
-</div>
+                                    <div className="shuffle-flashcard-grid">
+                                        {displayedCards.map((card, index) => {
+                                            const suit = cardSuits[index] || '♠';
+                                            const isRedSuit = suit === '♥' || suit === '♦';
+                                            return (
+                                                <div
+                                                    key={index}
+                                                    className={`shuffle-flashcard-card ${
+                                                        selectedCards.includes(index) ? 'selected' : ''
+                                                    } ${card.matched ? 'matched' : ''} ${isRedSuit ? 'red-suit' : ''}`}
+                                                    onClick={() => handleCardClick(index)}
+                                                >
+                                                    {!card.matched ? (
+                                                        <>
+                                                            <div className="card-corners">
+                                                                <span className="suit">{suit}</span>
+                                                            </div>
+                                                            <div className="shuffle-flashcard-card-content">
+                                                                <h3>{card.type === 'question'}</h3>
+                                                                <p>{card.content}</p>
+                                                            </div>
+                                                            <div className="card-corners-bottom-right">
+                                                                <span className="suit">{suit}</span>
+                                                            </div>
+                                                        </>
+                                                    ) : null}
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
                                 )}
                                 {!isGameCompleted && (
                                     <div className="modal-buttons">
@@ -278,46 +280,46 @@ useEffect(() => {
                             </div>
                         </div>
                     )}
- {isAttemptsModalOpen && (
-   <div className="modal-attempts">
-       <div className="modal-attempts-content">
-           <h2 className="leaderboard-title">Your Top Times</h2>
-           <div className="leaderboard-container">
-               {deckAttempts.length === 0 ? (
-                   <p className="no-attempts">No attempts recorded yet. Be the first!</p>
-               ) : (
-                   <div className="podium-leaderboard">
-                       {[...deckAttempts]
-                           .sort((a, b) => a.timeElapsed - b.timeElapsed)
-                           .slice(0, 3)
-                           .map((attempt, index) => {
-                               const displayOrder = index === 0 ? 1 : index === 1 ? 2 : 3;
-                               return (
-                                   <div 
-                                       key={index} 
-                                       className={`podium-entry position-${displayOrder}`}
-                                       style={{'--animation-order': displayOrder}}
-                                   >
-                                       <div className="podium-platform">
-                                           <div className="score-content">
-                                               <div className="medal">{index === 0 ? "🥇" : index === 1 ? "🥈" : "🥉"}</div>
-                                               <div className="time">{attempt.timeElapsed}s</div>
-                                               <div className="date">{new Date(attempt.createdAt).toLocaleDateString()}</div>
+                        {isAttemptsModalOpen && (
+                           <div className="modal-attempts">
+                               <div className="modal-attempts-content">
+                                   <h2 className="leaderboard-title">Your Top Times</h2>
+                                   <div className="leaderboard-container">
+                                       {deckAttempts.length === 0 ? (
+                                           <p className="no-attempts">No attempts recorded yet. Be the first!</p>
+                                       ) : (
+                                           <div className="podium-leaderboard">
+                                               {[...deckAttempts]
+                                                   .sort((a, b) => a.timeElapsed - b.timeElapsed)
+                                                   .slice(0, 3)
+                                                   .map((attempt, index) => {
+                                                       const displayOrder = index === 0 ? 1 : index === 1 ? 2 : 3;
+                                                       return (
+                                                           <div 
+                                                               key={index} 
+                                                               className={`podium-entry position-${displayOrder}`}
+                                                               style={{'--animation-order': displayOrder}}
+                                                           >
+                                                               <div className="podium-platform">
+                                                                   <div className="score-content">
+                                                                       <div className="medal">{index === 0 ? "🥇" : index === 1 ? "🥈" : "🥉"}</div>
+                                                                       <div className="time">{attempt.timeElapsed}s</div>
+                                                                       <div className="date">{new Date(attempt.createdAt).toLocaleDateString()}</div>
+                                                                   </div>
+                                                                   <div className="platform-block">
+                                                                       <span className="rank-number">{index + 1}</span>
+                                                                   </div>
+                                                               </div>
+                                                           </div>
+                                                       );
+                                                   })}
                                            </div>
-                                           <div className="platform-block">
-                                               <span className="rank-number">{index + 1}</span>
-                                           </div>
-                                       </div>
+                                       )}
                                    </div>
-                               );
-                           })}
-                   </div>
-               )}
-           </div>
-           <button className="close-button" onClick={closeAttemptsModal}>Close</button>
-       </div>
-   </div>
-)}
+                                   <button className="close-button" onClick={closeAttemptsModal}>Close</button>
+                               </div>
+                           </div>
+                        )}
                 </div>
             </div>
         );

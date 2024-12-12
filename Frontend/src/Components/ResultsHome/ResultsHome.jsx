@@ -31,8 +31,6 @@ const ResultsHome = ({ onShowDeck, onShowQuiz }) => {
     const [isDeckOpen, setDeckOpen] = useState(false);
     const [isQuizOpen, setQuizOpen] = useState(false);
 
-
-    // Allows user to exit the modal with the ESC key on their keyboard
     useEffect(() => {
         const handleEscKey = (event) => {
             if (event.key === 'Escape') {
@@ -47,19 +45,55 @@ const ResultsHome = ({ onShowDeck, onShowQuiz }) => {
         }
     }, [isDeckOpen, isQuizOpen]);
 
-    // Handles opening the Deck modal with the preview button
+    // Fetch the user's favorited decks and quizzes
+    useEffect(() => {
+        getFavoritedDecks();
+        getFavoritedQuizzes();
+    }, []);
+
+    const getFavoritedDecks = async () => {
+        if (userId) {
+            try {
+                const response = await fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/decks/${userId}/getFavDecks`);
+                const favDecks = await response.json();
+                const initialFavorites = filteredResults.reduce((acc, deck) => {
+                    acc[deck._id] = favDecks.includes(deck._id);
+                    return acc;
+                }, {});
+                setFavoritedDecks(initialFavorites);
+            } catch (error) {
+                console.error('Error fetching favorited decks', error);
+            }
+        }
+    };
+
+    const getFavoritedQuizzes = async () => {
+        if (userId) {
+            try {
+                const response = await fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/quizzes/${userId}/getFavQuizzes`);
+                const favQuizzes = await response.json();
+                const initialFavorites = filteredQuizzes.reduce((acc, quiz) => {
+                    acc[quiz._id] = favQuizzes.includes(quiz._id);
+                    return acc;
+                }, {});
+                setFavoritedQuizzes(initialFavorites);
+            } catch (error) {
+                console.error('Error fetching favorited quizzes', error);
+            }
+        }
+    };
+
     const handleDeckPreview = (deck) => {
         setDeckOpen(true);
         setFlashcards(deck);
         setSelectedDeck(deck);
         getFlashcards(deck);
     }
-    
+
     const closeDeckModal = () => {
         setDeckOpen(false);
     }
 
-    // Handles opening the Quiz modal with the preview button
     const handleQuizPreview = (quiz) => {
         setQuizOpen(true);
         setQuestions(quiz);
@@ -81,7 +115,6 @@ const ResultsHome = ({ onShowDeck, onShowQuiz }) => {
             const data = await response.json();
             if (response.ok) {
               setFlashcards(data);
-              console.log(data);
             }
           } catch (error) {
             console.error("Error fetching flashcards", error);
@@ -146,13 +179,14 @@ const ResultsHome = ({ onShowDeck, onShowQuiz }) => {
                 alert('Please log in to add this quiz to your favorites.');
                 return;
             }
-            
+
             // Toggle the favorite status locally
             setFavoritedQuizzes(prev => ({
                 ...prev,
                 [quizID]: !prev[quizID]
             }));
-    
+
+            // Update the favorited status on the server
             const response = await fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/quizzes/${userId}/favQuiz`, {
                 method: 'POST',
                 headers: {
@@ -162,6 +196,14 @@ const ResultsHome = ({ onShowDeck, onShowQuiz }) => {
                     quizId: quizID,
                 }),
             });
+
+            if (!response.ok) {
+                // Revert the state if there's an error
+                setFavoritedQuizzes(prev => ({
+                    ...prev,
+                    [quizID]: !prev[quizID]
+                }));
+            }
         } catch (error) {
             console.error('Error toggling favorite status', error);
             // Revert the state if there's an error
@@ -171,7 +213,6 @@ const ResultsHome = ({ onShowDeck, onShowQuiz }) => {
             }));
         }
     };
-
     return (
         <div className='search-results-page'>
             <div className='results-home-container'>

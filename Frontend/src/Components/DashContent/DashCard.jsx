@@ -282,17 +282,17 @@ const DashCard = () => {
 
                 {/* Modal for Adding or Editing Flashcard */}
                 {isCardModalOpen && (
-                    <div className="flashcard-modal">
-                        <div className="flashcard-modal-content">
+                    <div className="flashcard-modal-dashcard">
+                        <div className="flashcard-modal-content-dashcard">
                             <h2>{isEditing ? "Edit Flashcard" : "Add New Flashcard"}</h2>
                             <form onSubmit={(e) => { e.preventDefault(); handleFlashcardSubmit(); }}>
                                 <h3>Prompt</h3>
                                 <textarea type="text" rows="5" className='input' value={newPrompt} onChange={(e) => setNewPrompt(e.target.value)} required placeholder="Enter prompt" />
                                 <h3>Response</h3>
                                 <textarea type="text" rows="5" className='input' value={newResponse} onChange={(e) => setNewResponse(e.target.value)} required placeholder="Enter response" />
-                                <div className="flashcard-modal-buttons">
-                                    <button type="button" onClick={() => closeFlashcardModal()}>Cancel</button>
-                                    <button type="submit">{isEditing ? "Save Changes" : "Add Flashcard"}</button>                              
+                                <div className="modal-buttons-dashcard">
+                                    <button type="button-dash" onClick={() => closeFlashcardModal()}>Cancel</button>
+                                    <button type="submit-dash">{isEditing ? "Save Changes" : "Add Flashcard"}</button>                              
                                 </div>
                             </form>
                         </div>

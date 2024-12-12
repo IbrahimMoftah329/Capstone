@@ -23,6 +23,7 @@
     text-align: left;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-bottom-left-radius: 30px;
+    height: 80vh;
 }
 
 .library-content-bottom {
@@ -40,9 +41,13 @@
     border-radius: 15px;
     padding: 15px;
     width: 270px;
+    height: 150px;
     text-align: center;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .shuffle-item:hover {
@@ -50,11 +55,18 @@
     box-shadow: 0 6px 12px rgba(0,0,0,0.15);
 }
 
+.shuffle-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
 .shuffle-button {
     background-color: #124883;
     color: white;
     border: none;
     padding: 5px 10px;
+    width: 75px;
     border-radius: 20px;
     cursor: pointer;
     transition: background-color 0.3s;
@@ -88,16 +100,28 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-between;
 
 }
 
-.shuffle-flashcard-grid {
+/* .shuffle-flashcard-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 28px; /* Further reduced gap */
+    gap: 28px;
     flex-grow: 1;
-    overflow: hidden;
+    overflow: auto;
     padding: 10px;
+} */
+
+.shuffle-flashcard-grid {
+    gap: 10px;
+    overflow: auto;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-height: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
 }
 
 .shuffle-flashcard-card {
@@ -111,6 +135,9 @@
     flex-direction: column;
     cursor: pointer;
     transition: transform 0.3s ease;
+    margin: auto;
+    padding: 10px;
+    overflow: hidden;
 }
 
 .shuffle-flashcard-card:hover {
@@ -177,7 +204,7 @@
 .modal-buttons {
     display: flex;
     justify-content: center;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 .modal-buttons button {
