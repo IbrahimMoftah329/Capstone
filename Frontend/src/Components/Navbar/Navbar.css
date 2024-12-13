@@ -5,7 +5,7 @@ nav {
     background-color: #124883;
     color: #ffffff;
     padding: 4px 0; /* Corrected '4x' to '4px' */
-    position: fixed;
+    /* position: fixed; */
     top: 0;
     left: 0;
     display: flex;

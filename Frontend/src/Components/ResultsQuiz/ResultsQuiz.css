@@ -1,23 +1,23 @@
 .search-quiz-page {
-  min-height: 100vh;
+  height: 100%;
   background-color: #ffffff;
-  padding: 40px 20px;
+  margin-bottom: 30px;
 }
 
 .results-container-quiz {
-  max-width: 1350px;
   margin: 0 auto;
-  width: 100%;
+  width: 80%;
+  height: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .filter-bar-quiz {
   display: flex;
   justify-content: center;
   gap: 20px;
-  padding: 20px 24px;
   margin-bottom: 40px;
   background-color: #fff;
-  border-bottom: 1px solid #e5e7eb;
 }
 
 .filter-button-quiz {

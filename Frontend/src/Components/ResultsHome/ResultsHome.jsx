@@ -257,7 +257,10 @@ const ResultsHome = ({ onShowDeck, onShowQuiz }) => {
                                 )}
                             </div>
                     </div>
-                    <hr></hr>
+
+                    <hr style={{ margin: '20px 0' }} />
+
+                    
                     {/* Second Row */}
                     <div className='content-section'>
                         <div className = 'row-description'>

@@ -7,9 +7,18 @@
   font-family: "Outfit", sans-serif;
 }
 
-body{
+html, body{
   background: #FFFFFF;
-  padding-top: 70px;
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+#root {
+  height: 100%;
 }
 
 .container{

@@ -24,7 +24,7 @@ const SearchResults = () => {
     }, [location.state]);
 
     return (
-        <div>
+        <div className = 'SearchResultsPage'>
             {currentView === 'home' && (
                 <ResultsHome 
                     onShowDeck = {showResultsDeck} 
