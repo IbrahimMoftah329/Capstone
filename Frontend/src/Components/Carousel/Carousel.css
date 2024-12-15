@@ -211,3 +211,73 @@
     align-items: center;
     transform: rotate(180deg);
 }
+
+
+/* Responsive adjustments */
+@media screen and (max-width: 1200px) {
+    .carousel {
+        padding: 0 50px;
+    }
+    
+    .slider ul li {
+        padding: 0 5px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .carousel {
+        padding: 0 40px;
+        width: 95%;
+    }
+
+    .slide, .slide-back {
+        max-width: 300px;
+        padding: 10px;
+    }
+
+    .next-button, .back-button {
+        width: 30px;
+        height: 30px;
+    }
+
+    .card-content {
+        padding: 30px 10px 10px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .carousel {
+        padding: 0 30px;
+        width: 100%;
+    }
+
+    .slide, .slide-back {
+        max-width: 250px;
+    }
+
+    .next-button, .back-button {
+        width: 25px;
+        height: 25px;
+    }
+
+    .info h3 {
+        margin-top: 15px;
+    }
+
+    .card-corners, .card-corners-bottom-right {
+        padding: 5px;
+    }
+}
+
+/* Optional: Add smooth transitions */
+.slide, .slide-back, .next-button, .back-button {
+    transition: all 0.3s ease-in-out;
+}
+
+/* Fix for better touch interaction on mobile */
+@media (hover: none) {
+    .slide, .slide-back {
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+    }
+}

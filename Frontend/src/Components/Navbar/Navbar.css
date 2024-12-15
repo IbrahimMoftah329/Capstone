@@ -219,3 +219,107 @@ nav ul li {
     font-size: 0.9em;
     color: #888;
 }
+
+
+/* Responsive Design */
+@media screen and (max-width: 1024px) {
+    nav {
+        padding: 4px 15px;
+    }
+
+    .search-bar {
+        max-width: 400px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    nav {
+        height: auto;
+        min-height: 70px;
+        flex-wrap: wrap;
+        padding: 10px;
+    }
+
+    .cm {
+        flex: 0 1 auto;
+    }
+
+    .search-bar {
+        order: 3;
+        flex: 1 1 100%;
+        margin: 10px 0;
+        max-width: none;
+    }
+
+    .links {
+        flex: 0 1 auto;
+    }
+
+    nav ul li {
+        margin: 0 5px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .heading {
+        font-size: 1.2rem;
+    }
+
+    .heading img {
+        width: 35px;
+        height: 35px;
+    }
+
+    nav ul li:not(.user-button) {
+        display: none;
+    }
+
+    /* Show mobile menu button */
+    .mobile-menu-button {
+        display: block;
+    }
+
+    /* Mobile menu styles */
+    .mobile-menu {
+        position: fixed;
+        top: 70px;
+        left: 0;
+        right: 0;
+        background-color: #124883;
+        padding: 10px;
+        display: none;
+    }
+
+    .mobile-menu.active {
+        display: block;
+    }
+
+    .mobile-menu ul {
+        flex-direction: column;
+        width: 100%;
+        padding: 0;
+        margin: 0;
+    }
+
+    .mobile-menu li {
+        width: 100%;
+        text-align: center;
+        margin: 10px 0;
+    }
+}
+
+/* Touch device optimization */
+@media (hover: none) {
+    .search-button,
+    nav ul li a {
+        padding: 12px;
+    }
+}
+
+/* Dark mode considerations */
+@media (prefers-color-scheme: dark) {
+    .search-input {
+        background-color: #ffffff;
+        color: #000000;
+    }
+}

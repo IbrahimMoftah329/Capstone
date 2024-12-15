@@ -53,3 +53,100 @@ ul li a svg{
     width: 20px;
 
 }
+
+/* Mobile menu button */
+.mobile-toggle {
+    display: none;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1001;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 5px;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 1024px) {
+    .sidebar {
+        width: 160px;
+    }
+
+    .sidebar ul li a {
+        padding: 20px 8px;
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .mobile-toggle {
+        display: block;
+    }
+
+    .sidebar {
+        width: 200px;
+        transform: translateX(-100%);
+        position: fixed;
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .sidebar.active {
+        transform: translateX(0);
+    }
+
+    .sidebar ul li a {
+        padding: 16px 10px;
+    }
+
+    /* Adjust main content when sidebar is open */
+    .main-content {
+        margin-left: 0;
+        transition: margin-left 0.3s ease;
+    }
+
+    .main-content.shifted {
+        margin-left: 200px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .sidebar {
+        width: 100%;
+        max-width: 280px;
+    }
+
+    .sidebar ul li a {
+        padding: 20px 15px;
+        font-size: 16px;
+    }
+
+    /* Add overlay when sidebar is open */
+    .sidebar-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+    }
+
+    .sidebar-overlay.active {
+        display: block;
+    }
+}
+
+/* Touch device optimization */
+@media (hover: none) {
+    .sidebar ul li a {
+        padding: 16px 10px;
+    }
+
+    .sidebar ul li a:active {
+        background-color: #2E5A88;
+    }
+}

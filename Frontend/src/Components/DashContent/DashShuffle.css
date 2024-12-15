@@ -582,3 +582,93 @@
 .close-button:hover {
     background: rgba(18, 72, 131, 0.9);
 }
+
+
+/* Responsive breakpoints */
+@media screen and (max-width: 1024px) {
+    .shuffle-flashcard-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .shuffle-flashcard-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+
+    .podium-platform {
+        width: 100px;
+    }
+
+    .score-content {
+        padding: 0.8rem;
+    }
+
+    .modal-content {
+        height: 100vh;
+        width: 100%;
+        border-radius: 0;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .shuffle-list {
+        grid-template-columns: 1fr;
+    }
+
+    .shuffle-item {
+        width: 100%;
+    }
+
+    .shuffle-flashcard-card {
+        width: 100%;
+        max-width: 140px;
+    }
+
+    .modal-attempts-content {
+        padding: 1rem;
+    }
+
+    .podium-leaderboard {
+        flex-direction: column;
+        height: auto;
+        align-items: center;
+    }
+
+    .position-1, .position-2, .position-3 {
+        order: unset;
+    }
+
+    .platform-block {
+        height: 60px !important;
+    }
+}
+
+/* Touch device optimization */
+@media (hover: none) {
+    .shuffle-item {
+        transform: none;
+    }
+
+    .shuffle-flashcard-card:active {
+        transform: scale(0.98);
+    }
+}
+
+/* Accessibility improvements */
+.shuffle-button:focus,
+.close-button:focus {
+    outline: 2px solid #124883;
+    outline-offset: 2px;
+}
+
+/* Animation optimizations */
+@media (prefers-reduced-motion: reduce) {
+    .shuffle-item,
+    .shuffle-flashcard-card,
+    .podium-entry {
+        animation: none;
+        transition: none;
+    }
+}

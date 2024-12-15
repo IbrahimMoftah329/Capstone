@@ -525,6 +525,135 @@
     margin-top: 20px;
     width: 30%; 
 }
+
+/* Responsive breakpoints */
+@media screen and (max-width: 1024px) {
+    .flashcard-list {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+
+    .prev-button-studymode,
+    .next-buttons-studymode {
+        top: -300px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .flashcard-content {
+        padding: 10px;
+    }
+
+    .flashcard-list {
+        grid-template-columns: 1fr;
+    }
+
+    .flashcard-item {
+        padding: 12px;
+    }
+
+    .modal-buttons-dashcard {
+        width: 100%;
+    }
+
+    .prev-button-studymode,
+    .next-buttons-studymode {
+        top: -250px;
+    }
+
+    .prev-button-studymode img,
+    .next-buttons-studymode img {
+        width: 3rem;
+        height: 3rem;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .flashcard-box {
+        padding: 10px;
+        border-radius: 15px;
+    }
+
+    .add-button {
+        top: 10px;
+        right: 10px;
+        width: 25px;
+        height: 25px;
+        font-size: 1.2rem;
+    }
+
+    .flashcard-button {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+
+    .button-group {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .study-mode-modal-content {
+        padding: 10px;
+    }
+
+    .restart-button-studymode,
+    .exit-button-studymode {
+        width: 100%;
+        margin: 5px 0;
+    }
+
+    .prev-button-studymode,
+    .next-buttons-studymode {
+        top: -200px;
+    }
+
+    .prev-button-studymode img,
+    .next-buttons-studymode img {
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+}
+
+/* Study mode card responsive styles */
+.flashcard {
+    width: min(90vw, 600px);
+    height: min(60vh, 400px);
+    margin: 20px auto;
+}
+
+.flashcard-contents {
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+    padding: clamp(10px, 3vw, 20px);
+}
+
+/* Touch device optimization */
+@media (hover: none) {
+    .flashcard-button:active {
+        transform: scale(0.98);
+    }
+
+    .study-button:active {
+        transform: scale(0.98);
+    }
+
+    .flashcard-item {
+        touch-action: manipulation;
+    }
+}
+
+/* Improve accessibility */
+.flashcard-button:focus,
+.study-button:focus,
+.add-button:focus {
+    outline: 2px solid #124883;
+    outline-offset: 2px;
+}
+
+/* Dark mode considerations */
+@media (prefers-color-scheme: dark) {
+    .flashcard-modal-content-dashcard,
+    .study-mode-modal-content {
+        background-color: #ffffff;
+    }
 }
 
 

@@ -91,7 +91,7 @@ const Carousel = () => {
             />
             <div className='slider'>
                 <ul ref={slider}>
-                    {['Personalized Learning', 'Engaging Learning Experience', 'Organization and Ease of Use', 'Filler Title Card 4', 'Filler Title Card 5', 'AI Integrated Learning'].map((slideTitle, index) => (
+                    {['Personalized Learning', 'Engaging Learning Experience', 'Organization and Ease of Use', 'Game Integration', 'Study Organization', 'AI Integrated Learning'].map((slideTitle, index) => (
                         <li key={index}>
 
               <ReactCardFlip isFlipped={isFlipped[index]} flipDirection="horizontal">

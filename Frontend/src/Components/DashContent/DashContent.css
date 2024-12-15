@@ -145,3 +145,76 @@ h3 {
     color: #666;
     font-size: 1.1rem;
   }
+
+
+/* Responsive breakpoints */
+@media screen and (max-width: 768px) {
+  .profile-box {
+      padding: 20px;
+      margin: 10px;
+  }
+
+  .content {
+      padding: 15px;
+  }
+
+  form {
+      gap: 0.8rem;
+  }
+
+  .btn {
+      width: 100%;
+      max-width: none;
+  }
+
+  .popup {
+      width: 90%;
+      text-align: center;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .profile-box {
+      padding: 15px;
+      border-radius: 15px;
+  }
+
+  .input {
+      padding: 8px;
+  }
+
+  textarea.input {
+      min-height: 100px;
+  }
+
+  .content-title {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 5px;
+  }
+}
+
+/* Touch device optimization */
+@media (hover: none) {
+  .input, .btn {
+      font-size: 16px; /* Prevent zoom on focus in iOS */
+  }
+
+  .btn:active {
+      background-color: #0d3661;
+  }
+}
+
+/* Accessibility improvements */
+.btn:focus,
+.input:focus {
+  outline: 2px solid #124883;
+  outline-offset: 2px;
+}
+
+/* Dark mode considerations */
+@media (prefers-color-scheme: dark) {
+  .input::placeholder {
+      color: #666;
+  }
+}
