@@ -24,7 +24,7 @@ const SearchResults = () => {
     }, [location.state]);
 
     return (
-        <div>
+        <div className = 'SearchResultsPage'>
             {currentView === 'home' && (
                 <ResultsHome 
                     onShowDeck = {showResultsDeck} 
@@ -55,17 +55,3 @@ const SearchResults = () => {
 
 export default SearchResults;
 
-
-
-/*
-Personal Notes:
-
-Features to implement:
-- favorites button in results home page items
-- creator name and profile picture in results home page items
-- preview button on results home page items
-- improve scroll bar for modal preview 
-
-
-
-*/

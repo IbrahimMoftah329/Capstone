@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import './DashCard.css'; // Optional CSS file for styling
+// import nextArrow from '/Users/ninapham/Desktop/OCT /Capstone/Frontend/src/assets/arrow.jpg';
+// import backArrow from '/Users/ninapham/Desktop/OCT /Capstone/Frontend/src/assets/arrow2.jpg';
 import nextArrow from '../../assets/arrow.jpg';
 import backArrow from '../../assets/arrow2.jpg';
+import './DashCard.css'; // Optional CSS file for styling
 import { useUser } from '@clerk/clerk-react';
 import Suits from '../Suits/Suits';
 
@@ -17,12 +19,15 @@ const DashCard = () => {
     const [editCardId, setEditCardId] = useState(null); // State to track which flashcard is being edited
     const [showDeletePopup, setShowDeletePopup] = useState(false); // State for delete popup visibility
     const [cardToDelete, setCardToDelete] = useState(null); // State for the card to be deleted
-
+    const { isSignedIn, user } = useUser();
+    const [editingIndex, setEditingIndex] = useState(null);
     const [isStudyMode, setIsStudyMode] = useState(false);
     const [currentCardIndex, setCurrentCardIndex] = useState(0);
     const [isFlipped, setIsFlipped] = useState(false);
 
-    const { user } = useUser();
+    if (!isSignedIn) {
+        return;
+    }
 
     // Function to add a flashcard
     const addFlashcard = () => {
@@ -149,6 +154,8 @@ const DashCard = () => {
         setCardToDelete(null);
     };
 
+    {/*study mode functions*/}
+
     const startStudy = () => {
         if (flashcards.length === 0) {
             alert('Please add some flashcards first!');
@@ -218,25 +225,21 @@ const DashCard = () => {
 
     return (
         <div className="flashcard-content">
-            <h1 className="content-title">{deck.name}</h1>
+            <h1 className="content-title">{deck ? deck.name : "Deck Details"}</h1>
             <div className="flashcard-box">
-                <p className="content-description" style={{ paddingBottom: "10px", paddingRight: "35px" }}>{deck.description}</p> {/* Use deck description */}
+                <p className="content-description">{deck?.description}</p> {/* Use deck description */}
                 <p>Created on: {
                     new Date(deck.createdAt).toLocaleDateString('en-US', {
                         month: 'numeric',
                         day: 'numeric',
-                        year: 'numeric'
+                        year: 'numeric',
                     })
-                }</p> {/* Show creation date */}
-                <p>Professor: {deck.professor}</p> {/* Show creation date */}
-                <p>Semester: {deck.semester}</p> {/* Show creation date */}
-                <p>Number of Flashcards: {deck.flashcards.length} cards</p>
+                    }
+                </p>
+                <p>Professor: {deck?.professor}</p>
+                <p>Semester: {deck?.semester}</p>
                 <button className="add-button" onClick={openFlashcardModal()}>+</button>
-
-                {/* Start Study Mode Button */}
-                <button className="study-button" onClick={startStudy}>Start Study Mode</button>
-                
-                <h2 style={{ paddingTop: "10px" }}>Flashcards:</h2>
+                <h2>Flashcards</h2>
                 <div className="flashcard-list" style={{ width: '100%' }}>
                     {flashcards.map((card) => (
                         <div key={card._id} className="flashcard-item">
@@ -286,36 +289,95 @@ const DashCard = () => {
 
                 {/* Modal for Adding or Editing Flashcard */}
                 {isCardModalOpen && (
-                    <div className="flashcard-modal">
-                        <div className="flashcard-modal-content">
+                    <div className="flashcard-modal-dashcard">
+                        <div className="flashcard-modal-content-dashcard">
                             <h2>{isEditing ? "Edit Flashcard" : "Add New Flashcard"}</h2>
                             <form onSubmit={(e) => { e.preventDefault(); handleFlashcardSubmit(); }}>
                                 <h3>Prompt</h3>
                                 <textarea type="text" rows="5" className='input' value={newPrompt} onChange={(e) => setNewPrompt(e.target.value)} required placeholder="Enter prompt" />
                                 <h3>Response</h3>
                                 <textarea type="text" rows="5" className='input' value={newResponse} onChange={(e) => setNewResponse(e.target.value)} required placeholder="Enter response" />
-                                <div className="modal-buttons">
-                                    <button type="button" onClick={() => closeFlashcardModal()}>Cancel</button>
-                                    <button type="submit">{isEditing ? "Save Changes" : "Add Flashcard"}</button>                              
+                                <div className="modal-buttons-dashcard">
+                                    <button type="button-dash" onClick={() => closeFlashcardModal()}>Cancel</button>
+                                    <button type="submit-dash">{isEditing ? "Save Changes" : "Add Flashcard"}</button>                              
                                 </div>
                             </form>
                         </div>
                     </div>
                 )}
 
-                {/* Styled Popup for Delete Confirmation */}
-                {showDeletePopup && (
-                    <div className="popup-overlay">
-                        <div className="popup-content">
-                            <h2>Confirm Deletion</h2>
-                            <p>Are you sure you want to delete this flashcard? This action cannot be undone.</p>
-                            <div className="popup-buttons">
-                                <button className="popup-button confirm" onClick={confirmDeleteCard}>Yes, Delete</button>
-                                <button className="popup-button cancel" onClick={cancelDelete}>Cancel</button>
+                 {/* Study Mode Flashcard Modal */}
+                {isStudyMode && (
+                    <div className="study-mode-modal">
+                        <div className="study-mode-modal-content">
+                             <div className="study-mode-container">
+                                <div className="study-mode">
+                                    <h2>Study Flashcards</h2>
+                                    {/* Suits Component */}
+                                    <Suits deck={deck} flashcards={flashcards} currentCardIndex={currentCardIndex} isFlipped={isFlipped} onFlip={flipCard}/>
+                                    {/* Carousel Navigation */}
+                                    <div className="carousel-indicators">
+                                    {flashcards.map((_, index) => (
+                                    <button key={index} className={`carousel-dot ${index === currentCardIndex ? 'active' : ''}`} onClick={() => { 
+                                        setCurrentCardIndex(index);
+                                        setIsFlipped(false);
+                                        }}/>
+                                        ))}
+                                    </div>
+
+                                    {/* Control Buttons */}
+                                    <div className="card-buttons-studymode">
+                                        <button className="prev-button-studymode" onClick={previousCard} disabled={currentCardIndex === 0}>
+                                        <img src={backArrow} alt="previous" />
+                                        </button>
+                                        <button className="restart-button-studymode" onClick={() => { 
+                                            setCurrentCardIndex(0); 
+                                            setIsFlipped(false); 
+                                        }}
+                                        >
+                                            Restart
+                                        </button>
+                                        <button 
+                                            className="exit-button-studymode" 
+                                            onClick={() => setIsStudyMode(false)}
+                                        >
+                                            Exit
+                                        </button>
+
+                                        <button 
+                                            className="next-buttons-studymode" 
+                                            onClick={nextCard} 
+                                            disabled={currentCardIndex === flashcards.length - 1}
+                                        >
+                                            <img src={nextArrow} alt="next" />
+                                        </button>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                                </div>
+                            )}
+
+                            {/* Regular Study Button (when modal is closed) */}
+                            {!isStudyMode && (
+                                <button className="study-button" onClick={startStudy}>
+                                Study Flashcards
+                                </button>
+                            )}
+                            
+                        {/* Styled Popup for Delete Confirmation */}
+                        {showDeletePopup && (
+                            <div className="popup-overlay">
+                                <div className="popup-content">
+                                    <h2>Confirm Deletion</h2>
+                                    <p>Are you sure you want to delete this flashcard? This action cannot be undone.</p>
+                                    <div className="popup-buttons">
+                                        <button className="popup-button confirm" onClick={confirmDeleteCard}>Yes, Delete</button>
+                                        <button className="popup-button cancel" onClick={cancelDelete}>Cancel</button>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                )}
+                        )}
             </div>
         </div>
     );

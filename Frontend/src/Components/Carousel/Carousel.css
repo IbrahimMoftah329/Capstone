@@ -1,0 +1,213 @@
+/* Keep your existing carousel styles */
+.carousel {
+    padding: 0 80px;
+    position: relative;  
+    width: 100%;
+    margin: 30 auto;
+    overflow: hidden;
+}
+
+.next-button, .back-button {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    padding: 20px;
+    width: 10%;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.back-button {
+    right: auto;
+    left: 0;
+}
+
+.next-button {
+    right: 9;
+}
+
+.slider {
+    overflow: hidden;
+    display: flex;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    width: 100%;
+}
+
+.slider ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: calc(100% * 3);
+    transition: transform 0.5s ease-in-out;
+}
+
+.slider ul li {
+    flex: 1;
+    min-width: 300px;
+    max-width: 400px;
+    margin: 658x;
+    border-radius: 10px;
+    text-align: center;
+}
+
+/* Updated card styles */
+.slide, .slide-back {
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    border-radius: 10px;
+    color: #000000;
+    line-height: 1.4;
+    background: #f9f9f9;
+    flex: 0 0 33.33%;
+    margin: 20px;
+    text-align: center;
+    width: 300px;
+    height: 400px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.info h3 {
+    color: #124883;
+    margin-top: 40px; /* Space for the top suit */
+}
+
+.more p {
+    color: #124883;
+}
+
+/* New poker card suit styles */
+.card-corners {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.suit {
+    font-size: 24px;
+    line-height: 1;
+}
+
+.rank {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 2px;
+}
+
+/* Top right corner */
+.card-corners-right {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    transform: rotate(180deg);
+}
+
+/* Center content adjustments */
+.card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    width: 100%;
+    text-align: center;
+}
+
+.center-suit {
+    font-size: 48px;
+    margin: 15px 0;
+}
+
+/* Color for red suits */
+.red-suit .suit,
+.red-suit .rank,
+.red-suit .center-suit {
+    color: #e32424;
+}
+
+/* Bottom corners (rotated) */
+.card-corners-bottom {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    transform: rotate(180deg);
+}
+
+.card-corners-bottom-right {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+/* Card back styles */
+.slide-back {
+    background: #f0f0f0;
+}
+
+/* Optional: Add a pattern to the card back */
+.slide-back::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 10px,
+        rgba(0, 0, 0, 0.03) 10px,
+        rgba(0, 0, 0, 0.03) 20px
+    );
+    border-radius: 10px;
+    z-index: 0;
+}
+
+.info {
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.card-content p {
+    margin: 0;
+    padding: 0.5rem 0;
+    text-align: center;
+    width: 100%;
+}
+
+.slide-back p {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+    z-index: 1;
+    width: 90%;
+    text-align: center;
+}
+
+.card-corners-bottom-right {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transform: rotate(180deg);
+}

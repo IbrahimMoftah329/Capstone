@@ -5,7 +5,7 @@ nav {
     background-color: #124883;
     color: #ffffff;
     padding: 4px 0; /* Corrected '4x' to '4px' */
-    position: fixed;
+    /* position: fixed; */
     top: 0;
     left: 0;
     display: flex;
@@ -46,7 +46,7 @@ nav ul li {
     display: inline-block;
     padding: 5px;
     list-style: none;
-    margin: 5px 20px;
+    margin: 5px;
     font-size: 16px;
 }
 
@@ -135,87 +135,4 @@ nav ul li {
 
 .search-button:hover {
     background-color: #c1c1c1;
-}
-
-/* Dropdown */
-.dropdown {
-    position: relative;
-}
-
-.dropdown-button {
-    padding: 8px 22px;
-    background: #D9D9D9;
-    color: #000000;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-    border-radius: 30px 0 0 30px;
-    outline: none;
-    background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 6"%3E%3Cpath fill="%23000000" d="M0 0l5 6 5-6z"/%3E%3C/svg%3E'); /* Arrow */
-    background-repeat: no-repeat;
-    background-position: right 8px center;
-    background-size: 9px 10px;
-}
-
-.dropdown-menu {
-    position: absolute;
-    top: 110%;
-    left: 0;
-    color: #000000;
-    background-color: #D9D9D9;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    z-index: 10;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.dropdown-item {
-    padding: 8px 22px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-.dropdown-item:hover {
-    background-color: #f0f0f0;
-}
-
-/* Suggestions Dropdown */
-.suggestions-dropdown {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    max-height: 300px;
-    overflow-y: auto;
-    background-color: white;
-    border: 1px solid #e0e0e0;
-    border-top: none;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    z-index: 10;
-}
-
-.suggestion-item {
-    display: flex;
-    flex-direction: column;
-    padding: 10px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-.suggestion-item:hover {
-    background-color: #f0f0f0;
-}
-
-.suggestion-type {
-    font-size: 0.8em;
-    color: #666;
-}
-
-.suggestion-name {
-    font-weight: bold;
-}
-
-.suggestion-details {
-    font-size: 0.9em;
-    color: #888;
 }

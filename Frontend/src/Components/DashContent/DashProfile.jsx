@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { IoIosHeart } from "react-icons/io";
+import { BsSuitDiamondFill } from "react-icons/bs";
 import './DashContent.css'; // Make sure the CSS file path is correct
 import { useUser } from '@clerk/clerk-react';
 
 const DashProfile = () => {
     const { user } = useUser();
-    
     const [username, setUsername] = useState(user?.username || '');
     const [university, setUniversity] = useState(user?.university || '');
     const [major, setMajor] = useState(user?.major || '');
@@ -57,14 +56,13 @@ const DashProfile = () => {
             .catch(error => console.error("Error fetching user info:", error));
     };
 
-
     useEffect(() => {
         getUserInfo();
     }, [user]);
 
     return (
         <div className="content">
-            <h1 className="content-title">Profile < IoIosHeart /> </h1>
+            <h1 className="content-title">Profile <BsSuitDiamondFill /></h1>
             <form className="profile-box" onSubmit={updateUserProfile}>
                 <h3>UserName</h3>
                 <input type='text' className='input' value={username} onChange={(e) => setUsername(e.target.value)} required placeholder='Enter UserName'  />

@@ -3,41 +3,52 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import './Quiz.css';
 import { useUser } from '@clerk/clerk-react';
 
+const getSemesterSuit = (semester) => {
+    const suits = {
+        'Winter': { symbol: '♠', color: '#000000' },
+        'Spring': { symbol: '♦', color: '#e31b23' },
+        'Summer': { symbol: '♣', color: '#000000' },
+        'Fall': { symbol: '♥', color: '#e31b23' }
+    };
+    
+    const season = semester ? semester.split(' ')[0] : 'Winter';
+    return suits[season] || suits['Winter'];
+};
+
 const Quiz = () => {
     const location = useLocation();
-    const { quiz } = location.state || {}; // Retrieve quiz from location.state
-    const [questions, setQuestions] = useState([]); // State for flashcards
-    const [answers, setAnswers] = useState({}); // Stores user answers as questionId: selectedOptionIndex
+    const { quiz } = location.state || {};
+    const [questions, setQuestions] = useState([]);
+    const [answers, setAnswers] = useState({});
 
     const navigate = useNavigate();
-    const { isSignedIn } = useUser();
+    const { isSignedIn, user } = useUser();
+
+    // Determine suit based on deck
+    const suit = getSemesterSuit(quiz?.semester);
+
     useEffect(() => {
         if (!isSignedIn) {
             navigate("/");
         }
     }, [isSignedIn, navigate]);
 
-    const { user } = useUser();
-
-    // Function to fetch questions for the given quiz
+    // Fetch questions (existing logic remains the same)
     const getQuestions = () => {
         fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/questions/quiz/${quiz._id}/questions`)
             .then((response) => response.json())
             .then((data) => {
-                setQuestions(data); // Store fetched questions
+                setQuestions(data);
             })
             .catch((error) => console.error('Error fetching questions:', error));
     };
-
 
     useEffect(() => {
         getQuestions();
     }, []);
 
-    // Display a loading message or error if quiz data is missing
     if (!quiz) return <div>Error: Quiz data not found.</div>;
 
-    // Handle option change for each question
     const handleOptionChange = (questionId, optionIndex) => {
         setAnswers({
             ...answers,
@@ -45,16 +56,16 @@ const Quiz = () => {
         });
     };
 
-    // Check if all questions have been answered
-    const allQuestionsAnswered = questions.length > 0 && questions.every(question => answers.hasOwnProperty(question._id));
+    const allQuestionsAnswered = questions.length > 0 && 
+        questions.every(question => answers.hasOwnProperty(question._id));
 
     const handleQuizSubmit = async () => {
+        // Existing submit logic remains the same
         if (!allQuestionsAnswered) {
             alert("Please answer all questions before submitting.");
             return;
         }
     
-        // Calculate score and format answers with `isCorrect` field
         const formattedAnswers = questions.map(question => {
             const correctOptionIndex = question.options.findIndex(option => option.isCorrect);
             const userAnswerText = question.options[answers[question._id]].text;
@@ -74,7 +85,7 @@ const Quiz = () => {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    userId: user.id, // Clerk's `user.id` as `clerkId` in backend
+                    userId: user.id,
                     quizId: quiz._id,
                     answers: formattedAnswers,
                     score: score
@@ -98,7 +109,14 @@ const Quiz = () => {
             <h1>{quiz.name}</h1>
 
             {questions.map((question, index) => (
-                <div key={question._id} className="question-block">
+                <div 
+                    key={question._id} 
+                    className="question-block"
+                    data-suit={suit.symbol}
+                    style={{ 
+                        '--suit-color': suit.color 
+                    }}
+                >
                     <h3>Question {index + 1}: {question.questionText}</h3>
                     <div className="options">
                         {question.options.map((option, optionIndex) => (
@@ -120,7 +138,13 @@ const Quiz = () => {
                 </div>
             ))}
 
-            <button className="submit-button" onClick={handleQuizSubmit}>Submit Quiz</button>
+            <button 
+                className="submit-button" 
+                onClick={handleQuizSubmit}
+                disabled={!allQuestionsAnswered}
+            >
+                Submit Quiz
+            </button>
         </div>
     );
 };

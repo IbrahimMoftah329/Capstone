@@ -13,7 +13,7 @@ const DashLibrary = () => {
     const [decks, setDecks] = useState([]);
     const [isEditing, setIsEditing] = useState(false);
     const [editDeckId, setEditDeckId] = useState(null);
-
+    const [isDeck, setIsDeck] = useState(true); // Flag to track whether it's a deck or quiz being deleted
     const [showDeletePopup, setShowDeletePopup] = useState(false);
     const [itemToDelete, setItemToDelete] = useState(null);
     const [deleteType, setDeleteType] = useState(''); // Track delete type ('deck', 'quiz', or 'attempt')
@@ -26,7 +26,6 @@ const DashLibrary = () => {
     const selectedDeckName = selectedDeckId
     ? decks.find(deck => deck._id === selectedDeckId)?.name
     : ""; // Derive selected deck name from selectedDeckId
-
     const [quizzes, setQuizzes] = useState([]);
     const [attempts, setAttempts] = useState([]);
     
@@ -79,8 +78,8 @@ const DashLibrary = () => {
     };
 
     const deleteDeck = (id) => {
-        console.log("Deleting deck with ID:", id);
-        return fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/decks/${id}`, {
+        // console.log("Deleting deck with ID:", id);
+        return fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/decks/${id}/delete`, {
             method: "DELETE",
         })
             .then(() => {
@@ -302,10 +301,6 @@ const DashLibrary = () => {
         navigate(`/quiz/${quiz._id}`, { state: { quiz } });
     };
 
-
-
-
-
     const deleteAttempt = (id) => {
         console.log("Deleting attempt with ID:", id);
         return fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/attempts/${id}`, {
@@ -318,17 +313,26 @@ const DashLibrary = () => {
             .catch(error => console.error("Error deleting attempt:", error));
     };
 
+
     const getAttempts = () => {
-        fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/attempts/user/${user.id}/attempts`, {
-            headers: { "Content-Type": "application/json" },
-            method: "GET",
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log("Fetched attempts data:", data); // Log fetched attempts to verify structure
-                setAttempts(data);
+        // First fetch the list of favorited quiz IDs
+        fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/quizzes/user/${user.id}/quizzes`)
+            .then(quizzesResponse => quizzesResponse.json())
+            .then(quizzes => {
+                // Fetch all attempts, favorited or not
+                fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/attempts/user/${user.id}/attempts`, {
+                    method: "GET",
+                    headers: { "Content-Type": "application/json" }
+                })
+                    .then(response => response.json())
+                    .then(allAttempts => {
+                        // Filter attempts to only include those whose quizId is in the list of user quizzes
+                        const filteredAttempts = allAttempts.filter(attempt => quizzes.some(quiz => quiz._id === attempt.quizId));
+                        setAttempts(filteredAttempts);
+                    })
+                    .catch(error => console.error("Error fetching attempts:", error));
             })
-            .catch(error => console.error("Error fetching attempts:", error));
+            .catch(error => console.error("Error fetching favorited quizzes:", error));
     };
 
     // Handle delete button click for attempts
@@ -362,6 +366,7 @@ const DashLibrary = () => {
                 setIsLoading(false); // Stop loading on error as well
             });
     }, []);
+
 
     // Display loading message while decks and quizzes are loading
     if (isLoading) return <div>Loading...</div>;
@@ -427,7 +432,7 @@ const DashLibrary = () => {
                 <p className="library-content-description">Manage your attempts here.</p>
                 <div className="quiz-list">
                     {attempts && attempts.map((attempt) => {
-                        console.log("Attempt ID:", attempt.attemptId); // Debug log to check _id
+                        // console.log("Attempt ID:", attempt.attemptId); // Debug log to check _id
                         return (
                             <div key={attempt.attemptId} className="quiz-item" onClick={() => navigateToQuizAttempt(attempt)}>
                                 <div>
@@ -455,8 +460,8 @@ const DashLibrary = () => {
 
             {/* Modal for Adding New Deck */}
             {isDeckModalOpen && (
-                <div className="modal">
-                    <div className="modal-content">
+                <div className="modal-dashlib">
+                    <div className="modal-content-dashlib">
                         <h2>{isEditing ? "Edit Deck" : "Add New Deck"}</h2>
                         <form onSubmit={(e) => { e.preventDefault(); handleDeckSubmit(); }}>
                             <h3>Deck Name</h3>
@@ -481,9 +486,9 @@ const DashLibrary = () => {
                                 <option value="Summer 2022">Summer 2022</option>
                                 <option value="Spring 2022">Spring 2022</option>
                             </select>
-                            <div className="modal-buttons">
-                                <button type="button" onClick={closeDeckModal}>Cancel</button>
-                                <button type="submit">{isEditing ? "Save Changes" : "Add Deck"}</button>
+                            <div className="modal-buttons-dashlib">
+                                <button type="button-dashlib" onClick={closeDeckModal}>Cancel</button>
+                                <button type="submit-dashlib">{isEditing ? "Save Changes" : "Add Deck"}</button>
                             </div>
                         </form>
                     </div>
@@ -492,8 +497,8 @@ const DashLibrary = () => {
 
             {/* Modal for Quizzes */}
             {isQuizModalOpen && (
-                    <div className="modal">
-                    <div className="modal-content">
+                    <div className="modal-dashlib">
+                    <div className="modal-content-dashlib">
                         <h2>Create New Quiz</h2>
                         <form onSubmit={(e) => { e.preventDefault(); handleQuizSubmit(); }}>
                             <h3>Quiz Name</h3>
@@ -510,9 +515,9 @@ const DashLibrary = () => {
                                 ))}
                             </select>
 
-                            <div className="modal-buttons">
-                                <button type="button" onClick={closeQuizModal}>Cancel</button>
-                                <button type="submit">Create</button>
+                            <div className="modal-buttons-dashlib">
+                                <button type="button-dashlib" onClick={closeQuizModal}>Cancel</button>
+                                <button type="submit-dashlib">Create</button>
                             </div>
                         </form>
                     </div>
@@ -524,13 +529,14 @@ const DashLibrary = () => {
                 <div className="popup-overlay">
                     <div className="popup-content">
                         <h2>Confirm Deletion</h2>
+                       
                         <p>{deleteType === 'deck' ? "Are you sure you want to delete this deck? This action cannot be undone." 
                             : deleteType === 'quiz' ? "Are you sure you want to delete this quiz? This action cannot be undone."
                             : "Are you sure you want to delete this attempt? This action cannot be undone."}
-                        </p>                        
+                        </p>                                               
                         <div className="popup-buttons">
-                        <button className="popup-button confirm" onClick={confirmDelete}>Yes, Delete</button>
-                        <button className="popup-button cancel" onClick={() => setShowDeletePopup(false)}>Cancel</button>
+                        <button className="popup-button confirm" onClick={confirmDelete}>Yes, delete</button>
+                        <button className="popup-button cancel" onClick={() => setShowDeletePopup(false)}>Cancel</button>            
                         </div>
                     </div>
                 </div>

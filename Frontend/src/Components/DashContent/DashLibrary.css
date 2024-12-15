@@ -49,6 +49,9 @@
     font-size: 2rem;
     color: #333;
     margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .library-content-description {
@@ -170,7 +173,7 @@
 }
 
 /* Modal Styles */
-.modal {
+.modal-dashlib {
     position: fixed;
     top: 0;
     left: 0;
@@ -183,7 +186,7 @@
     z-index: 1000; /* Ensure it appears above other elements */
 }
 
-.modal-content {
+.modal-content-dashlib {
     width: 85%; /* Increase the width slightly */
     max-width: 1000px; /* Adjust maximum width */
     background-color: #ffffff;
@@ -193,10 +196,11 @@
     overflow: hidden;
     max-height: 95%; /* Increase max-height to make it taller */
     overflow-y: auto; /* Enable vertical scrolling */
+    
 }
 
 /* Make the input fields wider */
-.modal-content textarea {
+.modal-content-dashlib textarea {
     width: 100%; /* Take full width */
     padding: 10px; /* Add padding for a better user experience */
     border-radius: 5px;
@@ -205,17 +209,17 @@
     resize: vertical; /* Allow resizing only vertically */
 }
 
-.modal-content h2 {
+.modal-content-dashlib h2 {
     margin-top: 0;
 }
 
-.modal-buttons {
+.modal-buttons-dashlib {
     display: flex;
     justify-content: space-between;
     margin-top: 20px;
 }
 
-.modal-content button {
+.modal-content-dashlib button {
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
@@ -224,21 +228,25 @@
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.modal-content button[type="button"] {
+.modal-content-dashlib button[type="button-dashlib"] {
     background-color: #ccc;
     color: #333;
 }
 
-.modal-content button[type="button"]:hover {
+.modal-content-dashlib button[type="button-dashlib"]:hover {
     background-color: #bbb;
 }
 
-.modal-content button[type="submit"] {
+.modal-content-dashlib button[type="submit-dashlib"] {
     background-color: #124883;
     color: #fff;
 }
 
-.modal-content button[type="submit"]:hover {
+.modal-content-dashlib button[type="submit-dashlib"]:hover {
+    background-color: #45a049;
+}
+
+.modal-content-dashlib button[type="submit-dashlib"]:hover {
     background-color: #45a049;
 }
 
@@ -320,7 +328,7 @@
     flex-direction: column;
     justify-content: space-between;
     cursor: pointer;
-    min-height: 350px; /* Set a minimum height */
+    min-height: 250px; /* Set a minimum height */
     word-break: break-word;
 }
 
@@ -390,4 +398,28 @@
 
 .quiz-button:hover {
     background-color: #45a049; /* Darker green on hover for non-delete buttons */
+}
+.Library-button.favorite {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px 12px; /* Increased padding around the button */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 8px; /* Add spacing between buttons */
+}
+
+.heart-icon {
+    font-size: 1.5rem;
+    color: #666;
+    transition: color 0.3s ease;
+}
+
+.favorited .heart-icon {
+    color: #e31b23;
+}
+
+.Library-button.favorite:hover .heart-icon {
+    color: #e31b23;
 }
