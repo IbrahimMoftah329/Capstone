@@ -82,38 +82,39 @@
 .modal-content {
     background-color: white;
     border-radius: 8px;
-    width: 98%; 
-    max-width: 1000px; 
-    height: 98vh;
-    padding: 20px; 
+    width: 90%; 
+    max-width: 800px;
+    height: 90vh;
+    padding: 20px 20px 10px 20px; /* Reduced bottom padding */
     display: flex;
     flex-direction: column;
     align-items: center;
-
+    gap: 10px; /* Add gap between elements */
 }
+
 
 .shuffle-flashcard-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 28px; /* Further reduced gap */
+    gap: 15px; /* Reduced gap */
     flex-grow: 1;
     overflow: hidden;
-    padding: 10px;
+    padding: 8px;
+    margin-top: 10px;
 }
 
 .shuffle-flashcard-card {
     background: #f9f9f9;
-    border-radius: 10px;
+    border-radius: 8px;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
     position: relative;
-    height: 186px; 
-    width: 165px;
+    height: 127px;
+    width: 115px;
     display: flex;
     flex-direction: column;
     cursor: pointer;
     transition: transform 0.3s ease;
-    
-    
+    overflow: hidden; /* Ensure content doesn't spill out */
 }
 
 .shuffle-flashcard-card:hover {
@@ -123,23 +124,23 @@
 /* Card Corner Styles */
 
 .card-corners .suit {
-    font-size: 12px; /* Reduced from 20px */
+    font-size: 10px; /* Reduced from 12px */
     line-height: 1;
 }
 
-.card-corners{
-    font-size: 10px; /* Reduced from 18px */
+.card-corners {
+    font-size: 8px; /* Reduced from 10px */
     font-weight: normal;
     margin-bottom: 2px;
     position: absolute;
-    top: 2px;    /* Reduced from default */
-    left: 2px; 
+    top: 2px;
+    left: 2px;
 }
 
 .card-corners-bottom-right {
     position: absolute;
-    bottom: 5px;
-    right: 5px;
+    bottom: 3px; /* Reduced from 5px */
+    right: 3px; /* Reduced from 5px */
     display: flex;
     flex-direction: column;
     align-items: flex-end;
@@ -147,7 +148,7 @@
 }
 
 .shuffle-flashcard-card .suit {
-    font-size: 18px;
+    font-size: 14px; /* Reduced from 18px */
     line-height: 1;
 }
 
@@ -157,7 +158,16 @@
 }
 
 .shuffle-flashcard-card-content h3 {
-    font-weight: normal; /* Remove bold for question */
+    font-size: 0.3em;
+    font-weight: normal; /* Remove bold */
+    margin: 0;
+    padding: 0 4px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    max-height: 3.6em;
+    width: 100%;
 }
 
 .shuffle-flashcard-card-content {
@@ -166,16 +176,29 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 8px; /* Reduced from 10px */
-    
+    padding: 6px; /* Reduced from 8px */
+    font-size: 0.9em; /* Added to reduce overall text size */
 }
 
-.shuffle-flashcard-card p {
-    font-size: 12px; /* Reduced from 13px */
+.shuffle-flashcard-card-content p {
+    font-size: 0.75em; /* Reduced from 0.85em */
     color: #333;
-    max-height: 100%;
-    overflow: auto;
+    margin: 0 auto; /* Center horizontally */
+    padding: 0 8px; /* Increased horizontal padding */
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: 4.8em;
+    width: 90%; /* Slightly narrower than the card */
+    position: absolute; /* Position absolutely within the content div */
+    top: 50%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Perfect centering */
+    line-height: 1.2; /* Tighter line height */
 }
+
 .shuffle-flashcard-card.selected {
     background-color: #d9e8f5; /* Muted blue-gray */
     border: 2px solid #124883; /* Same as your main color */
@@ -186,16 +209,22 @@
 .modal-buttons-shuffle {
     display: flex;
     justify-content: center;
-    margin-top: 20px;
+    margin-top: 5px; /* Reduced from 10px */
+    padding: 2px; /* Reduced from 5px */
 }
 
 .modal-buttons-shuffle button {
-    padding: 10px 20px;
+    padding: 4px 12px; /* Reduced from 8px 16px */
     background-color: #124883;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 4px;
     cursor: pointer;
+    font-size: 0.8rem; /* Reduced from 0.9rem */
+    min-height: 30px; /* Reduced from 32px */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 /* Modal for displaying deck attempts */
 .modal-attempts {
