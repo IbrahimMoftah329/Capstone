@@ -39,11 +39,5 @@ router.post('/:userId/favDeck', toggleFavDeck);
 router.get('/:userId/getfavDecks', getFavDecks);
 
 
-// Route to toggle a deck for favorited or not
-router.post('/:userId/favDeck', toggleFavDeck);
-
-// Route to get all favorited decks of a single user
-router.get('/:userId/getfavDecks', getFavDecks);
-
 
 module.exports = router;

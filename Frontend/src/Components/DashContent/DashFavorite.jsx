@@ -21,33 +21,104 @@ const DashFavorite = () => {
     const [deleteType, setDeleteType] = useState('');
 
 
-    // This function is used to get all the deck details from the current user's favorited decks array
+    // This function is used to get all the deck details from the current user's favorited decks array    
     const getDecks = () => {
-        // fetch the array of favorited deck id's
-        fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/decks/${user.id}/getFavDecks`)
-            .then((response) => response.json())
-            .then((deckIds) => {
-                // fetch all the details for each deck
-                Promise.all(
-                    deckIds.map((deckId) =>
-                        fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/decks/${deckId}`)
-                            .then((response) => response.json())
-                    )
-                )
-                    .then((decksDetails) => {
-                        // update the usestate with the deck details
-                        setDecks(decksDetails);
-                    })
-                    .catch((err) => {
-                        setError('Failed to load deck details');
-                    });
+        // Step 1: Fetch the IDs of the favorited decks
+        fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/decks/${user.id}/getFavDecks`, {
+            headers: { "Content-Type": "application/json" },
+            method: "GET",
+        })
+        .then(response => response.json())  // Get the array of deck IDs
+        .then(deckIds => {
+            // Step 2: Fetch the list of all decks to compare their IDs
+            fetch('http://localhost:4000/api/decks/alldecks', {
+                headers: { "Content-Type": "application/json" },
+                method: "GET",
             })
-            .catch((err) => {
-                setError('Failed to load favorite decks');
-            });
+            .then(response => response.json())  // Get all deck data
+            .then(allDecks => {
+                // Extract the IDs from the list of all decks
+                const allDeckIds = allDecks.map(deck => deck._id);
+    
+                // Step 3: Filter the favorite deck IDs to only include those that exist in the list of all decks
+                const validDeckIds = deckIds.filter(deckId => allDeckIds.includes(deckId));
+    
+                // Step 4: Fetch the details of the valid decks
+                const deckDetailsPromises = validDeckIds.map(deckId =>
+                    fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/decks/${deckId}`, {
+                        headers: { "Content-Type": "application/json" },
+                        method: "GET",
+                    })
+                    .then(response => response.json())  // Get deck details for each valid deck
+                );
+    
+                // Step 5: Wait for all deck details to be fetched
+                Promise.all(deckDetailsPromises)
+                    .then(decks => {
+                        // Update the usestate with full deck details
+                        setDecks(decks);
+                    })
+                    .catch(error => console.error("Error fetching deck details:", error));
+            })
+            .catch(error => console.error("Error fetching all decks:", error));
+        })
+        .catch(error => console.error("Error fetching favorite decks:", error));
     };
+    
+    // const getDecks = () => {
+    //     // fetch the array of favorited deck id's
+    //     fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/decks/${user.id}/getFavDecks`)
+    //         .then((response) => response.json())
+    //         .then((deckIds) => {
+    //             // fetch all the details for each deck
+    //             Promise.all(
+    //                 deckIds.map((deckId) =>
+    //                     fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/decks/${deckId}`)
+    //                         .then((response) => response.json())
+    //                 )
+    //             )
+    //                 .then((decksDetails) => {
+    //                     // update the usestate with the deck details
+    //                     setDecks(decksDetails);
+    //                 })
+    //                 .catch((err) => {
+    //                     setError('Failed to load deck details');
+    //                 });
+    //         })
+    //         .catch((err) => {
+    //             setError('Failed to load favorite decks');
+    //         });
+    // };
 
 
+    // const getQuizzes = () => {
+    //     // Step 1: Fetch the IDs of the favorited quizzes
+    //     fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/quizzes/${user.id}/getFavQuizzes`, {
+    //         headers: { "Content-Type": "application/json" },
+    //         method: "GET",
+    //     })
+    //     .then(response => response.json())  // Get the array of quiz IDs
+    //     .then(quizIds => {
+    //         // Step 2: Fetch the details of each quiz by its ID
+    //         const quizDetailsPromises = quizIds.map(quizId => 
+    //             fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/quizzes/${quizId}`, {
+    //                 headers: { "Content-Type": "application/json" },
+    //                 method: "GET",
+    //             })
+    //             .then(response => response.json())  // Get quiz details for each quiz
+    //         );
+    
+    //         // Step 3: Wait for all quiz details to be fetched
+    //         Promise.all(quizDetailsPromises)
+    //             .then(quizzes => {
+    //                 // Update the  usestate with full quiz details
+    //                 setQuizzes(quizzes);
+    //             })
+    //             .catch(error => console.error("Error fetching quiz details:", error));
+    //     })
+    //     .catch(error => console.error("Error fetching favorite quizzes:", error));
+    // };   
+    
     const getQuizzes = () => {
         // Step 1: Fetch the IDs of the favorited quizzes
         fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/quizzes/${user.id}/getFavQuizzes`, {
@@ -56,25 +127,41 @@ const DashFavorite = () => {
         })
         .then(response => response.json())  // Get the array of quiz IDs
         .then(quizIds => {
-            // Step 2: Fetch the details of each quiz by its ID
-            const quizDetailsPromises = quizIds.map(quizId => 
-                fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/quizzes/${quizId}`, {
-                    headers: { "Content-Type": "application/json" },
-                    method: "GET",
-                })
-                .then(response => response.json())  // Get quiz details for each quiz
-            );
+            // Step 2: Fetch the list of all quizzes to compare their IDs
+            fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/quizzes/allquizzes`, {
+                headers: { "Content-Type": "application/json" },
+                method: "GET",
+            })
+            .then(response => response.json())  // Get all quiz data
+            .then(allQuizzes => {
+                // Extract the IDs from the list of all quizzes
+                const allQuizIds = allQuizzes.map(quiz => quiz._id);
     
-            // Step 3: Wait for all quiz details to be fetched
-            Promise.all(quizDetailsPromises)
-                .then(quizzes => {
-                    // Update the  usestate with full quiz details
-                    setQuizzes(quizzes);
-                })
-                .catch(error => console.error("Error fetching quiz details:", error));
+                // Step 3: Filter the favorite quiz IDs to only include those that exist in the list of all quizzes
+                const validQuizIds = quizIds.filter(quizId => allQuizIds.includes(quizId));
+    
+                // Step 4: Fetch the details of the valid quizzes
+                const quizDetailsPromises = validQuizIds.map(quizId =>
+                    fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/quizzes/${quizId}`, {
+                        headers: { "Content-Type": "application/json" },
+                        method: "GET",
+                    })
+                    .then(response => response.json())  // Get quiz details for each valid quiz
+                );
+    
+                // Step 5: Wait for all quiz details to be fetched
+                Promise.all(quizDetailsPromises)
+                    .then(quizzes => {
+                        // Update the usestate with full quiz details
+                        setQuizzes(quizzes);
+                    })
+                    .catch(error => console.error("Error fetching quiz details:", error));
+            })
+            .catch(error => console.error("Error fetching all quizzes:", error));
         })
         .catch(error => console.error("Error fetching favorite quizzes:", error));
-    };    
+    };
+    
 
 
     // This will get all the quiz attempts ONLY from favorited quizzes

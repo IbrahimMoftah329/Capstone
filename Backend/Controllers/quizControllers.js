@@ -158,13 +158,12 @@ const deleteQuiz = async (req, res) => {
         const deletedQuiz = await Quiz.findByIdAndDelete(quizId);
     
         // Step 5: Remove the quiz reference from the user's quiz list
-        // Step 5: Remove the quiz reference from the user's quiz list
         await User.findOneAndUpdate(
             { clerkId: quiz.createdBy }, // Find the user by clerkId (assuming createdBy holds clerkId)
             { $pull: { quizzes: quiz._id } } // Remove the quiz ID from the user's quizzes array
         );
 
-        // Step 5: Remove the deckId from all users' favoriteDecks
+        // Step 5: Remove the deckId from all users' favoriteQuizzes
         await User.updateMany(
             { favoriteQuizzes: quizId }, // Find all users who have the deckId in their favoriteDecks
             { $pull: { favoriteQuizzes: quizId } } // Remove the deckId from their favoriteDecks array
