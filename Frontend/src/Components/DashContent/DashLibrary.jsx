@@ -240,11 +240,19 @@ const DashLibrary = () => {
             headers: { "Content-Type": "application/json" },
             method: "GET",
         })
-            .then(response => response.json())
-            .then(data => {
-                setQuizzes(data);
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
             })
-            .catch(error => console.error("Error fetching quizzes:", error));
+            .then(data => {
+                setQuizzes(Array.isArray(data) ? data : []); // Ensure quizzes is always an array
+            })
+            .catch(error => {
+                console.error("Error fetching quizzes:", error);
+                setQuizzes([]); // Fallback to an empty array in case of error
+            });
     };
 
     // Opens the quiz modal, resetting necessary state and associating with selected deck

@@ -19,39 +19,15 @@ const getAllQuizzes = async (req, res) => {
 // Get all quizzes for a user
 const getQuizzes = async (req, res) => {
     try {
-        // Find the user by their clerkId and populate only the quizzes array with selected fields
-        const user = await User.findOne({ clerkId: req.params.userId }).populate({
-            path: 'quizzes',
-            select: 'name description semester professor university deckId deckName questions createdAt',
-            populate: {
-                path: 'deckId',
-                select: 'name' // Only get the deck name
-            }
-        });
-    
-        // Check if user exists
-        if (!user) {
-            return res.status(404).json({ error: 'User not found' });
+        const userId = req.params.userId;
+        const quizzes = await Quiz.find({ createdBy: userId }).populate('deckId');
+        if (!quizzes || quizzes.length === 0) {
+            return res.status(404).json({ message: "No quizzes found for this user" });
         }
-    
-        // Format the quizzes data to include deck name, quiz ID, and other specified fields
-        const quizzes = user.quizzes.map(quiz => ({
-            _id: quiz._id,                           // Include the quiz ID
-            name: quiz.name,
-            description: quiz.description,
-            semester: quiz.semester,
-            professor: quiz.professor,
-            university: quiz.university,
-            deckId: quiz.deckId._id,                 // Include the deck ID if it exists
-            deckName: quiz.deckId.name,              // Include deck name from populated data
-            createdAt: quiz.createdAt,
-            numQuestions: quiz.questions.length, // Include the number of questions
-        }));
-    
-        // Return the formatted quizzes
-        res.json(quizzes);
-    } catch (err) {
-        res.status(500).send(err.message);
+        res.status(200).json(quizzes);
+    } catch (error) {
+        console.error("Error fetching quizzes:", error);
+        res.status(500).json({ message: "Internal Server Error" });
     }
 };
 
