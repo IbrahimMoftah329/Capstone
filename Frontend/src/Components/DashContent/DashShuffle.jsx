@@ -20,7 +20,6 @@ const DashShuffle = () => {
     const [deckAttempts, setDeckAttempts] = useState([]); // State for specific deck attempts
     const { user } = useUser();
 
-
     // Card suits for randomization
     const suits = ['♠', '♥', '♦', '♣'];
     const [cardSuits, setCardSuits] = useState([]);
@@ -82,8 +81,15 @@ const getFlashcards = (deckId, deckName) => {
     fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/flashcards/deck/${deckId}/flashcards`)
         .then((response) => response.json())
         .then((data) => {
+            // First, shuffle all flashcards
+            const shuffledFlashcards = [...data].sort(() => Math.random() - 0.5);
+            
+            // Take only the first 6 flashcards
+            const selectedFlashcards = shuffledFlashcards.slice(0, 6);
+            
+            // Create pairs for these 6 flashcards
             const cards = [];
-            data.forEach((flashcard) => {
+            selectedFlashcards.forEach((flashcard) => {
                 cards.push({ 
                     id: flashcard._id, 
                     type: 'question', 
@@ -95,22 +101,24 @@ const getFlashcards = (deckId, deckName) => {
                     content: flashcard.answer,
                 });
             });
+            
+            // Shuffle the pairs
             const shuffled = cards.sort(() => Math.random() - 0.5);
             
-            // Generate random suits for the cards
-            const randomSuits = shuffled.map(() => 
+            // Generate random suits for exactly 12 cards
+            const randomSuits = Array(12).fill().map(() => 
                 suits[Math.floor(Math.random() * suits.length)]
             );
             
             setCardSuits(randomSuits);
             setShuffledCards(shuffled);
-            setDisplayedCards(shuffled.slice(0, 16));
-            setRemainingCards(shuffled.slice(16));
+            setDisplayedCards(shuffled); // Display all 12 cards (6 pairs)
+            setRemainingCards([]); // No remaining cards needed
             setSelectedDeckName(deckName);
-            setSelectedDeckId(deckId); // Make sure to set the deck ID
+            setSelectedDeckId(deckId);
             setIsFlashcardModalOpen(true);
-            setTimeElapsed(0); // Reset timer
-            setIsTimerRunning(true); // Start timer
+            setTimeElapsed(0);
+            setIsTimerRunning(true);
         })
         .catch((error) => console.error("Error fetching flashcards:", error));
 };

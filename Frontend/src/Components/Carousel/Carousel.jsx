@@ -29,13 +29,13 @@ const Carousel = () => {
         "Cardmates offers personalized learning pathways to help students reach their full potential.",
         "Cardmates provides engaging and interactive learning experiences tailored to individual needs.",
         "Cardmates offers a user-friendly platform for organizing and managing personalized learning experiences.",
-        "filler front card 4",
-        "filler front card 5",
+        "CardMate enables game features like the Shuffle feature to help users remember terms",
+        "CardMate provides personalized organization with user libraries",
         "Cardmates integrates AI to deliver personalized learning experiences, adapting to individual needs and optimizing learning outcomes.",
         "Cardmates empowers students to connect with like-minded peers by providing a platform to easily find and connect with students taking similar classes or studying under the same professors. Cardmates facilitates meaningful connections, fostering collaboration, study groups, and friendships among students who share common academic interests.",
         "Our platform makes it easy for learners to navigate and find specific topics. Cardmates offers a user-friendly interface that is easy to navigate, even for learners with limited technical skills. Our tools can streamline the process of creating, administering, and analyzing quizzes, saving users valuable time and effort.",
-        "filler back description card 4",
-        "Filler back description for card 5",
+"CardMate Shuffle transforms studying into an engaging memory game! Match questions with answers while enjoying beautiful card designs with suit symbols. Track your best times on the podium leaderboard and challenge yourself to earn gold, silver, and bronze medals for each deck. Perfect for mastering content while having fun!", // Back card description
+        "Create your own digital library organized by subjects and decks, perfect for any field of study! Easily manage your content with a clean and intuitive design, allowing you to sort, edit, and build your flashcard collection. With personalized user profiles, your study materials are always secure and accessible when you need them.", // Back card description,
         "Cardmates leverages AI to automate quiz creation, generating relevant questions based on the learning material. This saves time for educators and ensures that quizzes are aligned with the curriculum."
     ];
 
