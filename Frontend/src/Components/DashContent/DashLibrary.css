@@ -49,6 +49,9 @@
     font-size: 2rem;
     color: #333;
     margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .library-content-description {

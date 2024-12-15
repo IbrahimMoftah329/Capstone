@@ -230,10 +230,14 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 16px;
     transition: background-color 0.3s ease, transform 0.2s ease;
-    min-width: 50px; /* Set minimum width for buttons */
-    flex: 1; /* Ensure the buttons are equal width */
+}
+
+.modal-buttons-dashcard {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
 }
 
 .flashcard-modal-content-dashcard button[type="button-dash"] {
@@ -253,12 +257,6 @@
 .flashcard-modal-content-dashcard button[type="submit-dash"]:hover {
     background-color: #45a049;
 
-}
-
-.flashcard-modal-buttons {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 10px;
 }
 
 
@@ -523,13 +521,5 @@
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     /* overflow-y: auto; */
-}
-
-.modal-buttons-dashcard {
-    display: flex;
-    justify-content: center; /* Center align the buttons */
-    gap: 10px; /* Add small space between buttons */
-    margin-top: 20px;
-    width: 30%; 
 }
 
