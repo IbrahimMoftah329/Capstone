@@ -49,7 +49,7 @@ const ResultsDeck = ({ onShowHome, onShowDeck, onShowQuiz }) => {
   const getFlashcards = async (deck) => {
     if (deck && deck._id) {
       try {
-        const response = await fetch(`http://localhost:4000/api/flashcards/deck/${deck._id}/flashcards`);
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/flashcards/deck/${deck._id}/flashcards`);
         const data = await response.json();
         if (response.ok) {
           setFlashcards(data);

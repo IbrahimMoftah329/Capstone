@@ -126,7 +126,7 @@ const ResultsHome = ({ onShowDeck, onShowQuiz }) => {
     const getQuestions = async (quiz) => {
         if (quiz && quiz._id) {
         try{
-          const response = await fetch(`http://localhost:4000/api/questions/quiz/${quiz._id}/questions`);
+          const response = await fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/questions/quiz/${quiz._id}/questions`);
           const data = await response.json();
           if (response.ok) {
             setQuestions(data);

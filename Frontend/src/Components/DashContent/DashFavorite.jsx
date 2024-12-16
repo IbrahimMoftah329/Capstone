@@ -31,7 +31,7 @@ const DashFavorite = () => {
         .then(response => response.json())  // Get the array of deck IDs
         .then(deckIds => {
             // Step 2: Fetch the list of all decks to compare their IDs
-            fetch('http://localhost:4000/api/decks/alldecks', {
+            fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/decks/alldecks`, {
                 headers: { "Content-Type": "application/json" },
                 method: "GET",
             })
