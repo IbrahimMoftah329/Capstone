@@ -656,12 +656,6 @@
     }
 }
 
-/* Accessibility improvements */
-.shuffle-button:focus,
-.close-button:focus {
-    outline: 2px solid #124883;
-    outline-offset: 2px;
-}
 
 /* Animation optimizations */
 @media (prefers-reduced-motion: reduce) {

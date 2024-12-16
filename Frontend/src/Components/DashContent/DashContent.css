@@ -205,12 +205,7 @@ h3 {
   }
 }
 
-/* Accessibility improvements */
-.btn:focus,
-.input:focus {
-  outline: 2px solid #124883;
-  outline-offset: 2px;
-}
+
 
 /* Dark mode considerations */
 @media (prefers-color-scheme: dark) {
