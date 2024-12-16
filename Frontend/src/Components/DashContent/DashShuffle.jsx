@@ -26,8 +26,8 @@ const DashShuffle = () => {
     const [cardSuits, setCardSuits] = useState([]);
 
     const getDecks = () => {
-        fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/decks/user/${user.id}/decks`)
-            .then((response) => response.json())
+        fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/decks/user/${user.id}/all-decks`) // Updated endpoint
+        .then((response) => response.json())
             .then((data) => {
                 setDecks(data);
                 setIsLoading(false);

@@ -5,6 +5,38 @@ const Quiz = require('../models/quiz')
 
 const mongoose = require('mongoose')
 
+
+const getAllUserDecks = async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    console.log('Requested User ID:', userId);
+
+    // Find the user by clerkId and populate created and favorited decks
+    const user = await User.findOne({ clerkId: userId }).populate('decks favoriteDecks');
+    if (!user) {
+      console.error('User not found for ID:', userId);
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    // Combine created and favorited decks
+    const createdDecks = user.decks.map(deck => ({ ...deck.toObject(), isFavorite: false }));
+    const favoritedDecks = user.favoriteDecks.map(deck => ({ ...deck.toObject(), isFavorite: true }));
+
+    // Remove duplicates (if any)
+    const combinedDecks = Array.from(
+      new Map([...createdDecks, ...favoritedDecks].map(deck => [deck._id.toString(), deck])).values()
+    );
+
+    res.status(200).json(combinedDecks);
+  } catch (err) {
+    console.error('Error fetching user decks:', err);
+    res.status(500).json({ error: 'Server error' });
+  }
+};
+
+
+
 // Get all decks from all users
 const getAllDecks = async (req, res) => {
   try {
@@ -223,5 +255,6 @@ module.exports = {
   deleteDeck,
   updateDeck,
   toggleFavDeck,
+  getAllUserDecks,
   getFavDecks
 }
