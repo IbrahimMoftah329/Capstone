@@ -14,6 +14,7 @@ const Results = () => {
         if (!isSignedIn) {
             navigate("/");
         }
+        window.scrollTo(0, 0);
     }, [isSignedIn, navigate]);
 
     const { user } = useUser();
