@@ -1,6 +1,6 @@
 const Deck = require('../models/deck')
 const User = require('../models/user')
-const Question = require('../models/question');
+const Question = require('../models/Question');
 const Quiz = require('../models/quiz')
 const QuizAttempt = require('../models/quizAttempt');
 const { generateQuestionFromFlashcard } = require('../utils/openaiHelpers');

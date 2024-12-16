@@ -47,7 +47,7 @@ const ResultsQuiz = ({ onShowHome, onShowDeck, onShowQuiz }) => {
     const getQuestions = async (quiz) => {
         if (quiz?._id) {
             try {
-                const response = await fetch(`http://localhost:4000/api/questions/quiz/${quiz._id}/questions`);
+                const response = await fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/questions/quiz/${quiz._id}/questions`);
                 const data = await response.json();
                 if (response.ok) {
                     setQuestions(data);
@@ -124,14 +124,15 @@ const ResultsQuiz = ({ onShowHome, onShowDeck, onShowQuiz }) => {
                                 >
                                     <h3>{quiz.name}</h3>
                                     <div className='quiz-meta'>
-                                        <span>Professor: {quiz.professor}</span>
-                                        <button className="add_favorite_quiz" onClick={(e) => {
-                                            e.stopPropagation();
-                                            toggleFavoriteQuiz(quiz._id);
-                                            }}>
-                                            <IoIosHeart className={`heart-icon-quiz ${favoritedQuizzes[quiz._id] ? 'active' : ''}`} />
-                                        </button>                    
+                                        <span>{quiz.questions.length} Questions •</span>
+                                        <span>Professor: {quiz.professor}</span>                    
                                     </div>
+                                    <button className="add_favorite_quiz" onClick={(e) => {
+                                        e.stopPropagation();
+                                        toggleFavoriteQuiz(quiz._id);
+                                        }}>
+                                        <IoIosHeart className={`heart-icon-quiz ${favoritedQuizzes[quiz._id] ? 'active' : ''}`} />
+                                    </button>
                                 </div>
                             ))}
                         </div>

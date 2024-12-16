@@ -126,7 +126,7 @@ const ResultsHome = ({ onShowDeck, onShowQuiz }) => {
     const getQuestions = async (quiz) => {
         if (quiz && quiz._id) {
         try{
-          const response = await fetch(`http://localhost:4000/api/questions/quiz/${quiz._id}/questions`);
+          const response = await fetch(`${import.meta.env.VITE_BACKEND_API_HOST}/questions/quiz/${quiz._id}/questions`);
           const data = await response.json();
           if (response.ok) {
             setQuestions(data);
@@ -238,7 +238,7 @@ const ResultsHome = ({ onShowDeck, onShowQuiz }) => {
                                 <div className='result-deck-item-home'>
                                     <div className='deck-name-home'>{deck.name}</div>
                                     <div className='deck-info'>
-                                        {deck.__v} Cards | Professor: {deck.professor}
+                                        {deck.__v} Cards | Prof. {deck.professor}
                                     </div>
 
                                     <div className='buttons'>
@@ -274,7 +274,7 @@ const ResultsHome = ({ onShowDeck, onShowQuiz }) => {
                             <div className='result-deck-item-home'>
                                 <div className='deck-name-home'>{quiz.name}</div>
                                 <div className='deck-info'>
-                                    Professor: {quiz.professor}
+                                    {quiz.questions.length} Questions | Prof. {quiz.professor}
                                 </div>
                                 <div className='buttons'>
                                     <button className = 'preview' onClick={() => handleQuizPreview(quiz)}>Preview</button>
