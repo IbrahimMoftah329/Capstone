@@ -238,7 +238,7 @@ const ResultsHome = ({ onShowDeck, onShowQuiz }) => {
                                 <div className='result-deck-item-home'>
                                     <div className='deck-name-home'>{deck.name}</div>
                                     <div className='deck-info'>
-                                        {deck.__v} Cards | Professor: {deck.professor}
+                                        {deck.__v} Cards | Prof. {deck.professor}
                                     </div>
 
                                     <div className='buttons'>
@@ -274,7 +274,7 @@ const ResultsHome = ({ onShowDeck, onShowQuiz }) => {
                             <div className='result-deck-item-home'>
                                 <div className='deck-name-home'>{quiz.name}</div>
                                 <div className='deck-info'>
-                                    Professor: {quiz.professor}
+                                    {quiz.questions.length} Questions | Prof. {quiz.professor}
                                 </div>
                                 <div className='buttons'>
                                     <button className = 'preview' onClick={() => handleQuizPreview(quiz)}>Preview</button>

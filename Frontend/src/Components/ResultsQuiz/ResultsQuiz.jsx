@@ -124,14 +124,15 @@ const ResultsQuiz = ({ onShowHome, onShowDeck, onShowQuiz }) => {
                                 >
                                     <h3>{quiz.name}</h3>
                                     <div className='quiz-meta'>
-                                        <span>Professor: {quiz.professor}</span>
-                                        <button className="add_favorite_quiz" onClick={(e) => {
-                                            e.stopPropagation();
-                                            toggleFavoriteQuiz(quiz._id);
-                                            }}>
-                                            <IoIosHeart className={`heart-icon-quiz ${favoritedQuizzes[quiz._id] ? 'active' : ''}`} />
-                                        </button>                    
+                                        <span>{quiz.questions.length} Questions •</span>
+                                        <span>Professor: {quiz.professor}</span>                    
                                     </div>
+                                    <button className="add_favorite_quiz" onClick={(e) => {
+                                        e.stopPropagation();
+                                        toggleFavoriteQuiz(quiz._id);
+                                        }}>
+                                        <IoIosHeart className={`heart-icon-quiz ${favoritedQuizzes[quiz._id] ? 'active' : ''}`} />
+                                    </button>
                                 </div>
                             ))}
                         </div>
