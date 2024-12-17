@@ -8,7 +8,7 @@ import ResultsHome from '../../Components/ResultsHome/ResultsHome';
 
 const SearchResults = () => {
   const location = useLocation();
-    const { filteredResults, filteredDxecks, filteredQuizzes, initialView } = location.state || {};
+    const { filteredResults, filteredDecks, filteredQuizzes, initialView } = location.state || {};
     
     // Default to 'home' if initialView is not passed
     const [currentView, setCurrentView] = useState(initialView || 'home');
