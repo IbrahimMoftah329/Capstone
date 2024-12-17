@@ -29,11 +29,15 @@ const Results = () => {
     };
 
     // Fetch questions if they were not passed in location.state
+    // useEffect(() => {
+    //     if (!questions.length && quiz) {
+    //         getQuestions();
+    //     }
+    // }, [questions, quiz]);
     useEffect(() => {
-        if (!questions.length && quiz) {
-            getQuestions();
-        }
-    }, [questions, quiz]);
+        getQuestions();
+    }, []);
+    
 
     if (!attempt || !quiz) return <div>Error: Results not found.</div>;
 
